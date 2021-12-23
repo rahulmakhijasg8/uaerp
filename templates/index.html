@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>Universal Adventure | send Mail</title>
+    <style>
+        .main-container
+        {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .form-container
+        {
+            width: 800px;
+            height: 400px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container main-container">
+        <form action="" method="POST" class="form-container container">
+            {% csrf_token %}
+            <div class="form-row row col-md-12 col-12 my-4">
+                <div class="col-3">
+                    <label  class="form-label">Hotel Name</label>
+                </div>
+                <div class="col-9">
+                    <input type="text" name="hotel-name" placeholder="Hotel Name" class="form-control"  aria-describedby="emailHelp" required>
+                </div>
+            </div>
+            <div class="form-row row col-md-12 col-12 my-4">
+                <div class="col-3">
+                    <label class="form-label">Hotel City</label>
+                </div>
+                <div class="col-9">
+                    <input type="text" name="hotel-city" placeholder="Hotel City" class="form-control" aria-describedby="emailHelp" required>
+                </div>
+            </div>
+            <div class="form-row row col-md-12 col-12 my-4">
+                <div class="col-3">
+                    <label class="form-label">Hotel Mail Id </label>
+                </div>
+                <div class="col-9">
+                    <input type="text" name="mail-id" placeholder="Comma Seperated Multiple Mail Ids" class="form-control"  aria-describedby="emailHelp" required>
+                </div>
+            </div>
+            <div class="form-row row col-md-12 col-12 my-4">
+                <div class="col-3">
+                    <label for="exampleInputPassword1" class="form-label">Concern Person Name </label>
+                </div>
+                <div class="col-9">
+                    <input type="text" name="concern-person-name" placeholder="Optional" class="form-control" >
+                </div>
+            </div>
+            <div class="form-row" style="display: flex;justify-content: center;align-items: center;">
+                <button type="submit" class="btn btn-primary px-4 py-2">Send Mail</button>
+            </div>
+          </form>
+    </div>    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        {% if messages %}
+            {% for message in messages %}
+                swal("Mail Sended!","{{message}}", "success");
+            {% endfor %}
+        {% endif %}
+    </script>
+  </body>
+</html>

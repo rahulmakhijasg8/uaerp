@@ -1,0 +1,41 @@
+<div>
+<form action="" method="get">
+    {{myFilter.form}}
+
+    <button class="btn" type="submit">Search</button>
+</form>
+
+</div>
+<br>
+<style>
+   table, th, td {
+  border: 5px solid  #96D4D4;
+  border-collapse: collapse;
+}
+</style>
+
+<table class="table table-sm">
+    <tr>
+        <th>State</th> &nbsp;
+        <th>City</th> &nbsp;
+        <th>Hotel Type</th> &nbsp;
+        <th>Hotel Name</th> &nbsp;
+        <th>Image1</th> &nbsp;
+        <th>Image2</th> &nbsp;
+    </tr>
+
+    {% for entry in Entryform %}
+        <tr>
+            <td style="height: 50px;px;width:100px">{{entry.State_Name}}</td>
+            <td>{{entry.City_Name}}</td>
+            <td>{{entry.Hotel_Type}}</td>
+            <td>{{entry.Hotel_Name}}</td>
+            <td><a href="{{entry.Image_1.url}}">link</a></td>
+            <td><a href="{{entry.Image_2.url}}">link</a></td>
+           
+
+        </tr>
+    {% endfor %}
+
+
+</table>

@@ -1,0 +1,45 @@
+<style>
+    table, th, td {
+   border: 5px solid  #96D4D4;
+   border-collapse: collapse;
+ }
+ </style>
+
+ 
+ <table id="results"   class="table table-sm">
+     <thead>
+        <tr>
+            <th>Booking ID</th> &nbsp;&nbsp;
+            <th>Booking Date</th> &nbsp;
+            <th>Start Date-End Date</th> &nbsp;
+            <th>City, State</th> &nbsp;
+            <th>Trip Name</th> &nbsp;
+            <th>Name</th> &nbsp;
+            <th>Total Cost</th> &nbsp;
+            <th>Due Amount</th> &nbsp;
+            
+            <th>Due Date</th> &nbsp;
+        </tr>
+     </thead>
+     <tbody>
+        {% for entry in Entryform %}
+            
+         <tr>
+             <td style="height: 50px;px;width:100px">{{entry.Bookingkey}}</td>
+             <td>{{entry.BookingDate}}</td>
+             <td>{{entry.Start_Date}}-{{entry.End_Date}}</td>
+             <td>{{entry.City}} {{entry.State}}</td>
+             <td>{{entry.Trip_Name}}</td>
+             <td>{{entry.Name}}</td>
+             <td>{{entry.Total_Cost}}</td>
+             <td>{{entry.Amount_Paid}}</td>
+             <td>{{entry.Due_Date}}
+                 <a href="b/d/{{entry.id}}" target="_blank">link</a></td>
+            
+ 
+         </tr>
+     {% endfor %}
+     </tbody>
+ 
+     
+ </table>

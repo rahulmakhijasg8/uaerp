@@ -1,0 +1,24 @@
+<form action="" method="POST" id="id01" class="modal" style="text-align: center;"  >
+    {% csrf_token %}
+    <label for="your_name" >Vehicle Name </label>
+    <input id="vname" type="text" name="Vehiclename"    required><br>
+    <label for="your_name">Start Date </label>
+    <input id="Startdate" type="date" name="Startdate"  required>&nbsp;&nbsp;
+    <label for="your_name">End Date </label>
+    <input id="enddate" type="date" name="Enddate" required><br>
+    <label for="your_name">Start Location </label>
+    <input id="slocation" type="text" name="Slocation"  required>&nbsp;&nbsp;
+    <label for="your_name">End Location </label>
+    <input id="elocation" type="text" name="Elocation" required><br>
+    <label for="your_name">Additional info </label>
+    <input id="additionalinfo" type="text" name="Additionalinfo" required><br>
+    <label for="your_name" >Driver Name </label>
+	<input id="dname" type="text" name="Dname" ">&nbsp;&nbsp;
+    <label for="your_name">Driver No. </label>
+    <input type="number"   id="dno" name="dno" ><br>
+    <label for="your_name">Total Cost </label>
+    <input type="number"   id="totalcost" name="totalcost" ><br>
+
+    <input type="submit" name="" id="btn">
+
+</form>

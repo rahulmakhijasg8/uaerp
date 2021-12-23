@@ -1,0 +1,28 @@
+<h2>New Guest</h2><br>
+<form action=""  method = "POST" >
+    {% csrf_token %}
+    <div id="compulsary-fields">
+        <label for="your_name" >Name: </label>
+        <input id="your_name" type="text" name="Name" required><br>
+        <label for="your_name">Phone No: </label>
+        <input id="your_name" type="number" name="Phone" required><br>
+        <label for="your_name">Email: </label>
+        <input id="your_name" type="email" name="Email" required><br>
+    </div><br><br><br>
+    <div id="optional">
+        <label for="your_name">DOB: </label>
+        <input id="your_name" type="date" value="2021-12-12"  name="dob"><br>
+        <label for="your_name">Sex: </label>
+        <input id="your_name" type="text" name="Sex"><br>
+        <label for="your_name">Aadhar Card No: </label>
+        <input id="your_name" type="text" name="Aadhar"><br>
+        <label for="your_name">Occupation: </label>
+        <input id="your_name" type="text" name="Occupation"><br>
+        <label for="your_name">Address: </label>
+        <input id="your_name" type="text" name="Address"><br>
+        <label for="your_name">City: </label>
+        <input id="your_name" type="text" name="City"><br>
+        <label for="your_name">State: </label>
+        <input id="your_name" type="text" name="State"><br>
+        <button type="submit">Submit</button>
+    </div>

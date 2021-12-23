@@ -1,0 +1,49 @@
+
+<center><h1>Entry Form</h1></center>
+
+<script type="text/javascript">
+    url = 'http://127.0.0.1:8000/data_list'
+    fetch(url)
+    .then(response => response.json())
+    .then(data =>{
+        c = data
+        console.log(c)
+    })
+    function myFunction() {
+                //clears all the guardians with the specified id
+                document.getElementById("guardian").innerHTML =
+                    null;}
+
+
+</script>
+
+<div style=
+width: 100%;
+        margin: auto;
+        border: 3px solid #4287f5;
+        right: 50%;">
+
+    <form  id="guardian"    action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.State_Name.label}}: &nbsp;  {{form.State_Name}}    <br> <br>  <br> <br>
+
+        {{form.City_Name.label}}: &nbsp;  {{form.City_Name}} <br> <br>  <br> <br>
+
+        {{form.Hotel_Name.label}}: &nbsp;  {{form.Hotel_Name}} <br> <br>  <br> <br>
+
+        {{form.Hotel_Type.label}}: &nbsp;  {{form.Hotel_Type}} <br> <br>  <br> <br>
+
+        {{form.Image_1.label}}: &nbsp;  {{form.Image_1}} <br> <br>  <br> <br>
+
+        {{form.Image_2.label}}: &nbsp;  {{form.Image_2}} <br> <br>  <br> <br>
+
+        <input style="background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 16px 32px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;" id="submit"  type="submit" name="Submit">
+    </form>
+    
+</div>

@@ -1,0 +1,675 @@
+<form action="" method="" id="id00">
+    <label  >Trip Name </label>
+    <input id="name" type= 'text' name="Tripname" value="{{a.Trip_Name}}" readonly required>&nbsp;&nbsp;
+    <label for="">Service Status</label>
+    <input type= 'text' name="Status" id="status" value="{{a.Service_Status}}" required readonly><br>
+    <label  >Created By </label>
+    <input id="createdby" type= 'text' name="Createdby" value="{{a.Created_by}}" readonly><br>
+    <label  >Start Date </label>
+    <input id="startdate" type= 'text' name="Startdate" value="{{a.Start_Date}}" readonly>&nbsp;&nbsp;
+    <label  >End Date </label>
+    <input id="enddate" type= 'text' name="Enddate" value="{{a.End_Date}}" readonly><br>
+    <label  >City </label>
+    <input id="tcity" type= 'text' name="Tripcity" value="{{a.City}}" required readonly>&nbsp;&nbsp;
+    <label  >State </label>
+    <input id="tstate" type= 'text' name="Tripstate" value="{{a.State}}" required readonly><br>
+    <label  >No of Persons </label>
+    <input id="noofpersons" type= 'text' name="Noofpersons" value="{{a.No_of_People}}" required readonly>&nbsp;&nbsp;
+    <label  >Additional info </label>
+    <input id="additionalinfo" type= 'text' name="Additionalinfo" value="{{a.Additional_info}}" required readonly><br>
+    <label  >Services </label>
+    <input id="services" type= 'text' name="Services" value="{{a.Service}}" required readonly><br>
+    <label  >Total Cost </label>
+    <input id="totalcost" type= 'text' name="Totalcost" value="{{a.Total_Cost}}" required readonly>&nbsp;&nbsp;
+    <label  >Amount Paid </label>
+    <input id="amountpaid" type= 'text' name="Amountpaid" value="{{amtpaid}}" required readonly><br>
+    <label  >Due Amount </label>
+    <input id="dueamount" type="number" name="amountpaid" value="{{a.Due_amount}}" >&nbsp;&nbsp;
+    <label  >Due Date </label>
+    <input id="duedate" type= 'text' name="Duedate" value="{{a.Due_Date}}" required readonly><br>
+
+</form>
+
+
+
+<form action="" method="POST" id="id01" class="modal" style="text-align: center;">
+    {% csrf_token %}
+    <label  >Name: </label>
+    <input id="tripname" type= 'text' name="Tripname" value="{{a.Trip_Name}}" required>&nbsp;&nbsp;
+    <label  >Created By </label>
+    <input id="tcreatedby" type= 'text' name="Createdby" value="{{a.Created_by}}"><br>
+    <label  >Start Date </label>
+    <input type="date" id="tstartdate" type="date" name="Startdate" value="{{a.Start_Date}}">&nbsp;&nbsp;
+    <label  >End Date </label>
+    <input type="date" id="tenddate" type="date" name="Enddate" value="{{a.End_Date}}"><br>
+    <label  >City: </label>
+    <input id="tcity" type= 'text' name="Tripcity" value="{{a.City}}" required>&nbsp;&nbsp;
+    <label  >State: </label>
+    <input id="tstate" type= 'text' name="Tripstate" value="{{a.State}}" required><br>
+    <label  >No of Persons </label>
+    <input id="tnoofpersons" type= 'text' name="Noofpersons" value="{{a.No_of_People}}" required>&nbsp;&nbsp;
+    <label  >Additional info </label>
+    <input id="tadditionalinfo" type= 'text' name="Additionalinfo" value="{{a.Additional_info}}" required><br>
+    <label  >Total Cost </label>
+    <input id="ttotalcost" type= 'text' name="Totalcost" value="{{a.Total_Cost}}" required>&nbsp;&nbsp;
+    <label  >Amount Paid </label>
+    <input id="tamountpaid" type= 'text' name="Amountpaid" value="{{a.Amount_Paid}}" required><br>
+    <label  >Due Date </label>
+    <input id="tduedate" type="date" name="Duedate" value="{{a.Due_Date}}"><br>
+
+    <input type="submit" value="submit" id="btnsave" class="myElement" form="id01">
+</form>
+
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Update Booking
+    Details</button>
+
+<h2>Payment History</h2> <a href="b/d/{{entry.id}}/e" target="_blank"><button>New Payment</button><br></a>
+
+<style>
+    table,
+    th,
+    td {
+        border: 5px solid #96D4D4;
+        border-collapse: collapse;
+    }
+</style>
+<script>
+    var modal = document.getElementById('id01');
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
+
+
+<table id="results" class="table table-sm">
+    <thead>
+        <tr>
+            <th>Payment Date</th> &nbsp;&nbsp;
+            <th>Payment Type</th> &nbsp;
+            <th>Booking Id </th> &nbsp;
+            <th>Amount</th> &nbsp;
+            <th>Mode of Payment</th> &nbsp;
+            <th>Additional Info</th> &nbsp;
+            <th>&nbsp;&nbsp;</th> &nbsp;
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for entry in b %}
+        <tr>
+            <td style="height: 50px;px;width:100px">{{entry.Date}}</td>
+            <td>{{entry.Payment_Type}}</td>
+            <td>{{entry.Bookingkey}}</td>
+            <td>{{entry.Amount}}</td>
+            <td>{{entry.Mode_of_payment}}</td>
+            <td>{{entry.Additional_info}}</td>
+            <td></td>
+
+
+        </tr>
+        {% endfor %}
+    </tbody>
+
+
+</table>
+
+
+
+<h2>Guest Info</h2> <a href="b/d/{{entry.id}}/e/f" target="_blank"><button>Add more persons</button></a><br>
+
+<style>
+    table,
+    th,
+    td {
+        border: 5px solid #96D4D4;
+        border-collapse: collapse;
+    }
+</style>
+
+
+<table id="results" class="table table-sm">
+
+    <thead>
+        <tr>
+            <th>Name</th> &nbsp;&nbsp;
+            <th>Phone No</th> &nbsp;
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for entry in c %}
+        <tr>
+            <td style="height: 50px;px;width:100px">{{entry.Name}}</td>
+            <td>{{entry.PhoneNo}}</td>
+            <td></td>
+
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+
+
+</table>
+
+<h2>Hotel Info</h2> <a href="b/d/{{entry.id}}/e/f/g" target="_blank"><button>Add more Hotels</button></a><br>
+
+<div id="ajax">
+    {% for entry in d %}
+    <div id="a">
+        <form action="" id="" class="" style="text-align: center;">
+            <label  >Hotel Name </label>
+            <input id="hotelnam" type= 'text' name="Hotelname" value="{{entry.Hname}}" required><br>
+            <label  >City: </label>
+            <input id="hcity" type= 'text' name="Hotelcity" value="{{entry.Hcity}}" required>&nbsp;&nbsp;
+            <label  >State: </label>
+            <input id="hstate" type= 'text' name="Hotelstate" value="{{entry.Hstate}}" required><br>
+            <label  >Checkin Date </label>
+            <input id="city" type= 'text' name="Checkindate" value="{{entry.Checkin_Date|date:'d M, Y' }}"required>&nbsp;&nbsp;
+            <label  >Checkout Date </label>
+            <input id="state" type= 'text' name="Checkoutdate" value="{{entry.Checktout_Date}}" required><br>
+            <label  >No of Rooms </label>
+            <input id="rooms" type="number" name="Rooms" value="{{entry.No_of_rooms}}">&nbsp;&nbsp;
+            <label  >Room Sharing </label>
+            <input type= 'text' id="roomsharing" name="Roomsharing" value="{{entry.Room_Sharing_Option}}"><br>
+            <label  >Room Type </label>
+            <input type= 'text' id="roomtype" type= 'text' name="Roomtype" value="{{entry.Room_Type}}">&nbsp;&nbsp;
+            <label  >Meal Plan </label>
+            <input id="tnoofpersons" type= 'text' name="Mealplan" value="{{entry.Meal_Plan}}" required><br>
+            <label  >Additional info </label>
+            <input id="tadditionalinfo" type= 'text' name="Additionalinfo" value="{{entry.Additional_info}}" required><br>
+            <label  >Room Cost </label>
+            <input id="ttotalcost" type= 'text' name="Roomcost" value="{{entry.Total_Cost}}" required>&nbsp;&nbsp;
+            <label  >Amount Paid </label>
+            <input id="amountpaid" type= 'number' name="Amountpaid" value="{{entry.Paymentinfo.amt_paid}}" required readonly>&nbsp;&nbsp;
+            <label  >Due Amount </label>
+            <input id="duedate" type= 'text' name="Duedate" value="{{entry.Due_Amount}}" required readonly><br>
+            <label  >Due Date </label>
+            <input id="duedate" type= 'text' name="Duedate" value="{{entry.Due_Date}}" required readonly><br>
+            <label  >Hotel Contact Name </label>
+            <input id="tamountpaid" type= 'text' name="Name" value="{{entry.Hotel_Contact_Name}}" required>&nbsp;&nbsp;
+            <label  >Hotel Phone No </label>
+            <input id="tduedate" type="number" name="Number" value="{{entry.Hotel_Contact_No}}" required>&nbsp;&nbsp;
+            <label  >Email </label>
+            <input id="tduedate" type="email" name="Email" value="{{entry.Hemail}}" required><br>
+            <input type="button" value="Edit" class="btn-edit" id="btn-edit-{{entry.id}}" data-hid="{{entry.id}}">
+            <input type="button" value="Delete" id="dbtn" class="btn-del" data-hid="{{entry.id}}"><br>
+              <a href="{{entry.id}}/hpayments" target="_blank"><button type="button">Payments</button></a>
+        </form>
+    </div><hr>
+
+
+    {% endfor %}
+
+</div>
+
+<form action="" method="POST" id="hform" class="" style="text-align: center;">
+    {% csrf_token %}
+    <input type="hidden" name="hiid" id="hiid">
+    <label  >Hotel Name </label>
+    <input id="hotelname" type= 'text' name="Hotelname" required><br>
+    <label  >City: </label>
+    <input id="hocity" type= 'text' name="Hotelcity" required>&nbsp;&nbsp;
+    <label  >State: </label>
+    <input id="hostate" type= 'text' name="Hotelstate" required><br>
+    <label  >Checkin Date </label>
+    <input id="cindate" type="date" name="Checkindate" required>&nbsp;&nbsp;
+    <label  >Checkout Date </label>
+    <input id="coutdate" type="date" name="Checkoutdate" required><br>
+    <label  >No of Rooms </label>
+    <input id="horooms" type="number" name="Rooms" ">&nbsp;&nbsp;
+    <label for=" your_name">Room Sharing </label>
+    <input type= 'text' id="horoomsharing" name="Roomsharing"><br>
+    <label  >Room Type </label>
+    <input type= 'text' id="horoomtype" type= 'text' name="Roomtype">&nbsp;&nbsp;
+    <label  >Meal Plan </label>
+    <input id="mealplan" type= 'text' name="Mealplan" required><br>
+    <label  >Additional info </label>
+    <input id="hadditionalinfo" type= 'text' name="Additionalinfo" required><br>
+    <label  >Room Cost </label>
+    <input id="htotalcost" type="number" name="Roomcost" oninput="calculate()" required>&nbsp;&nbsp;
+    <label  >Amount Paid </label>
+    <input id="hamountpaid" type="number" name="Amountpaid" oninput="calculate()" required >&nbsp;&nbsp;
+    <label  >Due Amount </label>
+    <input id="hdueamount" type="number" name="Dueamount" required ><br>
+    <label  >Name </label>
+    <input id="hname" type= 'text' name="Name" required>&nbsp;&nbsp;
+    <label  >Phone No </label>
+    <input id="hphoneno" type="number" name="Number" required>&nbsp;&nbsp;
+    <label  >Email </label>
+    <input id="hemail" type="email" name="Email" required><br>
+    <input type="button" value="save" name="" id="btn">
+
+</form>
+
+<script>
+    function calculate() {
+  var myBox1 = parseFloat(document.getElementById('htotalcost').value);
+  var myBox2 = parseFloat(document.getElementById('hamountpaid').value);
+  var result = document.getElementById('hdueamount');
+  var numb = myBox1 - myBox2;
+  numb = numb.toFixed(0);
+  result.value = numb;
+}
+</script>
+
+<h2>Transport Info</h2> <a href="b/d/{{entry.id}}/e/f/g/h" target="_blank"><button>Add more Transport</button></a>
+
+{% for entry in transport %}
+    
+        <form action="" id="" class="" style="text-align: center;">
+            <label  >Vehicle Name </label>
+            <input id="vehiclename" type= 'text' name="Hotelname" value="{{entry.Vehicle_Name}}" required><br>
+            <label  >Driver Name </label>
+            <input id="dname" type= 'text' name="Hotelcity" value="{{entry.Driver_Name}}" required>&nbsp;&nbsp;
+            <label  >Driver Phone No </label>
+            <input id="dnum" type= 'text' name="Hotelstate" value="{{entry.Driver_Phone_No}}" required><br>
+            <label  >Start Date </label>
+            <input id="dstart" type= 'text' name="Checkindate" value="{{entry.Start_Date|date:'d M, Y' }}"required>&nbsp;&nbsp;
+            <label  >End Date </label>
+            <input id="dend" type= 'text' name="Checkoutdate" value="{{entry.End_date}}" required><br>
+            <label  >Start Location </label>
+            <input id="dsloc" type="text" name="Rooms" value="{{entry.Start_Location}}">&nbsp;&nbsp;
+            <label  >End Location </label>
+            <input type= 'text' id="deloc" name="Roomsharing" value="{{entry.End_Location}}"><br>
+            <label  >Total Cost </label>
+            <input type= 'text' id="dtotalcost" type= 'text' name="Roomtype" value="{{entry.Total_Cost}}">&nbsp;&nbsp;
+            <label  >Additional Info </label>
+            <input id="dadditionalinfo" type= 'text' name="Mealplan" value="{{entry.Additional_info}}" required><br>
+            <input type="button" value="Edit" class="btn-edit" id="btn-edit-{{entry.id}}" data-hid="{{entry.id}}">
+            <input type="button" value="Delete" id="dbtn" class="btn-del" data-hid="{{entry.id}}">
+
+        </form>
+    <hr>
+
+
+    {% endfor %}
+
+
+
+
+<form action="" method="POST" id="paymentform" class="payment-form" style="text-align: center;"  >
+    {% csrf_token %}
+    <label for="your_name" >Vehicle Name </label>
+    <input id="vname" type="text" name="Vehiclename"    required><br>
+    <label for="your_name">Start Date </label>
+    <input id="Startdate" type="date" name="Startdate"  required>&nbsp;&nbsp;
+    <label for="your_name">End Date </label>
+    <input id="Enddate" type="date" name="Enddate" required><br>
+    <label for="your_name">Start Location </label>
+    <input id="slocation" type="text" name="Slocation"  required>&nbsp;&nbsp;
+    <label for="your_name">End Location </label>
+    <input id="elocation" type="text" name="Elocation" required><br>
+    <label for="your_name">Additional info </label>
+    <input id="vadditionalinfo" type="text" name="Additionalinfo" required><br>
+    <label for="your_name" >Driver Name </label>
+	<input id="dname" type="text" name="Dname" ">&nbsp;&nbsp;
+    <label for="your_name">Driver No. </label>
+    <input type="number"   id="dno" name="dno" ><br>
+    <label for="your_name">Total Cost </label>
+    <input type="number"   id="totalcost" name="totalcost" >&nbsp;&nbsp;
+    <label for="your_name">Amount Paid </label>
+    <input type="number"   id="amountpaid" name="amountpaid" >&nbsp;&nbsp;
+    <label for="your_name">Due Amount </label>
+    <input type="number"   id="dueamount" name="dueamount" ><br>
+
+    <input type="button" name="" value="save" id="tbtn">
+
+</form>
+
+
+<h2>Activities Info</h2> <a href="b/d/{{entry.id}}/e/f/g/h/i" target="_blank"><button>Add more Activity</button></a>
+
+{% for entry in activity %}
+    
+        <form action="" id="" class="" style="text-align: center;">
+            <label  >Activity Name Name </label>
+            <input id="aname" type= 'text' name="Hotelname" value="{{entry.Name_of_activity}}" required><br>
+            <label  >State </label>
+            <input id="astate" type= 'text' name="Hotelcity" value="{{entry.State}}" required>&nbsp;&nbsp;
+            <label  >City </label>
+            <input id="acity" type= 'text' name="Hotelstate" value="{{entry.City}}" required><br>
+            <label  >Date </label>
+            <input id="adate" type= 'text' name="Checkindate" value="{{entry.Date|date:'d M, Y' }}"required>&nbsp;&nbsp;
+            <label  >No of People </label>
+            <input id="anoofpeople" type= 'number' name="Checkoutdate" value="{{entry.No_of_People}}" required><br>
+            <label  >Vendor Name </label>
+            <input id="avename" type="text" name="Rooms" value="{{entry.Vendor_Name}}">&nbsp;&nbsp;
+            <label  >Vendor Contact No </label>
+            <input type= 'number' id="avno" name="Roomsharing" value="{{entry.Vendor_Contact_No}}"><br>
+            <label  >Total Cost </label>
+            <input type= 'text' id="atotalcost" type= 'number' name="Roomtype" value="{{entry.Total_Cost}}">&nbsp;&nbsp;
+            <label  >Additional Info </label>
+            <input id="aadditionalinfo" type= 'text' name="Mealplan" value="{{entry.Additional_info}}" required><br>
+            <input type="button" value="Edit" class="btn-edit" data-hid="{{entry.id}}">
+            <input type="button" value="Delete" id="dbtn" class="btn-del" data-hid="{{entry.id}}">
+
+        </form>
+    <hr>
+
+
+    {% endfor %}
+
+
+
+<form action="" method="POST" id="ainfo" class="a-info" style="text-align: center;"  >
+    {% csrf_token %}
+    <label for="your_name" >Activity Name </label>
+    <input id="aname" type="text" name="Activityname"    required><br>
+    <label for="your_name">State </label>
+    <input id="astate" type="text" name="State"  required>&nbsp;&nbsp;
+    <label for="your_name">City </label>
+    <input id="accity" type="text" name="City" required><br>
+    <label for="your_name">No of Persons </label>
+    <input id="anoofpersons" type="text" name="Noofperson"  required><br>
+    <label for="your_name">Date </label>
+    <input id="acdate" type="date" name="Date" required><br>
+    <label for="your_name">Additional info </label>
+    <input id="aadditionalinfo" type="text" name="Additionalinfo" required><br>
+    <label for="your_name" >Vendor Name </label>
+	<input id="avname" type="text" name="Vname" ">&nbsp;&nbsp;
+    <label for="your_name">Vendor No. </label>
+    <input type="number"   id="vno" name="Vno" ><br>
+    <label for="your_name">Total Cost </label>
+    <input type="number"   id="atotalcost" name="Vno" >&nbsp;&nbsp;
+    <label for="your_name">Amount Paid </label>
+    <input type="number"   id="aamountpaid" name="Vno" >&nbsp;&nbsp;
+    <label for="your_name">Due Amount </label>
+    <input type="number"   id="adueamount" name="Vno" ><br>
+
+    <input type="button" value="Save" name="" id="abtn">
+
+</form>
+
+<h2>Tickets Info</h2> <button>Add more Tickets</button>
+
+
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+        padding-top: 60px;
+    }
+
+    .moda {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+        padding-top: 60px;
+    }
+</style>
+
+<script>
+    var moda = document.getElementById('id0');
+
+    window.onclick = function (event) {
+        if (event.target == moda) {
+            moda.style.display = "none";
+        }
+    }
+
+</script>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    let id = "{{a.id}}";
+    $("#btn").click(function () {
+        //console.log('save button clicked');
+        output = "";
+        let hid = $("#hiid").val();
+        let hn = $("#hotelname").val();
+        let city = $("#hocity").val();
+        let state = $("#hostate").val();
+        let cindate = $("#cindate").val();
+        let coutdate = $("#coutdate").val();
+        let rooms = $("#horooms").val();
+        let roomsharing = $("#horoomsharing").val();
+        let roomtype = $("#horoomtype").val();
+        let mealplan = $("#mealplan").val();
+        let hadditionalinfo = $("#hadditionalinfo").val();
+        let htotalcost = $("#htotalcost").val();
+        let hamountpaid = $("#hamountpaid").val();
+        let hdueamount = $("#hdueamount").val();
+        let name = $("#hname").val();
+        let phoneno = $("#hphoneno").val();
+        let email = $("#hemail").val();
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        hdata = {
+            hiid:hid,hname: hn, csrfmiddlewaretoken: csr, Hotelcity: city, Hotelstate: state,
+            Checkindate: cindate, Checkoutdate: coutdate, Rooms: rooms, Roomsharing: roomsharing,
+            Roomtype: roomtype, Mealplan: mealplan, Additionalinfo: hadditionalinfo,
+            Roomcost: htotalcost,Amtpaid:hamountpaid,dueamt:hdueamount,Name: name, Number: phoneno, Email: email
+        };
+        $.ajax({
+            url: "b/d//e/f/g",
+            method: "POST",
+            data: hdata,
+            success: function (data) {
+
+                x = data.info;
+                console.log(x);
+                for(i=1; i<x.length; i++){
+                output += "<form style='text-align: center;'>" +
+                        "<input type='text' value="+x[i].Hname+"><br\>"+
+                        "<label >City </label>"+
+                        "<input type='text'value="+x[i].Hcity+" required>&nbsp;&nbsp;" +
+                        "<label  >State: </label>"+
+                        "<input type='text'value="+x[i].Hstate+" required><br\>" +
+                        "<label  >Checkin Date </label>"+
+                        "<input type='date' value="+x[i].Checkin_Date +" required>&nbsp;&nbsp;" +
+                        "<label  >Checkout Date </label>"+
+                        "<input type='date' value="+x[i].Checktout_Date +" required><br\>" +
+                        "<label  >No of Rooms </label>"+
+                        "<input type='number' value="+x[i].No_of_rooms +" required>&nbsp;&nbsp;"+
+                        "<label  >Room Sharing </label>"+
+                        "<input type='text' value="+x[i].Room_Sharing_Option +" required><br\>"+
+                        "<label  >Room Type </label>"+
+                        "<input type='text' value="+x[i].Room_Type +" required>&nbsp;&nbsp;"+
+                        "<label  >Meal Plan </label>"+
+                        "<input type='text' value="+x[i].Meal_Plan +" required><br\>"+
+                        "<label  >Additional Info </label>"+
+                        "<input type='text' value="+x[i].Additional_info +" required><br\>"+
+                        "<label  >Room Cost </label>"+
+                        "<input type='number' value="+x[i].Total_Cost +" required>&nbsp;&nbsp;"+
+                        "<label  >Amount Paid </label>"+
+                        "<input type='number' value="+x[i].Amount_Paid +" required>&nbsp;&nbsp;"+
+                        "<label  >Due Amount </label>"+
+                        "<input type='number' value="+x[i].Due_Amount +" required><br\>"+
+                       " <label  >Name </label>"+
+                       "<input type='text' value="+x[i].Hotel_Contact_Name +" required>&nbsp;&nbsp;"+
+                       " <label  >Phone No </label>"+
+                       "<input type='number' value="+x[i].Hotel_Contact_No +" required>&nbsp;&nbsp;"+
+                        "<label  >Email </label>"+
+                        "<input type='email' value="+x[i].Hemail +" required><br\>"+
+                        "<input type='button' value='Edit' class='edit-btn' data-hid="+x[i].id+">"+
+                        "<input type='button' value='Delete' class='del-btn' id='dbtn' data-hid="+x[i].id+"><hr\>"
+
+                };
+
+                $("#ajax").append(output);
+                $("#hform").trigger("reset");
+                $("#hiid").val("");
+                
+            
+
+            }
+        
+        })   
+    })
+
+    $(".btn-del").click(function () {
+        console.log("delete button clicked");
+        let id = $(this).attr("data-hid");
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        mydata = {hid:id,csrfmiddlewaretoken: csr}
+        mythis = this;
+        $.ajax({
+            url: "{% url 'delete' %}",
+            method: "POST",
+            data: mydata,
+            success: function (data){
+                if(data.status==1){
+                console.log(data);
+                $(mythis).closest("div").fadeOut();
+                }
+            }
+
+        })
+    })
+    let editbtnid;
+    let editbtn;
+    window.addEventListener("click",(e)=>{
+        console.log(e.target);
+        editbtn=e.target;
+        editbtnid=e.target.id.split("-")[2];
+    })
+    editbtn.addEventListener("click",()=>{
+
+    })
+    $("#ajax").on("click",`#btn-edit-${editbtnid}`,function(){
+        console.log("edit button clicked");
+        let id = $(this).attr("data-hid");
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        mydata = {hid:id,csrfmiddlewaretoken: csr}
+        $.ajax({
+            url: "{% url 'edit' %}",
+            method: "POST",
+            data: mydata,
+            dataType:"json",
+            success: function (data){
+                console.log(data);
+                $("#hiid").val(data.id);
+                $("#hotelname").val(data.Hname);
+                $("#hocity").val(data.Hcity);
+                $("#hostate").val(data.Hstate);
+                $("#cindate").val(data.Checkin_Date);
+                $("#coutdate").val(data.Checktout_Date);
+                $("#horooms").val(data.No_of_rooms);
+                $("#horoomsharing").val(data.Room_Sharing_Option);
+                $("#horoomtype").val(data.Room_Type);
+                $("#mealplan").val(data.Meal_Plan);
+                $("#hadditionalinfo").val(data.Additional_info);
+                $("#htotalcost").val(data.Total_Cost);
+                $("#hamountpaid").val(data.Amount_Paid);
+                $("#hdueamount").val(data.Due_Amount);
+                $("#hname").val(data.Hotel_Contact_Name);
+                $("#hphoneno").val(data.Hotel_Contact_No);
+                $("#hemail").val(data.Hemail);
+
+            }
+
+        })
+    })
+
+</script>
+
+<script>
+
+    $("#tbtn").click(function () {
+        //console.log('save button clicked');
+        output = "";
+        let html = $("#a");
+        let vname = $("#vname").val();
+        let Startdate = $("#Startdate").val();
+        let enddate = $("#Enddate").val();
+        let slocation = $("#slocation").val();
+        let elocation = $("#elocation").val();
+        let vadditionalinfo = $("#vadditionalinfo").val();
+        let dname = $("#dname").val();
+        let dno = $("#dno").val();
+        let totalcost = $("#totalcost").val();
+        let amountpaid = $("#amountpaid").val();
+        let dueamount = $("#dueamount").val();
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        tdata = {
+            vname: vname, csrfmiddlewaretoken: csr, Startdate: Startdate, enddate: enddate,
+            slocation: slocation, elocation: elocation, vadditionalinfo: vadditionalinfo, dname: dname,
+            dno: dno, totalcost: totalcost, amountpaid: amountpaid,
+            dueamount: dueamount};
+        $.ajax({
+            url: "b/d//e/f/g/h",
+            method: "POST",
+            data: tdata,
+            success: function (data) {
+
+                x = data.info;
+                console.log(x);
+                
+        
+            
+
+            }
+        
+        })   
+    })
+
+</script>
+
+<script>
+
+    $("#abtn").click(function () {
+        //console.log('save button clicked');
+        output = "";
+        let html = $("#a");
+        let aname = $("#aname").val();
+        let astate = $("#astate").val();
+        let acity = $("#accity").val();
+        let anoofpersons = $("#anoofpersons").val();
+        let adate = $("#acdate").val();
+        let aadditionalinfo = $("#aadditionalinfo").val();
+        let avname = $("#avname").val();
+        let vno = $("#vno").val();
+        let atotalcost = $("#atotalcost").val();
+        let aamountpaid = $("#aamountpaid").val();
+        let adueamount = $("#adueamount").val();
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        adata = {
+            aname: aname, csrfmiddlewaretoken: csr, astate: astate, acity: acity,
+            anoofpersons: anoofpersons, adate: adate, aadditionalinfo: aadditionalinfo, avname: avname,
+            vno: vno, atotalcost: atotalcost, aamountpaid: aamountpaid,
+            adueamount: adueamount};
+        $.ajax({
+            url: "b/d//e/f/g/h/i",
+            method: "POST",
+            data: adata,
+            success: function (data) {
+
+                x = data.info;
+                console.log(x);
+                
+        
+            
+
+            }
+        
+        })   
+    })
+
+</script>

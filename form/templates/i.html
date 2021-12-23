@@ -1,0 +1,35 @@
+<form action="" method="POST" id="id01" class="modal" style="text-align: center;"  >
+    {% csrf_token %}
+    <label for="your_name" >Activity Name </label>
+    <input id="aname" type="text" name="Activityname"    required><br>
+    <label for="your_name">State </label>
+    <input id="state" type="text" name="State"  required>&nbsp;&nbsp;
+    <label for="your_name">City </label>
+    <input id="city" type="text" name="City" required><br>
+    <label for="your_name">No of Persons </label>
+    <input id="noofpersons" type="text" name="Noofperson"  required><br>
+    <label for="your_name">Date </label>
+    <input id="date" type="date" name="Date" required><br>
+    <label for="your_name">Additional info </label>
+    <input id="additionalinfo" type="text" name="Additionalinfo" required><br>
+    <label for="your_name" >Vendor Name </label>
+	<input id="vname" type="text" name="Vname" ">&nbsp;&nbsp;
+    <label for="your_name">Vendor No. </label>
+    <input type="number"   id="vno" name="Vno" ><br>
+    <label for="your_name">Total Cost </label>
+    
+
+    <input type="submit" name="" id="btn">
+
+</form>
+
+<script>
+    function calculate() {
+  var myBox1 = parseFloat(document.getElementById('totalcost').value);
+  var myBox2 = parseFloat(document.getElementById('amountpaid').value);
+  var result = document.getElementById('dueamount');
+  var numb = myBox1 - myBox2;
+  numb = numb.toFixed(0);
+  result.value = numb;
+}
+</script>

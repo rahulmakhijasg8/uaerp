@@ -1,0 +1,55 @@
+<form action="" method="POST" id="id01" class="modal" style="text-align: center;"  >
+    {% csrf_token %}
+    <label for="your_name" >Hotel Name </label>
+    <input id="hotelname" type="text" name="Hotelname"    required><br>
+    <label for="your_name">City: </label>
+    <input id="city" type="text" name="Hotelcity"  required>&nbsp;&nbsp;
+    <label for="your_name">State: </label>
+    <input id="state" type="text" name="Hotelstate" required><br>
+    <label for="your_name">Checkin Date </label>
+    <input id="city" type="date" name="Checkindate"  required>&nbsp;&nbsp;
+    <label for="your_name">Checkout Date </label>
+    <input id="state" type="date" name="Checkoutdate" required><br>
+    <label for="your_name" >No of Rooms </label>
+	<input id="rooms" type="number" name="Rooms" ">&nbsp;&nbsp;
+    <label for="your_name">Room Sharing </label>
+    <input type="text"   id="roomsharing" name="Roomsharing" ><br>
+    <label for="your_name">Room Type </label>
+    <input  type="text"  id="roomtype" type="text" name="Roomtype" >&nbsp;&nbsp;
+    <label for="your_name">Meal Plan </label>
+    <input id="tnoofpersons" type="text" name="Mealplan" required><br>
+    <label for="your_name">Additional info </label>
+    <input id="tadditionalinfo" type="text" name="Additionalinfo" required><br>
+    <label for="your_name">Room Cost </label>
+    <input id="ttotalcost" type="number" name="Roomcost" oninput="calculate()" required>&nbsp;&nbsp;
+    <label for="your_name">Amount Paid </label>
+    <input id="hamountpaid" type="number" name="Amountpaid" oninput="calculate()" required >&nbsp;&nbsp;
+    <label for="your_name">Due Amount </label>
+    <input id="dueamount" type="number" name="Dueamount" required ><br>
+    <label for="your_name">Name </label>
+    <input id="tamountpaid" type="text" name="Name" required>&nbsp;&nbsp;
+    <label for="your_name">Phone No </label>
+    <input id="tduedate" type="number" name="Number"  required>&nbsp;&nbsp;
+    <label for="your_name">Email </label>
+    <input id="tduedate" type="email" name="Email"  required><br>
+    <input type="submit" name="" id="btn">
+
+</form>
+
+<script>
+
+    document.getElementById("btn").addEventListener("click", function() {
+        window.open('http://127.0.0.1:8000/b/b/d/{{id}}/').alert('Please Refresh');
+    })
+</script>
+
+<script>
+    function calculate() {
+  var myBox1 = parseFloat(document.getElementById('ttotalcost').value);
+  var myBox2 = parseFloat(document.getElementById('hamountpaid').value);
+  var result = document.getElementById('dueamount');
+  var numb = myBox1 - myBox2;
+  numb = numb.toFixed(0);
+  result.value = numb;
+}
+</script>

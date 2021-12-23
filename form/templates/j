@@ -1,0 +1,42 @@
+<script>
+
+    $("#abtn").click(function () {
+        //console.log('save button clicked');
+        output = "";
+        let html = $("#a");
+        let aname = $("#aname").val();
+        let astate = $("#astate").val();
+        let acity = $("#acity").val();
+        let anoofpersons = $("#anoofpersons").val();
+        let adate = $("#adate").val();
+        let aadditionalinfo = $("#aadditionalinfo").val();
+        let avname = $("#avname").val();
+        let vno = $("#vno").val();
+        let atotalcost = $("#atotalcost").val();
+        let aamountpaid = $("#aamountpaid").val();
+        let adueamount = $("#adueamount").val();
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        adata = {
+            aname: aname, csrfmiddlewaretoken: csr, astate: astate, acity: acity,
+            anoofpersons: anoofpersons, adate: adate, aadditionalinfo: aadditionalinfo, avname: avname,
+            vno: vno, atotalcost: atotalcost, aamountpaid: aamountpaid,
+            adueamount: adueamount};
+        $.ajax({
+            url: "b/d//e/f/g/h/i",
+            method: "POST",
+            data: adata,
+            success: function (data) {
+
+                x = data.info;
+                console.log(x);
+                
+        
+            
+
+            }
+        
+        })   
+    })
+
+</script>

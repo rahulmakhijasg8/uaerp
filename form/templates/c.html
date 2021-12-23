@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        #optional {
+            display:none;
+        }
+        #txtvalues{
+            display: none;
+        }
+    
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $('.chckvalues').click(function(){
+                var txt="";
+                $('.chckvalues:checked').each(function()
+                {
+                    txt+=$(this).val()+","
+                });
+                txt=txt.substring(0,txt.length-1)
+                $('#txtvalues').val(txt);
+            });
+        });
+    </script>
+    <script type="">
+        function optional(a)
+    {
+        if(a==1)
+            document.getElementById("optional").style.display="none";
+        else
+            document.getElementById("optional").style.display="block";
+    }
+    </script>
+</head>
+<body>
+    <div class="example">
+        <div class="form1" id="form1">
+            <form action=""  method = "POST" >
+                {% csrf_token %}
+                <div id="compulsary-fields">
+                    <label for="your_name" >Name: </label>
+                    <input id="your_name" type="text" name="Name" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'b' %}" target="_blank"><button type="button">Trip List</button></a><br>
+                    <label for="your_name">Phone No: </label>
+                    <input id="your_name" type="number" name="Phone" required><br>
+                    <label for="your_name">Email: </label>
+                    <input id="your_name" type="email" name="Email" required><br>
+                </div><br><br><br>
+                <h3>Optional Personal Details</h3><br><br><br>
+                <button type="button"   onclick="optional(1)">Hide</button><br><br>
+                <button type="button"   onclick="optional(2)">Show</button>
+                <div id="optional">
+                    <label for="your_name">DOB: </label>
+                    <input id="your_name" type="date" value="2021-12-12"  name="dob"><br>
+                    <label for="your_name">Sex: </label>
+                    <input id="your_name" type="text" name="Sex"><br>
+                    <label for="your_name">Aadhar Card No: </label>
+                    <input id="your_name" type="text" name="Aadhar"><br>
+                    <label for="your_name">Occupation: </label>
+                    <input id="your_name" type="text" name="Occupation"><br>
+                    <label for="your_name">Address: </label>
+                    <input id="your_name" type="text" name="Address"><br>
+                    <label for="your_name">City: </label>
+                    <input id="your_name" type="text" name="City"><br>
+                    <label for="your_name">State: </label>
+                    <input id="your_name" type="text" name="State"><br>
+                </div>
+                <div id="Booking-info">
+                    <label for="your_name">Trip Name: </label> 
+                    <input id="your_name" type="text" name="TripName" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label for="">Service Status</label>
+                    <input type="text" name="Status" id="status" required><br>
+                    <label for="your_name">Start Date: </label>
+                    <input id="your_name" type="date" name="startdate" value="2021-12-12" required><br>
+                    <label for="your_name">End Date: </label>
+                    <input id="your_name" type="date" name="enddate" value="2021-12-12" required><br>
+                    <label for="your_name">City: </label>
+                    <input id="your_name" type="text" name="Tripcity" required><br>
+                    <label for="your_name">State: </label>
+                    <input id="your_name" type="text" name="Tripstate" required><br>
+                    <label id="your_name">Service: </label>&nbsp;&nbsp;&nbsp;
+                    <input type="checkbox" class="chckvalues"   value="Hotel"   name="Hotel" id="hotel" for="your_name">Hotel&nbsp;
+                    
+                    <input type="checkbox" class="chckvalues" value="Transport"   name="Transport" id="transport">Transport&nbsp;
+                    
+                    <input type="checkbox" class="chckvalues"  value="Activities"   name="Activities" id="activities">Activities&nbsp;
+                    
+                    <input type="checkbox" class="chckvalues" value="Tickets" name="Tickets" id="tickets">Tickets&nbsp;<br>
+                    
+                    <input type="text" id="txtvalues"  name="cbox"><br><br>
+                    <label for="your_name">Total Cost </label>
+                    <input id="totalcost" type="number" name="totalcost" oninput="calculate()" required>&nbsp;
+                    <label for="your_name">Amount Paid </label>
+                    <input id="amountpaid" type="number" name="amountpaid" oninput="calculate()" required>&nbsp;&nbsp;
+                    <label for="your_name">Due Amount </label>
+                    <input id="ddueamount" type="number" name="dueamount"  >&nbsp;&nbsp;
+                    <input type="date" name="payment-date">&nbsp;
+                    <input type="text" name="modeofpayment" placeholder="Mode of payment" required><br>
+                    <label for="your_name">Additional info </label>
+                    <input id="your_name" type="text" name="additionalinfo" required>
+                    <label for="your_name">Created By </label>
+                    <input id="your_name" type="text" name="createdby" required><br>
+                    <label for="your_name">Due Date </label>
+                    <input id="your_name" type="date" name="duedate" value="2021-12-12" required><br>
+                    <label for="your_name">No of People </label>
+                    <input id="your_name" type="number" name="noofpeople" required><br>
+                </div>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    function calculate() {
+  var myBox1 = parseFloat(document.getElementById('totalcost').value);
+  var myBox2 = parseFloat(document.getElementById('amountpaid').value);
+  var result = document.getElementById('ddueamount');
+  var numb = myBox1 - myBox2;
+  numb = numb.toFixed(0);
+  result.value = numb;
+}
+</script>
