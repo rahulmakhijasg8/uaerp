@@ -63,7 +63,7 @@
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Update Booking
     Details</button>
 
-<h2>Payment History</h2> <a href="b/d/{{entry.id}}/e" target="_blank"><button>New Payment</button><br></a>
+<h2>Payment History</h2> <a href="payments" target="_blank"><button>New Payment</button><br></a>
 
 <style>
     table,
@@ -119,7 +119,7 @@
 
 
 
-<h2>Guest Info</h2> <a href="b/d/{{entry.id}}/e/f" target="_blank"><button>Add more persons</button></a><br>
+<h2>Guest Info</h2> <a href="addguests" target="_blank"><button>Add more persons</button></a><br>
 
 <style>
     table,
@@ -155,7 +155,7 @@
 
 </table>
 
-<h2>Hotel Info</h2> <a href="b/d/{{entry.id}}/e/f/g" target="_blank"><button>Add more Hotels</button></a><br>
+<h2>Hotel Info</h2> <a href="addhotels" target="_blank"><button>Add more Hotels</button></a><br>
 
 <div id="ajax">
     {% for entry in d %}
@@ -256,7 +256,7 @@
 }
 </script>
 
-<h2>Transport Info</h2> <a href="b/d/{{entry.id}}/e/f/g/h" target="_blank"><button>Add more Transport</button></a>
+<h2>Transport Info</h2> <a href="addtransport" target="_blank"><button>Add more Transport</button></a>
 
 {% for entry in transport %}
     
@@ -321,7 +321,7 @@
 </form>
 
 
-<h2>Activities Info</h2> <a href="b/d/{{entry.id}}/e/f/g/h/i" target="_blank"><button>Add more Activity</button></a>
+<h2>Activities Info</h2> <a href="addactivities" target="_blank"><button>Add more Activity</button></a>
 
 {% for entry in activity %}
     
