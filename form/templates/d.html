@@ -184,11 +184,9 @@
             <label  >Room Cost </label>
             <input id="ttotalcost" type= 'text' name="Roomcost" value="{{entry.Total_Cost}}" required>&nbsp;&nbsp;
             <label  >Amount Paid </label>
-            <input id="amountpaid" type= 'number' name="Amountpaid" value="{{entry.Paymentinfo.amt_paid}}" required readonly>&nbsp;&nbsp;
+            <input id="amountpaid" type= 'number' name="Amountpaid" value="" required readonly>&nbsp;&nbsp;
             <label  >Due Amount </label>
-            <input id="duedate" type= 'text' name="Duedate" value="{{entry.Due_Amount}}" required readonly><br>
-            <label  >Due Date </label>
-            <input id="duedate" type= 'text' name="Duedate" value="{{entry.Due_Date}}" required readonly><br>
+            <input id="duedate" type= 'text' name="Duedate" value="" required readonly><br>
             <label  >Hotel Contact Name </label>
             <input id="tamountpaid" type= 'text' name="Name" value="{{entry.Hotel_Contact_Name}}" required>&nbsp;&nbsp;
             <label  >Hotel Phone No </label>
@@ -210,7 +208,7 @@
     {% csrf_token %}
     <input type="hidden" name="hiid" id="hiid">
     <label  >Hotel Name </label>
-    <input id="hotelname" type= 'text' name="Hotelname" required><br>
+    <input id="hoelname" type= 'text' name="Hotelname" required><br>
     <label  >City: </label>
     <input id="hocity" type= 'text' name="Hotelcity" required>&nbsp;&nbsp;
     <label  >State: </label>
@@ -232,9 +230,9 @@
     <label  >Room Cost </label>
     <input id="htotalcost" type="number" name="Roomcost" oninput="calculate()" required>&nbsp;&nbsp;
     <label  >Amount Paid </label>
-    <input id="hamountpaid" type="number" name="Amountpaid" oninput="calculate()" required >&nbsp;&nbsp;
+    <input id="hamountpaid" type="number" name="Amountpaid" oninput="calculate()"  >&nbsp;&nbsp;
     <label  >Due Amount </label>
-    <input id="hdueamount" type="number" name="Dueamount" required ><br>
+    <input id="hdueamount" type="number" name="Dueamount"  ><br>
     <label  >Name </label>
     <input id="hname" type= 'text' name="Name" required>&nbsp;&nbsp;
     <label  >Phone No </label>
@@ -257,9 +255,9 @@
 </script>
 
 <h2>Transport Info</h2> <a href="addtransport" target="_blank"><button>Add more Transport</button></a>
-
+<div id="bjax">
 {% for entry in transport %}
-    
+    <div>
         <form action="" id="" class="" style="text-align: center;">
             <label  >Vehicle Name </label>
             <input id="vehiclename" type= 'text' name="Hotelname" value="{{entry.Vehicle_Name}}" required><br>
@@ -279,20 +277,20 @@
             <input type= 'text' id="dtotalcost" type= 'text' name="Roomtype" value="{{entry.Total_Cost}}">&nbsp;&nbsp;
             <label  >Additional Info </label>
             <input id="dadditionalinfo" type= 'text' name="Mealplan" value="{{entry.Additional_info}}" required><br>
-            <input type="button" value="Edit" class="btn-edit" id="btn-edit-{{entry.id}}" data-hid="{{entry.id}}">
-            <input type="button" value="Delete" id="dbtn" class="btn-del" data-hid="{{entry.id}}">
+            <input type="button" value="Edit" class="tbtn-edit" id="btn-edit-{{entry.id}}" data-tid="{{entry.id}}">
+            <input type="button" value="Delete" id="dbtn" class="tbtn-del" data-tid="{{entry.id}}"><br>
+            <a href="{{entry.id}}/tpayments" target="_blank"><button type="button">Payments</button></a>
 
-        </form>
+     </div>   </form>
     <hr>
-
-
     {% endfor %}
+</div>
 
 
 
-
-<form action="" method="POST" id="paymentform" class="payment-form" style="text-align: center;"  >
+<form action="" method="POST" id="tinfo" class="tinfo"  style="text-align: center;"  >
     {% csrf_token %}
+    <input type="hidden" name="tiid" id="tiid">
     <label for="your_name" >Vehicle Name </label>
     <input id="vname" type="text" name="Vehiclename"    required><br>
     <label for="your_name">Start Date </label>
@@ -306,11 +304,11 @@
     <label for="your_name">Additional info </label>
     <input id="vadditionalinfo" type="text" name="Additionalinfo" required><br>
     <label for="your_name" >Driver Name </label>
-	<input id="dname" type="text" name="Dname" ">&nbsp;&nbsp;
+	<input id="drname" type="text" name="Dname" ">&nbsp;&nbsp;
     <label for="your_name">Driver No. </label>
     <input type="number"   id="dno" name="dno" ><br>
     <label for="your_name">Total Cost </label>
-    <input type="number"   id="totalcost" name="totalcost" >&nbsp;&nbsp;
+    <input type="number"   id="tttotalcost" name="totalcost" >&nbsp;&nbsp;
     <label for="your_name">Amount Paid </label>
     <input type="number"   id="amountpaid" name="amountpaid" >&nbsp;&nbsp;
     <label for="your_name">Due Amount </label>
@@ -322,11 +320,11 @@
 
 
 <h2>Activities Info</h2> <a href="addactivities" target="_blank"><button>Add more Activity</button></a>
-
+<div id="cjax">
 {% for entry in activity %}
-    
-        <form action="" id="" class="" style="text-align: center;">
-            <label  >Activity Name Name </label>
+    <div>
+        <form action="" id="tinfo" class="" style="text-align: center;">
+            <label  >Activity Name</label>
             <input id="aname" type= 'text' name="Hotelname" value="{{entry.Name_of_activity}}" required><br>
             <label  >State </label>
             <input id="astate" type= 'text' name="Hotelcity" value="{{entry.State}}" required>&nbsp;&nbsp;
@@ -344,23 +342,25 @@
             <input type= 'text' id="atotalcost" type= 'number' name="Roomtype" value="{{entry.Total_Cost}}">&nbsp;&nbsp;
             <label  >Additional Info </label>
             <input id="aadditionalinfo" type= 'text' name="Mealplan" value="{{entry.Additional_info}}" required><br>
-            <input type="button" value="Edit" class="btn-edit" data-hid="{{entry.id}}">
-            <input type="button" value="Delete" id="dbtn" class="btn-del" data-hid="{{entry.id}}">
+            <input type="button" value="Edit" class="abtn-edit" data-aid="{{entry.id}}">
+            <input type="button" value="Delete" id="dbtn" class="abtn-del" data-aid="{{entry.id}}"><br>
+            <a href="{{entry.id}}/apayments" target="_blank"><button type="button">Payments</button></a>
 
-        </form>
+    </div></form>
     <hr>
 
 
     {% endfor %}
-
+</div>
 
 
 <form action="" method="POST" id="ainfo" class="a-info" style="text-align: center;"  >
     {% csrf_token %}
+    <input type="hidden" name="aiid" id="aiid">
     <label for="your_name" >Activity Name </label>
-    <input id="aname" type="text" name="Activityname"    required><br>
+    <input id="acname" type="text" name="Activityname"    required><br>
     <label for="your_name">State </label>
-    <input id="astate" type="text" name="State"  required>&nbsp;&nbsp;
+    <input id="acstate" type="text" name="State"  required>&nbsp;&nbsp;
     <label for="your_name">City </label>
     <input id="accity" type="text" name="City" required><br>
     <label for="your_name">No of Persons </label>
@@ -368,13 +368,13 @@
     <label for="your_name">Date </label>
     <input id="acdate" type="date" name="Date" required><br>
     <label for="your_name">Additional info </label>
-    <input id="aadditionalinfo" type="text" name="Additionalinfo" required><br>
+    <input id="acadditionalinfo" type="text" name="Additionalinfo" required><br>
     <label for="your_name" >Vendor Name </label>
 	<input id="avname" type="text" name="Vname" ">&nbsp;&nbsp;
     <label for="your_name">Vendor No. </label>
     <input type="number"   id="vno" name="Vno" ><br>
     <label for="your_name">Total Cost </label>
-    <input type="number"   id="atotalcost" name="Vno" >&nbsp;&nbsp;
+    <input type="number"   id="actotalcost" name="Vno" >&nbsp;&nbsp;
     <label for="your_name">Amount Paid </label>
     <input type="number"   id="aamountpaid" name="Vno" >&nbsp;&nbsp;
     <label for="your_name">Due Amount </label>
@@ -439,7 +439,7 @@
         //console.log('save button clicked');
         output = "";
         let hid = $("#hiid").val();
-        let hn = $("#hotelname").val();
+        let hn = $("#hoelname").val();
         let city = $("#hocity").val();
         let state = $("#hostate").val();
         let cindate = $("#cindate").val();
@@ -458,13 +458,13 @@
         let csr = $("input[name=csrfmiddlewaretoken").val();
         console.log(id);
         hdata = {
-            hiid:hid,hname: hn, csrfmiddlewaretoken: csr, Hotelcity: city, Hotelstate: state,
+            hiid:hid,Hname: hn, csrfmiddlewaretoken: csr, Hotelcity: city, Hotelstate: state,
             Checkindate: cindate, Checkoutdate: coutdate, Rooms: rooms, Roomsharing: roomsharing,
             Roomtype: roomtype, Mealplan: mealplan, Additionalinfo: hadditionalinfo,
-            Roomcost: htotalcost,Amtpaid:hamountpaid,dueamt:hdueamount,Name: name, Number: phoneno, Email: email
+            Roomcost: htotalcost,Name: name, Number: phoneno, Email: email
         };
         $.ajax({
-            url: "b/d//e/f/g",
+            url: "addhotels",
             method: "POST",
             data: hdata,
             success: function (data) {
@@ -473,6 +473,7 @@
                 console.log(x);
                 for(i=1; i<x.length; i++){
                 output += "<form style='text-align: center;'>" +
+                        "<label >Hotel Name </label>"+
                         "<input type='text' value="+x[i].Hname+"><br\>"+
                         "<label >City </label>"+
                         "<input type='text'value="+x[i].Hcity+" required>&nbsp;&nbsp;" +
@@ -540,17 +541,8 @@
 
         })
     })
-    let editbtnid;
-    let editbtn;
-    window.addEventListener("click",(e)=>{
-        console.log(e.target);
-        editbtn=e.target;
-        editbtnid=e.target.id.split("-")[2];
-    })
-    editbtn.addEventListener("click",()=>{
-
-    })
-    $("#ajax").on("click",`#btn-edit-${editbtnid}`,function(){
+    
+    $(".btn-edit").click(function () {
         console.log("edit button clicked");
         let id = $(this).attr("data-hid");
         let csr = $("input[name=csrfmiddlewaretoken").val();
@@ -564,7 +556,7 @@
             success: function (data){
                 console.log(data);
                 $("#hiid").val(data.id);
-                $("#hotelname").val(data.Hname);
+                $("#hoelname").val(data.Hname);
                 $("#hocity").val(data.Hcity);
                 $("#hostate").val(data.Hstate);
                 $("#cindate").val(data.Checkin_Date);
@@ -575,14 +567,12 @@
                 $("#mealplan").val(data.Meal_Plan);
                 $("#hadditionalinfo").val(data.Additional_info);
                 $("#htotalcost").val(data.Total_Cost);
-                $("#hamountpaid").val(data.Amount_Paid);
-                $("#hdueamount").val(data.Due_Amount);
                 $("#hname").val(data.Hotel_Contact_Name);
                 $("#hphoneno").val(data.Hotel_Contact_No);
                 $("#hemail").val(data.Hemail);
 
             }
-
+        
         })
     })
 
@@ -593,7 +583,7 @@
     $("#tbtn").click(function () {
         //console.log('save button clicked');
         output = "";
-        let html = $("#a");
+        let tid = $("#tiid").val();
         let vname = $("#vname").val();
         let Startdate = $("#Startdate").val();
         let enddate = $("#Enddate").val();
@@ -608,26 +598,105 @@
         let csr = $("input[name=csrfmiddlewaretoken").val();
         console.log(id);
         tdata = {
-            vname: vname, csrfmiddlewaretoken: csr, Startdate: Startdate, enddate: enddate,
+            tiid:tid,vname: vname, csrfmiddlewaretoken: csr, Startdate: Startdate, enddate: enddate,
             slocation: slocation, elocation: elocation, vadditionalinfo: vadditionalinfo, dname: dname,
             dno: dno, totalcost: totalcost, amountpaid: amountpaid,
             dueamount: dueamount};
         $.ajax({
-            url: "b/d//e/f/g/h",
+            url: "addtransport",
             method: "POST",
             data: tdata,
             success: function (data) {
 
                 x = data.info;
                 console.log(x);
+                for(i=1; i<x.length; i++){
+                output += "<form style='text-align: center;'>" +
+                        "<label >Vehicle Name </label>"+
+                        "<input type='text' value="+x[i].Vehicle_Name+"><br\>"+
+                        "<label >Driver Name </label>"+
+                        "<input type='text'value="+x[i].Driver_Name+" required>&nbsp;&nbsp;" +
+                        "<label  >Driver Phone No </label>"+
+                        "<input type='number'value="+x[i].Driver_Phone_No+" required><br\>" +
+                        "<label  >Start Date </label>"+
+                        "<input type='date' value="+x[i].Start_Date +" required>&nbsp;&nbsp;" +
+                        "<label  >End Date </label>"+
+                        "<input type='date' value="+x[i].End_date +" required><br\>" +
+                        "<label  >Start Location </label>"+
+                        "<input type='text' value="+x[i].Start_Location+" required>&nbsp;&nbsp;"+
+                        "<label  >End Location </label>"+
+                        "<input type='text' value="+x[i].End_Location +" required><br\>"+
+                        "<label  >Total Cost </label>"+
+                        "<input type='number' value="+x[i].Total_Cost +" required>&nbsp;&nbsp;"+
+                        "<label  >Additional Info </label>"+
+                        "<input type='text' value="+x[i].Additional_info +" required><br\>"+
+                        "<input type='button' value='Edit' class='edit-btn' data-hid="+x[i].id+">"+
+                        "<input type='button' value='Delete' class='del-btn' id='dbtn' data-hid="+x[i].id+"><hr\>"
+
+                };
+
+                $("#bjax").append(output);
+                $("#tinfo").trigger("reset");
+                $("#tiid").val("");
                 
-        
             
 
             }
         
         })   
     })
+
+    $(".tbtn-del").click(function () {
+        console.log("delete button clicked");
+        let id = $(this).attr("data-tid");
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        mydata = {tid:id,csrfmiddlewaretoken: csr}
+        mythis = this;
+        $.ajax({
+            url: "{% url 'tdelete' %}",
+            method: "POST",
+            data: mydata,
+            success: function (data){
+                if(data.status==1){
+                console.log(data);
+                $(mythis).closest("div").fadeOut();
+                }
+            }
+
+        })
+    })
+
+
+    $(".tbtn-edit").click(function () {
+        console.log("edit button clicked");
+        let id = $(this).attr("data-tid");
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        mydata = {tid:id,csrfmiddlewaretoken: csr}
+        $.ajax({
+            url: "{% url 'tedit' %}",
+            method: "POST",
+            data: mydata,
+            dataType:"json",
+            success: function (data){
+                console.log(data);
+                $("#tiid").val(data.id);
+                $("#vname").val(data.Vehicle_Name);
+                $("#Startdate").val(data.Start_Date);
+                $("#Enddate").val(data.End_date);
+                $("#slocation").val(data.Start_Location);
+                $("#elocation").val(data.End_Location);
+                $("#vadditionalinfo").val(data.Additional_info);
+                $("#drname").val(data.Driver_Name);
+                $("#dno").val(data.Driver_Phone_No);
+                $("#tttotalcost").val(data.Total_Cost);
+
+            }
+        })
+    
+    })
+        
 
 </script>
 
@@ -637,39 +706,117 @@
         //console.log('save button clicked');
         output = "";
         let html = $("#a");
-        let aname = $("#aname").val();
-        let astate = $("#astate").val();
+        let aid = $("#aiid").val();
+        let aname = $("#acname").val();
+        let astate = $("#acstate").val();
         let acity = $("#accity").val();
         let anoofpersons = $("#anoofpersons").val();
         let adate = $("#acdate").val();
-        let aadditionalinfo = $("#aadditionalinfo").val();
+        let aadditionalinfo = $("#acadditionalinfo").val();
         let avname = $("#avname").val();
         let vno = $("#vno").val();
-        let atotalcost = $("#atotalcost").val();
+        let atotalcost = $("#actotalcost").val();
         let aamountpaid = $("#aamountpaid").val();
         let adueamount = $("#adueamount").val();
         let csr = $("input[name=csrfmiddlewaretoken").val();
         console.log(id);
         adata = {
-            aname: aname, csrfmiddlewaretoken: csr, astate: astate, acity: acity,
+            aiid:aid,aname: aname, csrfmiddlewaretoken: csr, astate: astate, acity: acity,
             anoofpersons: anoofpersons, adate: adate, aadditionalinfo: aadditionalinfo, avname: avname,
             vno: vno, atotalcost: atotalcost, aamountpaid: aamountpaid,
             adueamount: adueamount};
         $.ajax({
-            url: "b/d//e/f/g/h/i",
+            url: "addactivities",
             method: "POST",
             data: adata,
             success: function (data) {
 
                 x = data.info;
                 console.log(x);
-                
+                for(i=1; i<x.length; i++){
+                output += "<form style='text-align: center;'>" +
+                        "<label >Activity Name </label>"+
+                        "<input type='text' value="+x[i].Name_of_activity+"><br\>"+
+                        "<label >State </label>"+
+                        "<input type='text'value="+x[i].State+" required>&nbsp;&nbsp;" +
+                        "<label  >City </label>"+
+                        "<input type='text'value="+x[i].City+" required><br\>" +
+                        "<label  >Date </label>"+
+                        "<input type='date' value="+x[i].Date +" required>&nbsp;&nbsp;" +
+                        "<label  >No of People </label>"+
+                        "<input type='number' value="+x[i].No_of_People +" required><br\>" +
+                        "<label  >Vendor Name </label>"+
+                        "<input type='text' value="+x[i].Vendor_Name+" required>&nbsp;&nbsp;"+
+                        "<label  >Vendor Contact No </label>"+
+                        "<input type='text' value="+x[i].Vendor_Contact_No +" required><br\>"+
+                        "<label  >Total Cost </label>"+
+                        "<input type='number' value="+x[i].Total_Cost +" required>&nbsp;&nbsp;"+
+                        "<label  >Additional Info </label>"+
+                        "<input type='text' value="+x[i].Additional_info +" required><br\>"+
+                        "<input type='button' value='Edit' class='edit-btn' data-hid="+x[i].id+">"+
+                        "<input type='button' value='Delete' class='del-btn' id='dbtn' data-hid="+x[i].id+"><hr\>"
+
+                };
+
+                $("#cjax").append(output);
+                $("#ainfo").trigger("reset");
+                $("#aiid").val("");
         
             
 
             }
         
         })   
+    })
+
+    $(".abtn-del").click(function () {
+        console.log("delete button clicked");
+        let id = $(this).attr("data-aid");
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        mydata = {aid:id,csrfmiddlewaretoken: csr}
+        mythis = this;
+        $.ajax({
+            url: "{% url 'adelete' %}",
+            method: "POST",
+            data: mydata,
+            success: function (data){
+                if(data.status==1){
+                console.log(data);
+                $(mythis).closest("div").fadeOut();
+                }
+            }
+
+        })
+    })
+
+    $(".abtn-edit").click(function () {
+        console.log("edit button clicked");
+        let id = $(this).attr("data-aid");
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        mydata = {aid:id,csrfmiddlewaretoken: csr}
+        $.ajax({
+            url: "{% url 'aedit' %}",
+            method: "POST",
+            data: mydata,
+            dataType:"json",
+            success: function (data){
+                console.log(data);
+                $("#aiid").val(data.id);
+                $("#acname").val(data.Name_of_activity);
+                $("#acstate").val(data.State);
+                $("#accity").val(data.City);
+                $("#anoofpersons").val(data.No_of_People);
+                $("#acdate").val(data.Date);
+                $("#acadditionalinfo").val(data.Additional_info);
+                $("#avname").val(data.Vendor_Name);
+                $("#vno").val(data.Vendor_Contact_No);
+                $("#actotalcost").val(data.Total_Cost);
+
+            }
+        })
+    
     })
 
 </script>

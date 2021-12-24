@@ -15,5 +15,11 @@ urlpatterns = [
     path('delete/', views.delete, name = 'delete'),
     path('edit/', views.edit, name = 'edit'),
     path('index/',views.index,name='index'),
-     path('b/b/d/<int:id>/<int:hid>/hpayments', views.hotel_payments, name = 'hpayments'),
+    path('tdelete/', views.tdelete, name = 'tdelete'),
+    path('tedit/', views.tedit, name = 'tedit'),
+    path('adelete/', views.adelete, name = 'adelete'),
+    path('aedit/', views.aedit, name = 'aedit'),
+    path('b/b/d/<int:id>/<int:hid>/hpayments/', views.hotel_payments, name = 'hpayments'),
+    path('b/b/d/<int:id>/<int:tid>/tpayments/', views.transport_payments, name = 'tpayments'),
+    path('b/b/d/<int:id>/<int:aid>/apayments/', views.activity_payments, name = 'apayments'),
 ]

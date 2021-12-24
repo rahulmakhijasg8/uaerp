@@ -187,7 +187,7 @@ def g(request,id):
     id=id
     bookinginfo = Bookinginfo.objects.get(id=id)
     if request.method == 'POST':
-        hotelname=request.POST['hname']
+        hotelename=request.POST.get('Hotelname')
         hotelcity = request.POST.get('Hotelcity')
         hotelstate = request.POST.get('Hotelstate')
         checkin = request.POST.get('Checkindate')
@@ -198,9 +198,12 @@ def g(request,id):
         mealplan = request.POST.get('Mealplan')
         addinfo = request.POST.get('Additionalinfo')
         roomcost = request.POST.get('Roomcost')
-        
+        hname = request.POST.get('Name')
+        hnumber = request.POST.get('Number')
+        hemail = request.POST.get('Email')
+        hadditionalinfo = request.POST.get('Additionalinfo')
+
         hid = request.POST['hiid']
-        hotelname=request.POST['hname']
         hotelcity = request.POST['Hotelcity']
         hotelstate = request.POST['Hotelstate']
         checkin = request.POST['Checkindate']
@@ -211,42 +214,44 @@ def g(request,id):
         mealplan = request.POST['Mealplan']
         addinfo = request.POST['Additionalinfo']
         roomcost = request.POST['Roomcost']
-        amtpaid = request.POST['Amtpaid']
-        dueamt = request.POST['dueamt']
         hname = request.POST['Name']
         hnumber = request.POST['Number']
         hemail = request.POST['Email']
         hadditionalinfo = request.POST['Additionalinfo']
-        if(hid == ''):
+        hoelname=request.POST['Hname']
 
-            hotelinfo = Hotelinfo.objects.create(Bookingkey=bookinginfo,Hname=hotelname,Hstate=hotelstate,
-                                            Hcity=hotelcity,Checkin_Date=checkin,Checktout_Date=checkout,
-                                            No_of_rooms=rooms,Room_Type=roomtype,Meal_Plan=mealplan,
-                                            Room_Sharing_Option=roomsharing,Total_Cost=roomcost,Hotel_Contact_Name=hname,
-                                            Hotel_Contact_No=hnumber,Hemail=hemail,Additional_info=hadditionalinfo,
-                                            Amount_Paid=amtpaid,Due_Amount=dueamt)
+        if hid =='':
+            
+            hotelinfo = Hotelinfo.objects.create(Bookingkey=bookinginfo,Hname=hoelname,Hstate=hotelstate,
+                                                Hcity=hotelcity,Checkin_Date=checkin,Checktout_Date=checkout,
+                                                No_of_rooms=rooms,Room_Type=roomtype,Meal_Plan=mealplan,
+                                                Room_Sharing_Option=roomsharing,Total_Cost=roomcost,Hotel_Contact_Name=hname,
+                                                Hotel_Contact_No=hnumber,Hemail=hemail,Additional_info=hadditionalinfo,
+                                                )
         else:
-            Hotelinfo.objects.filter(id=hid).update(Bookingkey=bookinginfo,Hname=hotelname,Hstate=hotelstate,
-                                            Hcity=hotelcity,Checkin_Date=checkin,Checktout_Date=checkout,
+            Hotelinfo.objects.filter(id=hid).update(Bookingkey=bookinginfo,Hname=hoelname,Hstate=hotelstate,
+                                             Hcity=hotelcity,Checkin_Date=checkin,Checktout_Date=checkout,
                                             No_of_rooms=rooms,Room_Type=roomtype,Meal_Plan=mealplan,
                                             Room_Sharing_Option=roomsharing,Total_Cost=roomcost,Hotel_Contact_Name=hname,
                                             Hotel_Contact_No=hnumber,Hemail=hemail,Additional_info=hadditionalinfo,
-                                            Amount_Paid=amtpaid,Due_Amount=dueamt)
+                                            )
 
+       
+       
         hinfo = Hotelinfo.objects.filter(Bookingkey=id).values()
         info = list(hinfo)
         #print(info)
         # hotelinfoserializer = Hotelinfoserializer(hotelinfo)
         # print(hotelinfoserializer.data)
         return Response({'status':'save', 'info':info})
-    return render(request,'g.html')
+    return render(request,'g.html',{'id':id})
 
 @api_view(['GET','POST'])
 def h(request,id):
     id=id
     bookinginfo = Bookinginfo.objects.get(id=id)
     if request.method == 'POST':
-        vname=request.POST.get('Vehiclename')
+        vname=request.POST.get('vname')
         Startdate = request.POST.get('Startdate')
         enddate = request.POST.get('Enddate')
         slocation = request.POST.get('Slocation')
@@ -256,27 +261,35 @@ def h(request,id):
         dnumber = request.POST.get('dno')
         totalcost = request.POST.get('totalcost')
 
+        tid = request.POST['tiid']
         vname=request.POST['vname']
         Startdate = request.POST['Startdate']
         enddate = request.POST['enddate']
         slocation = request.POST['slocation']
         elocation = request.POST['elocation']
-        vadditionalinfo = request.POST['vadditionalinfo']
+        additionalinfo = request.POST['vadditionalinfo']
         dname = request.POST['dname']
         dnumber = request.POST['dno']
         totalcost = request.POST['totalcost']
         amountpaid = request.POST['amountpaid']
         dueamount = request.POST['dueamount']
 
-        transportinfo = Transportinfo.objects.create(Bookingkey=bookinginfo,Vehicle_Name=vname,Driver_Name=dname,
+        if tid =='':
+
+            transportinfo = Transportinfo.objects.create(Bookingkey=bookinginfo,Vehicle_Name=vname,Driver_Name=dname,
                                             Driver_Phone_No=dnumber,Start_Date=Startdate,End_date=enddate,
-                                            Start_Location=slocation,End_Location=elocation,Additional_info=vadditionalinfo,
+                                            Start_Location=slocation,End_Location=elocation,Additional_info=additionalinfo,
                                             Total_Cost=totalcost)
 
+        else:
+            Transportinfo.objects.filter(id=tid).update(Bookingkey=bookinginfo,Vehicle_Name=vname,Driver_Name=dname,
+                                            Driver_Phone_No=dnumber,Start_Date=Startdate,End_date=enddate,
+                                            Start_Location=slocation,End_Location=elocation,Additional_info=additionalinfo,
+                                            Total_Cost=totalcost)
                     
         tinfo = Transportinfo.objects.filter(Bookingkey=id).values()
         info = list(tinfo)
-        #print(info)
+        print(info)
         # hotelinfoserializer = Hotelinfoserializer(hotelinfo)
         # print(hotelinfoserializer.data)
         return Response({'status':'save', 'info':info})
@@ -297,6 +310,7 @@ def i(request,id):
         vno = request.POST.get('Vno')
         totalcost = request.POST.get('totalcost')
 
+        aid = request.POST['aiid']
         aname=request.POST['aname']
         state = request.POST['astate']
         city = request.POST['acity']
@@ -309,15 +323,21 @@ def i(request,id):
         amountpaid = request.POST['aamountpaid']
         dueamount = request.POST['adueamount']
 
-        activityinfo = Activitiesinfo.objects.create(Bookingkey=bookinginfo,Name_of_activity=aname,State=state,
+        if aid =='':
+
+         activityinfo = Activitiesinfo.objects.create(Bookingkey=bookinginfo,Name_of_activity=aname,State=state,
                                             City=city,No_of_People=noofpersons,Date=date,
                                             Vendor_Name=vname,Vendor_Contact_No=vno,Additional_info=additionalinfo,
                                             Total_Cost=totalcost)
-
-                    
+        else:
+            Activitiesinfo.objects.filter(id=aid).update(Bookingkey=bookinginfo,Name_of_activity=aname,State=state,
+                                            City=city,No_of_People=noofpersons,Date=date,
+                                            Vendor_Name=vname,Vendor_Contact_No=vno,Additional_info=additionalinfo,
+                                            Total_Cost=totalcost)
+       
         ainfo = Activitiesinfo.objects.filter(Bookingkey=id).values()
         info = list(ainfo)
-        #print(info)
+        print(info)
         # hotelinfoserializer = Hotelinfoserializer(hotelinfo)
         # print(hotelinfoserializer.data)
         return Response({'status':'save', 'info':info})
@@ -346,6 +366,49 @@ def edit(request):
                     "Total_Cost":hi.Total_Cost,"Amount_Paid":hi.Amount_Paid,"Due_Amount":hi.Due_Amount,"Additional_info":hi.Additional_info}
 
         return JsonResponse(hidata)
+
+def tedit(request):
+    if request.method == "POST":
+        id = request.POST['tid']
+        print(id)
+        ti = Transportinfo.objects.get(pk=id)
+        tidata = {"id":ti.id,"Vehicle_Name":ti.Vehicle_Name,"Driver_Name":ti.Driver_Name,"Driver_Phone_No":ti.Driver_Phone_No,
+                 "Start_Date":ti.Start_Date,"End_date":ti.End_date,"Start_Location":ti.Start_Location,
+                   "End_Location":ti.End_Location,"Total_Cost":ti.Total_Cost,"Additional_info":ti.Additional_info}
+
+        return JsonResponse(tidata)
+
+def tdelete(request):
+    if request.method == "POST":
+        id = request.POST['tid']
+        print(id)
+        ti = Transportinfo.objects.get(pk=id)
+        ti.delete()
+        return JsonResponse({'status':1})
+    else:
+        return JsonResponse({'status':0})
+
+def aedit(request):
+    if request.method == "POST":
+        id = request.POST['aid']
+        print(id)
+        ai = Activitiesinfo.objects.get(pk=id)
+        tidata = {"id":ai.id,"Name_of_activity":ai.Name_of_activity,"State":ai.State,"City":ai.City,
+                 "No_of_People":ai.No_of_People,"Date":ai.Date,"Vendor_Name":ai.Vendor_Name,
+                   "Vendor_Contact_No":ai.Vendor_Contact_No,"Total_Cost":ai.Total_Cost,"Additional_info":ai.Additional_info}
+
+        return JsonResponse(tidata)
+
+def adelete(request):
+    if request.method == "POST":
+        id = request.POST['aid']
+        print(id)
+        ai = Activitiesinfo.objects.get(pk=id)
+        ai.delete()
+        return JsonResponse({'status':1})
+    else:
+        return JsonResponse({'status':0})
+
 
 
 def index(request):
@@ -394,6 +457,36 @@ def hotel_payments(request,id,hid):
         info = request.POST.get('info')
 
         Paymentinfo.objects.create(Bookingkey=bookinginfo,Hpaymentskey=hotelinfo,Payment_Type='Hotel',Amount=amount,Date=date,
+                                    Mode_of_payment=mode,Additional_info=info)
+    return render(request, 'hotelpayments.html',{'id':id})
+
+def transport_payments(request,id,tid):
+    id=id
+    tid=tid
+    bookinginfo = Bookinginfo.objects.get(id=id)
+    transportinfo = Transportinfo.objects.get(id=tid)
+    if request.method == 'POST':
+        amount = request.POST.get('amount')
+        date = request.POST.get('date')
+        mode = request.POST.get('mode')
+        info = request.POST.get('info')
+
+        Paymentinfo.objects.create(Bookingkey=bookinginfo,Tpaymentskey=transportinfo,Payment_Type='Transport',Amount=amount,Date=date,
+                                    Mode_of_payment=mode,Additional_info=info)
+    return render(request, 'hotelpayments.html',{'id':id})
+
+def activity_payments(request,id,aid):
+    id=id
+    aid=aid
+    bookinginfo = Bookinginfo.objects.get(id=id)
+    activityinfo = Activitiesinfo.objects.get(id=aid)
+    if request.method == 'POST':
+        amount = request.POST.get('amount')
+        date = request.POST.get('date')
+        mode = request.POST.get('mode')
+        info = request.POST.get('info')
+
+        Paymentinfo.objects.create(Bookingkey=bookinginfo,paymentskey=activityinfo,Payment_Type='Activity',Amount=amount,Date=date,
                                     Mode_of_payment=mode,Additional_info=info)
     return render(request, 'hotelpayments.html',{'id':id})
 
