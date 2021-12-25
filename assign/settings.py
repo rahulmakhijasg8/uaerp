@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'form',
     'django_filters',
      'rest_framework',
-     'sendMail'
+     'sendMail',
+     'mathfilters'
 ]
 
 MIDDLEWARE = [
@@ -143,6 +144,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'rahulmakhijals7@gmail.com' # email id
-EMAIL_HOST_PASSWORD = "arsenewenger" # password
+EMAIL_HOST_USER = 'xxxxxxxxxx@gmail.com' # email id
+EMAIL_HOST_PASSWORD = "xxxxxxxxx" # password
 

@@ -1,44 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-        *{
-            font-family: 'Poppins', sans-serif;
-        }
-		img{display: block; margin-left: auto; margin-right: auto;}
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins";
+      }
+
+      body {
+        background: #d3e1e1 !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      hr:not([size]) {
+        height: 1px;
+      }
+
+      hr {
+        margin: 1rem 0;
+        color: inherit;
+        background-color: currentColor;
+        border: 0;
+        opacity: 0.25;
+      }
+
+      .receipt {
+        max-width: 400px;
+        margin-top: 20px;
+        background: #fff;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 1px 1px 22px rgba(0,0,0,0.3);
+        overflow: hidden;
+        border: 1px solid rgb(226, 225, 225);
+      }
+
+      .details {
+        background: #fff;
+        background-color: white;
+        position: relative;
+        padding: 10px;
+      }
+
+      table {
+        border-collapse: collapse !important;
+        border: none !important;
+      }
+
+      td {
+        border: none !important;
+      }
+
+      tr {
+        padding: 10px !important;
+      }
+
+      td {
+        padding: 5px;
+        vertical-align: text-top;
+        border: 1px solid black;
+      }
+
+      .left-align {
+        width: 150px;
+        text-align: left;
+      }
+
+      .right-align {
+        width: 250px;
+        text-align: right;
+      }
+
+      .tour-name {
+        font-size: 17px;
+        font-weight: bold;
+      }
+
+      .cost {
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(80, 162, 255);
+      }
+      .linear-line
+      {
+        width: 100%;
+        height: 2px;
+        background: rgb(226, 225, 225);
+        margin: 10px 0;
+      }
     </style>
-</head>
-<body>
-			<p>Hello {{concern_person_name|title}},</p>
-			<p>Greetings from Universal Adventures!</p>
-			<p>We are DMC &amp; Adventure Tour provider based in Delhi &amp; provide services across the country. As we are continuously expanding our services &amp; generating a high number of queries for <b>Resorts &amp; Hotels in {{hotel_city|title}}</b> every day, we are looking forward to collaborating with you to fulfill our existing &amp; upcoming demands.</p>
-			<p>We want to collaborate as a B to B partner, so please provide the best B2B prices for your different room categories of <b>{{hotel_name|title }}</b> for season time &amp; non-season time with MAPAI &amp; CPAI meal plan (if available). Please also provide the Honeymoon kit inclusions &amp; their charges(if available).</p>
-			<p>We are looking forward to starting the business with you very soon.</p>
-			<p><br></p>
-			<p>Warm Regards,</p>
-			<p>&nbsp;</p>
-			<p>--</p>
-			<p>Sunny Sharma</p>
-			<p>Business Development Head</p>
-			<p>Universal Adventures</p>
-			<p>+91 9528812938</p>
-			<p>www.universaladventures.in</p>
-	
-    <p><strong>
-	
-	
-		
-	</strong></p>
+  </head>
 
-</body>
+  <body>
+    <div class="receipt">
+      <img
+        src="https://universaladventures.in/static/img/mail_icons/UA-Receipt-Cover.jpg"
+        alt="Universal Adventures"
+        style="width: 100%"
+      />
+      <div class="details">
+        <div class="bookingDetails">
+          <table>
+            <tbody>
+              <tr>
+                <td class="left-align">
+                  <strong> Booking ID </strong>
+                </td>
+                <td class="right-align">
+                  <strong>Booking Date</strong>
+                </td>
+              </tr>
+              <tr>
+                <td class="left-align">{{bookinginfo.Bookingkey}}</td>
+                <td class="right-align">{{bookinginfo.BookingDate}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="linear-line"></div>
+
+        <div class="userDetails">
+          <table>
+            <tbody>
+              <tr>
+                <td class="left-align">Name</td>
+                <td class="right-align">{{pinfo.Name}}</td>
+              </tr>
+              <tr>
+                <td class="left-align">Phone Number</td>
+                <td class="right-align">{{pinfo.PhoneNo}}</td>
+              </tr>
+              <tr>
+                <td class="left-align">Email</td>
+                <td class="right-align">{{pinfo.Email}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+         <div class="linear-line"></div>
+
+        <div class="tourDetails">
+          <table>
+            <tbody>
+              <tr>
+                <td class="left-align tour-name">
+                  <strong>Tour Name</strong>
+                </td>
+                <td class="right-align tour-name">
+                  {{bookinginfo.Trip_Name}}
+                </td>
+              </tr>
+              <tr>
+                <td class="left-align tour-name">Service Date</td>
+                <td class="right-align tour-name">{{bookinginfo.Start_Date}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+         <div class="linear-line"></div>
+        <div class="costDetails">
+          <table>
+            <tbody>
+              <tr>
+                <td class="left-align">Package Cost</td>
+                <td class="right-align cost">Rs. {{bookinginfo.Total_Cost}}</td>
+              </tr>
+
+              <tr>
+                <td class="left-align">Payment {{payinfo.id}}</td>
+                <td class="right-align cost">Rs. {{payinfo.Amount}}</td>
+              </tr>
+
+              <tr>
+                <td class="left-align">Payment Date</td>
+                <td class="right-align">{{payinfo.Date}}</td>
+              </tr>
+              <tr>
+                <td class="left-align">Mode of Payment</td>
+                <td class="right-align">{{payinfo.Mode_of_payment}}</td>
+              </tr>
+              <tr>
+                <td class="left-align">Due Amount</td>
+                <td class="right-align cost">Rs. {{due_payment_amount}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+         <div class="linear-line"></div>
+
+        <div class="footer">
+          <h4>Regards,</h4>
+          <img
+            src="https://universaladventures.in/static/img/mail_icons/UA-Receipt-Logo.jpg"
+            alt="Universal Logo"
+            style="width: 170px; padding: 10px 0"
+          />
+          <p>
+            <a
+              href="https://universaladventures.in/"
+              target="_blank"
+              style="text-decoration: none"
+              >www.universaladventures.in</a
+            >
+          </p>
+          <p>
+            <a
+              
+              style="text-decoration: none"
+              >+91 9528812938; +91 8882654593</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
-
-
-
-

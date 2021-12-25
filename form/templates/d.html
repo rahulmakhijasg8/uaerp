@@ -1,3 +1,4 @@
+{% load mathfilters %}
 <form action="" method="" id="id00">
     <label  >Trip Name </label>
     <input id="name" type= 'text' name="Tripname" value="{{a.Trip_Name}}" readonly required>&nbsp;&nbsp;
@@ -20,17 +21,30 @@
     <label  >Services </label>
     <input id="services" type= 'text' name="Services" value="{{a.Service}}" required readonly><br>
     <label  >Total Cost </label>
-    <input id="totalcost" type= 'text' name="Totalcost" value="{{a.Total_Cost}}" required readonly>&nbsp;&nbsp;
+    <input id="totalcost" type= 'number' name="Totalcost" value="{{a.Total_Cost}}" onloadeddata="calculate()" required readonly>&nbsp;&nbsp;
     <label  >Amount Paid </label>
-    <input id="amountpaid" type= 'text' name="Amountpaid" value="{{amtpaid}}" required readonly><br>
+    <input id="amountpaid" type= 'number' name="Amountpaid" value="{{amtpaid}}" onloadeddata="calculate()" readonly ><br>
     <label  >Due Amount </label>
-    <input id="dueamount" type="number" name="amountpaid" value="{{a.Due_amount}}" >&nbsp;&nbsp;
+    {% with x=a.Total_Cost y=amtpaid %}
+    <input id="dueamount" type="number" name="amountpaid" value={{x|sub:y}}  >&nbsp;&nbsp;
+    {% endwith %}
     <label  >Due Date </label>
     <input id="duedate" type= 'text' name="Duedate" value="{{a.Due_Date}}" required readonly><br>
 
 </form>
 
+   
 
+<script>
+    function calculate() {
+  var myBox1 = parseFloat(document.getElementById('totalcost').value);
+  var myBox2 = parseFloat(document.getElementById('amountpaid').value);
+  var result = document.getElementById('dueamount');
+  var numb = myBox1 - myBox2;
+  numb = numb.toFixed(0);
+  result.value = numb;
+}
+</script>
 
 <form action="" method="POST" id="id01" class="modal" style="text-align: center;">
     {% csrf_token %}
@@ -53,12 +67,14 @@
     <label  >Total Cost </label>
     <input id="ttotalcost" type= 'text' name="Totalcost" value="{{a.Total_Cost}}" required>&nbsp;&nbsp;
     <label  >Amount Paid </label>
-    <input id="tamountpaid" type= 'text' name="Amountpaid" value="{{a.Amount_Paid}}" required><br>
+    <input id="tamountpaid" type= 'text' name="Amountpaid" value="{{amtpaid}}" required><br>
     <label  >Due Date </label>
     <input id="tduedate" type="date" name="Duedate" value="{{a.Due_Date}}"><br>
 
     <input type="submit" value="submit" id="btnsave" class="myElement" form="id01">
 </form>
+
+
 
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Update Booking
     Details</button>
@@ -107,7 +123,7 @@
             <td>{{entry.Amount}}</td>
             <td>{{entry.Mode_of_payment}}</td>
             <td>{{entry.Additional_info}}</td>
-            <td></td>
+            <td><a href="index/{{entry.id}}" target="_blank">Send Mail</a></td>
 
 
         </tr>
@@ -590,7 +606,7 @@
         let slocation = $("#slocation").val();
         let elocation = $("#elocation").val();
         let vadditionalinfo = $("#vadditionalinfo").val();
-        let dname = $("#dname").val();
+        let dname = $("#drname").val();
         let dno = $("#dno").val();
         let totalcost = $("#totalcost").val();
         let amountpaid = $("#amountpaid").val();

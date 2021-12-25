@@ -101,8 +101,8 @@ def d(request,id):
     id = id
     a = Bookinginfo.objects.get(id=id)
     b = Paymentinfo.objects.filter(Bookingkey=id).all()
-    amtpaid = Paymentinfo.objects.filter(Bookingkey=id,Payment_Type='Customer').aggregate(Sum('Amount'))
-    pinfo = PersonalInfo.objects.filter(connections__Bookingkey=id,connections__Membertype='NotPrime')
+    amtpaid =Paymentinfo.objects.filter(Bookingkey=id,Payment_Type='Customer').aggregate(Sum('Amount'))
+    pinfo = PersonalInfo.objects.filter(connections__Bookingkey=id)
     transport = Transportinfo.objects.filter(Bookingkey=id).all()
     activity = Activitiesinfo.objects.filter(Bookingkey=id).all()
     d = Hotelinfo.objects.filter(Bookingkey=id).all()
@@ -411,38 +411,24 @@ def adelete(request):
 
 
 
-def index(request):
-    if request.method == 'POST':
-        hotel_name = request.POST.get('hotel-name')
-        hotel_city = request.POST.get('hotel-city')
-        hotel_mail_ids = request.POST.get('mail-id')
-        concern_person_name = request.POST.get('concern-person-name')
-
-        hotel_mail_id = hotel_mail_ids.split(',')
-
-        print(hotel_mail_id)
-
-        context = {
-            'hotel_name':hotel_name,
-            'hotel_city':hotel_city,
-            'concern_person_name':concern_person_name
-        }
-        file_path = os.path.join(settings.BASE_DIR, r'static\pdf\Universal-Adventures.pdf')
-        file = open(file_path,'r')
-
-        message_body = render_to_string('mail.html',context)
-
-        mail = EmailMessage(
-        subject=f"Regarding Collaboration – {hotel_name} – Universal Adventures",
-        body=message_body,
-        from_email = settings.EMAIL_HOST_USER,
-        #from_email=settings.EMAIL_HOST_USER,
-        to=hotel_mail_id)
-        mail.content_subtype = "html"
-        mail.attach_file(file.name, 'application/pdf')
-        mail.send()
-        messages.info(request,'mail sended successfully')
-    return render(request,'index.html',{})
+def index(request,id,pid):
+  
+  bookinginfo = Bookinginfo.objects.get(id=id)
+  pinfo = PersonalInfo.objects.filter(connections__Bookingkey=id,connections__Membertype='Prime').get()
+  payinfo = Paymentinfo.objects.filter(Bookingkey=id,id=pid).get()
+  message_body = render_to_string('mail.html', {
+            'bookinginfo':bookinginfo,'pinfo':pinfo,'payinfo':payinfo
+        })
+  mail = EmailMessage(
+    subject='Payment Confirmation',
+    body=message_body,
+    from_email = settings.EMAIL_HOST_USER,
+    #from_email=settings.EMAIL_HOST_USER,
+            to=[pinfo.Email])
+  mail.content_subtype = "html"
+  mail.send()
+  messages.info(request,'mail sended successfully')
+  return render(request,'index.html',{})
 
 
 def hotel_payments(request,id,hid):
@@ -486,7 +472,7 @@ def activity_payments(request,id,aid):
         mode = request.POST.get('mode')
         info = request.POST.get('info')
 
-        Paymentinfo.objects.create(Bookingkey=bookinginfo,paymentskey=activityinfo,Payment_Type='Activity',Amount=amount,Date=date,
+        Paymentinfo.objects.create(Bookingkey=bookinginfo,Apaymentskey=activityinfo,Payment_Type='Activity',Amount=amount,Date=date,
                                     Mode_of_payment=mode,Additional_info=info)
     return render(request, 'hotelpayments.html',{'id':id})
 
