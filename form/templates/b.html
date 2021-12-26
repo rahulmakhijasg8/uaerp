@@ -1,3 +1,4 @@
+{% load mathfilters %}
 <style>
     table, th, td {
    border: 5px solid  #96D4D4;
@@ -32,7 +33,7 @@
              <td>{{entry.Trip_Name}}</td>
              <td>{{entry.Name}}</td>
              <td>{{entry.Total_Cost}}</td>
-             <td>{{entry.Amount_Paid}}</td>
+             <td>{{entry.Due_amount}}</td>
              <td>{{entry.Due_Date}}
                  <a href="b/d/{{entry.id}}" target="_blank">link</a></td>
             

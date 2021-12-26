@@ -38,8 +38,8 @@ class Bookinginfo(models.Model):
     State = models.CharField(max_length=255)
     Service = models.CharField(max_length=255, null=True)
     Total_Cost = models.PositiveIntegerField(null=True)
-    Amount_Paid = models.PositiveIntegerField(default=0)
-    Due_amount = models.PositiveIntegerField(null=True,default=0)
+    Amount_Paid = models.PositiveIntegerField(null=True)
+    Due_amount = models.PositiveIntegerField(null=True)
     BookingDate = models.DateField(default=datetime.date.today)
     Mode_of_payment = models.CharField(max_length=255, null=True)
     Additional_info = models.CharField(max_length=255, null=True)
@@ -52,8 +52,6 @@ class Bookinginfo(models.Model):
     def due_amt(self):
         due = self.Total_Cost - self.Amount_Paid
         return due
-
-    
 
 class Hotelinfo(models.Model):
     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE)
@@ -71,9 +69,14 @@ class Hotelinfo(models.Model):
     Hemail = models.EmailField(null=True)
     Total_Cost = models.PositiveIntegerField(null=True)
     Amount_Paid = models.PositiveIntegerField(null=True)
-    Due_Amount = models.PositiveIntegerField(null=True)
+    due_amount = models.PositiveIntegerField(default='0')
     Additional_info = models.CharField(null=True,max_length=255)
-     
+   
+    @property
+    def due_amt(self):
+        due = self.Total_Cost - self.Amount_Paid
+        return due
+
 class Activitiesinfo(models.Model):
     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE)
     Name_of_activity = models.CharField(max_length=255)
@@ -84,7 +87,14 @@ class Activitiesinfo(models.Model):
     Vendor_Name = models.CharField(max_length=255)
     Vendor_Contact_No = models.CharField(max_length=255)
     Total_Cost = models.PositiveIntegerField()
+    Amount_Paid = models.PositiveBigIntegerField(null=True)
+    Due_Amount = models.PositiveIntegerField(default='0')
     Additional_info = models.CharField(max_length=255,null=True)
+
+    @property
+    def due_amt(self):
+        due = self.Total_Cost - self.Amount_Paid
+        return due
 
 class Ticketinfo(models.Model):
     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE)
@@ -98,6 +108,8 @@ class Ticketinfo(models.Model):
     Amount_Paid = models.PositiveIntegerField(null=True)
     Additional_info = models.CharField(max_length=255)
 
+   
+
 class Transportinfo(models.Model):
     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE)
     Vehicle_Name = models.CharField(max_length=255)
@@ -108,8 +120,15 @@ class Transportinfo(models.Model):
     Start_Location = models.CharField(max_length=255)
     End_Location = models.CharField(max_length=255)
     Total_Cost = models.PositiveIntegerField()
+    Amount_Paid = models.PositiveBigIntegerField(null=True)
+    Due_Amount = models.PositiveIntegerField(null=True)
     Additional_info = models.CharField(max_length=255)    
 
+    @property
+    def due_amt(self):
+        due = self.Total_Cost - self.Amount_Paid
+        return due
+        
 class Paymentinfo(models.Model):
     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE)
     Hpaymentskey = models.ForeignKey(Hotelinfo,null=True,on_delete=models.CASCADE,related_name='hp')

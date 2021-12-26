@@ -95,6 +95,7 @@ def b(request):
     Entryform = myFilter.qs
     return render (request,'b.html',{'Entryform':Entryform,'myFilter':myFilter})
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime
 
 @csrf_exempt
 def d(request,id):
@@ -102,6 +103,7 @@ def d(request,id):
     a = Bookinginfo.objects.get(id=id)
     b = Paymentinfo.objects.filter(Bookingkey=id).all()
     amtpaid =Paymentinfo.objects.filter(Bookingkey=id,Payment_Type='Customer').aggregate(Sum('Amount'))
+    Bookinginfo.objects.filter(id=id).update(Amount_Paid=amtpaid['Amount__sum'])
     pinfo = PersonalInfo.objects.filter(connections__Bookingkey=id)
     transport = Transportinfo.objects.filter(Bookingkey=id).all()
     activity = Activitiesinfo.objects.filter(Bookingkey=id).all()
@@ -117,22 +119,25 @@ def d(request,id):
         additionalinfo = request.POST['Additionalinfo']
         totalcost = request.POST['Totalcost']
         amountpaid = request.POST['Amountpaid']
+        dueamount = request.POST['dueamount']
         duedate = request.POST['Duedate']
-
-        
+        date = datetime.strptime(startdate, '%b. %d, %Y').date()
+        edate = datetime.strptime(enddate, '%b. %d, %Y').date()
+        ddate = datetime.strptime(duedate, '%b. %d, %Y').date()
         bookinginfo=Bookinginfo.objects.get(id=id)
 
         
         bookinginfo.Trip_Name=name
         bookinginfo.City = city
         bookinginfo.Created_by = createdby
-        bookinginfo.Start_Date = startdate
-        bookinginfo.End_Date = enddate
+        bookinginfo.Start_Date = date
+        bookinginfo.End_Date = edate
         bookinginfo.No_of_People = noofpeople
         bookinginfo.Additional_info = additionalinfo
         bookinginfo.Total_Cost = totalcost
         bookinginfo.Amount_Paid = amountpaid
-        bookinginfo.Due_Date = duedate
+        bookinginfo.Due_amount = dueamount 
+        bookinginfo.Due_Date = ddate
         bookinginfo.save()
 
         
@@ -146,7 +151,6 @@ def e(request,id):
     id=id
     bookinginfo = Bookinginfo.objects.get(id=id)
     if request.method == 'POST':
-        type = request.POST.get('type')
         amount = request.POST.get('amount')
         date = request.POST.get('date')
         mode = request.POST.get('mode')
@@ -154,6 +158,8 @@ def e(request,id):
 
         Paymentinfo.objects.create(Bookingkey=bookinginfo,Payment_Type='Customer',Amount=amount,Date=date,
                                     Mode_of_payment=mode,Additional_info=info)
+        amtpaid =Paymentinfo.objects.filter(Bookingkey=id,Payment_Type='Customer').aggregate(Sum('Amount'))
+        Bookinginfo.objects.filter(id=id).update(Amount_Paid=amtpaid['Amount__sum'])
     return render(request, 'f.html',{'id':id})
 
 def f(request,id):
@@ -289,7 +295,7 @@ def h(request,id):
                     
         tinfo = Transportinfo.objects.filter(Bookingkey=id).values()
         info = list(tinfo)
-        print(info)
+        #print(info)
         # hotelinfoserializer = Hotelinfoserializer(hotelinfo)
         # print(hotelinfoserializer.data)
         return Response({'status':'save', 'info':info})
@@ -337,7 +343,7 @@ def i(request,id):
        
         ainfo = Activitiesinfo.objects.filter(Bookingkey=id).values()
         info = list(ainfo)
-        print(info)
+        #print(info)
         # hotelinfoserializer = Hotelinfoserializer(hotelinfo)
         # print(hotelinfoserializer.data)
         return Response({'status':'save', 'info':info})
@@ -363,7 +369,7 @@ def edit(request):
                  "Checkin_Date":hi.Checkin_Date,"Checktout_Date":hi.Checktout_Date,"No_of_rooms":hi.No_of_rooms,
                    "Room_Type":hi.Room_Type,"Meal_Plan":hi.Meal_Plan,"Room_Sharing_Option":hi.Room_Sharing_Option,
                     "Hotel_Contact_Name":hi.Hotel_Contact_Name,"Hotel_Contact_No":hi.Hotel_Contact_No,"Hemail":hi.Hemail,
-                    "Total_Cost":hi.Total_Cost,"Amount_Paid":hi.Amount_Paid,"Due_Amount":hi.Due_Amount,"Additional_info":hi.Additional_info}
+                    "Total_Cost":hi.Total_Cost,"Additional_info":hi.Additional_info}
 
         return JsonResponse(hidata)
 
@@ -444,6 +450,10 @@ def hotel_payments(request,id,hid):
 
         Paymentinfo.objects.create(Bookingkey=bookinginfo,Hpaymentskey=hotelinfo,Payment_Type='Hotel',Amount=amount,Date=date,
                                     Mode_of_payment=mode,Additional_info=info)
+        amtpaid=Paymentinfo.objects.filter(Hpaymentskey=hotelinfo).aggregate(Sum('Amount'))
+        print(amtpaid)
+        Hotelinfo.objects.filter(id=hid).update(Amount_Paid=int(amtpaid['Amount__sum']))
+        print(type(amtpaid['Amount__sum']))
     return render(request, 'hotelpayments.html',{'id':id})
 
 def transport_payments(request,id,tid):
@@ -459,6 +469,9 @@ def transport_payments(request,id,tid):
 
         Paymentinfo.objects.create(Bookingkey=bookinginfo,Tpaymentskey=transportinfo,Payment_Type='Transport',Amount=amount,Date=date,
                                     Mode_of_payment=mode,Additional_info=info)
+        amtpaid=Paymentinfo.objects.filter(Tpaymentskey=transportinfo).aggregate(Sum('Amount'))
+        print(amtpaid)
+        Transportinfo.objects.filter(id=tid).update(Amount_Paid=amtpaid['Amount__sum'])
     return render(request, 'hotelpayments.html',{'id':id})
 
 def activity_payments(request,id,aid):
@@ -474,6 +487,8 @@ def activity_payments(request,id,aid):
 
         Paymentinfo.objects.create(Bookingkey=bookinginfo,Apaymentskey=activityinfo,Payment_Type='Activity',Amount=amount,Date=date,
                                     Mode_of_payment=mode,Additional_info=info)
+        amtpaid=Paymentinfo.objects.filter(Apaymentskey=activityinfo).aggregate(Sum('Amount'))
+        Activitiesinfo.objects.filter(id=aid).update(Amount_Paid=amtpaid['Amount__sum'])
     return render(request, 'hotelpayments.html',{'id':id})
 
 
@@ -491,4 +506,3 @@ def login_user(request):
 
     else:
         return render(request,'login.html')
-      

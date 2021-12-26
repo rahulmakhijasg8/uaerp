@@ -26,7 +26,7 @@
     <input id="amountpaid" type= 'number' name="Amountpaid" value="{{amtpaid}}" onloadeddata="calculate()" readonly ><br>
     <label  >Due Amount </label>
     {% with x=a.Total_Cost y=amtpaid %}
-    <input id="dueamount" type="number" name="amountpaid" value={{x|sub:y}}  >&nbsp;&nbsp;
+    <input id="dueamount" type="number" name="dueamount" value={{x|sub:y}}  >&nbsp;&nbsp;
     {% endwith %}
     <label  >Due Date </label>
     <input id="duedate" type= 'text' name="Duedate" value="{{a.Due_Date}}" required readonly><br>
@@ -53,9 +53,9 @@
     <label  >Created By </label>
     <input id="tcreatedby" type= 'text' name="Createdby" value="{{a.Created_by}}"><br>
     <label  >Start Date </label>
-    <input type="date" id="tstartdate" type="date" name="Startdate" value="{{a.Start_Date}}">&nbsp;&nbsp;
+    <input type="text" id="tstartdate" name="Startdate" value="{{a.Start_Date}}">&nbsp;&nbsp;
     <label  >End Date </label>
-    <input type="date" id="tenddate" type="date" name="Enddate" value="{{a.End_Date}}"><br>
+    <input type="text" id="tenddate"  name="Enddate" value="{{a.End_Date}}"><br>
     <label  >City: </label>
     <input id="tcity" type= 'text' name="Tripcity" value="{{a.City}}" required>&nbsp;&nbsp;
     <label  >State: </label>
@@ -65,16 +65,17 @@
     <label  >Additional info </label>
     <input id="tadditionalinfo" type= 'text' name="Additionalinfo" value="{{a.Additional_info}}" required><br>
     <label  >Total Cost </label>
-    <input id="ttotalcost" type= 'text' name="Totalcost" value="{{a.Total_Cost}}" required>&nbsp;&nbsp;
+    <input id="ttotalcost" type= 'number' name="Totalcost" value="{{a.Total_Cost}}" required>&nbsp;&nbsp;
     <label  >Amount Paid </label>
-    <input id="tamountpaid" type= 'text' name="Amountpaid" value="{{amtpaid}}" required><br>
+    <input id="tamountpaid" type= 'integer' name="Amountpaid" value="{{amtpaid}}" required><br>
+    {% with x=a.Total_Cost y=amtpaid %}
+    <input id="dueamount" type="number" name="dueamount" value={{x|sub:y}}  >&nbsp;&nbsp;
+    {% endwith %}
     <label  >Due Date </label>
-    <input id="tduedate" type="date" name="Duedate" value="{{a.Due_Date}}"><br>
+    <input id="tduedate" type="text" name="Duedate" value="{{a.Due_Date}}"><br>
 
     <input type="submit" value="submit" id="btnsave" class="myElement" form="id01">
 </form>
-
-
 
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Update Booking
     Details</button>
@@ -198,11 +199,13 @@
             <label  >Additional info </label>
             <input id="tadditionalinfo" type= 'text' name="Additionalinfo" value="{{entry.Additional_info}}" required><br>
             <label  >Room Cost </label>
-            <input id="ttotalcost" type= 'text' name="Roomcost" value="{{entry.Total_Cost}}" required>&nbsp;&nbsp;
+            <input id="ttotalcost" type= 'number' name="Roomcost" value="{{entry.Total_Cost}}" required>&nbsp;&nbsp;
             <label  >Amount Paid </label>
-            <input id="amountpaid" type= 'number' name="Amountpaid" value="" required readonly>&nbsp;&nbsp;
+            <input id="amountpaid" type= 'number' name="Amountpaid" value="{{entry.Amount_Paid}}" required readonly>&nbsp;&nbsp;
             <label  >Due Amount </label>
-            <input id="duedate" type= 'text' name="Duedate" value="" required readonly><br>
+            {% with x=entry.Total_Cost y=entry.Amount_Paid %}
+            <input id="duedate" type= 'number' name="Duedate" value={{x|sub:y}} required readonly><br>
+            {% endwith %}
             <label  >Hotel Contact Name </label>
             <input id="tamountpaid" type= 'text' name="Name" value="{{entry.Hotel_Contact_Name}}" required>&nbsp;&nbsp;
             <label  >Hotel Phone No </label>
@@ -290,7 +293,14 @@
             <label  >End Location </label>
             <input type= 'text' id="deloc" name="Roomsharing" value="{{entry.End_Location}}"><br>
             <label  >Total Cost </label>
-            <input type= 'text' id="dtotalcost" type= 'text' name="Roomtype" value="{{entry.Total_Cost}}">&nbsp;&nbsp;
+            <input type= 'number' id="dtotalcost" name="Roomtype" value="{{entry.Total_Cost}}">&nbsp;&nbsp;
+            <label  >Amount Paid </label>
+            <input id="amountpaid" type= 'number' name="Amountpaid" value="{{entry.Amount_Paid}}" required readonly>&nbsp;&nbsp;
+            <label  >Due Amount </label>
+            {% with x=entry.Total_Cost y=entry.Amount_Paid %}
+            <input id="duedate" type= 'number' name="Duedate" value={{x|sub:y}} required readonly><br>
+            {% endwith %}
+            
             <label  >Additional Info </label>
             <input id="dadditionalinfo" type= 'text' name="Mealplan" value="{{entry.Additional_info}}" required><br>
             <input type="button" value="Edit" class="tbtn-edit" id="btn-edit-{{entry.id}}" data-tid="{{entry.id}}">
@@ -325,10 +335,6 @@
     <input type="number"   id="dno" name="dno" ><br>
     <label for="your_name">Total Cost </label>
     <input type="number"   id="tttotalcost" name="totalcost" >&nbsp;&nbsp;
-    <label for="your_name">Amount Paid </label>
-    <input type="number"   id="amountpaid" name="amountpaid" >&nbsp;&nbsp;
-    <label for="your_name">Due Amount </label>
-    <input type="number"   id="dueamount" name="dueamount" ><br>
 
     <input type="button" name="" value="save" id="tbtn">
 
@@ -355,7 +361,15 @@
             <label  >Vendor Contact No </label>
             <input type= 'number' id="avno" name="Roomsharing" value="{{entry.Vendor_Contact_No}}"><br>
             <label  >Total Cost </label>
-            <input type= 'text' id="atotalcost" type= 'number' name="Roomtype" value="{{entry.Total_Cost}}">&nbsp;&nbsp;
+            <input type= 'number' id="atotalcost" type= 'number' name="Roomtype" value="{{entry.Total_Cost}}">&nbsp;&nbsp;
+            <label  >Amount Paid </label>
+            <input id="amountpaid" type= 'number' name="Amountpaid" value="{{entry.Amount_Paid}}" required readonly>&nbsp;&nbsp;
+            <label  >Due Amount </label>
+           
+            {% with x=entry.Total_Cost y=entry.Amount_Paid %}
+            <input id="duedate" type= 'number' name="Duedate" value={{x|sub:y}} required readonly><br>
+            {% endwith %}
+            
             <label  >Additional Info </label>
             <input id="aadditionalinfo" type= 'text' name="Mealplan" value="{{entry.Additional_info}}" required><br>
             <input type="button" value="Edit" class="abtn-edit" data-aid="{{entry.id}}">
@@ -434,16 +448,7 @@
     }
 </style>
 
-<script>
-    var moda = document.getElementById('id0');
 
-    window.onclick = function (event) {
-        if (event.target == moda) {
-            moda.style.display = "none";
-        }
-    }
-
-</script>
 
 
 
@@ -608,8 +613,8 @@
         let vadditionalinfo = $("#vadditionalinfo").val();
         let dname = $("#drname").val();
         let dno = $("#dno").val();
-        let totalcost = $("#totalcost").val();
-        let amountpaid = $("#amountpaid").val();
+        let totalcost = $("#tttotalcost").val();
+        let amountpaid = $("#tamountpaid").val();
         let dueamount = $("#dueamount").val();
         let csr = $("input[name=csrfmiddlewaretoken").val();
         console.log(id);
