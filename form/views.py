@@ -72,7 +72,7 @@ def a(request):
                                     Due_amount=dueamount,BookingDate=paymentdate,Mode_of_payment=modeofpayment,Additional_info=additionalinfo,
                                     Created_by=createdby,Due_Date=duedate,Service_Status=servicestatus,No_of_People=noofpeople)
 
-        connections = Connections.objects.create(Bookingkey=bookinginfo,Membertype = 'Prime',Personalkey=personalinfo )
+        Connections.objects.create(Bookingkey=bookinginfo,Membertype = 'Prime',Personalkey=personalinfo )
 
         payment = Paymentinfo.objects.create(Bookingkey=bookinginfo,Payment_Type='Customer',Amount=amountpaid,Date=paymentdate,
                                     Mode_of_payment=modeofpayment,Additional_info=additionalinfo)
@@ -160,6 +160,8 @@ def e(request,id):
                                     Mode_of_payment=mode,Additional_info=info)
         amtpaid =Paymentinfo.objects.filter(Bookingkey=id,Payment_Type='Customer').aggregate(Sum('Amount'))
         Bookinginfo.objects.filter(id=id).update(Amount_Paid=amtpaid['Amount__sum'])
+        tcost =Bookinginfo.objects.filter(id=id).values_list('Total_Cost', flat=True)[0]
+        Bookinginfo.objects.filter(id=id).update(Due_amount=tcost-amtpaid['Amount__sum'])
     return render(request, 'f.html',{'id':id})
 
 def f(request,id):
@@ -428,7 +430,7 @@ def index(request,id,pid):
   mail = EmailMessage(
     subject='Payment Confirmation',
     body=message_body,
-    from_email = settings.EMAIL_HOST_USER,
+    from_email = 'booking@universaladventure.in',
     #from_email=settings.EMAIL_HOST_USER,
             to=[pinfo.Email])
   mail.content_subtype = "html"
@@ -453,7 +455,8 @@ def hotel_payments(request,id,hid):
         amtpaid=Paymentinfo.objects.filter(Hpaymentskey=hotelinfo).aggregate(Sum('Amount'))
         print(amtpaid)
         Hotelinfo.objects.filter(id=hid).update(Amount_Paid=int(amtpaid['Amount__sum']))
-        print(type(amtpaid['Amount__sum']))
+        tcost =Hotelinfo.objects.filter(id=hid).values_list('Total_Cost', flat=True)[0]
+        Hotelinfo.objects.filter(id=hid).update(due_amount=tcost-amtpaid['Amount__sum'])
     return render(request, 'hotelpayments.html',{'id':id})
 
 def transport_payments(request,id,tid):
@@ -470,8 +473,9 @@ def transport_payments(request,id,tid):
         Paymentinfo.objects.create(Bookingkey=bookinginfo,Tpaymentskey=transportinfo,Payment_Type='Transport',Amount=amount,Date=date,
                                     Mode_of_payment=mode,Additional_info=info)
         amtpaid=Paymentinfo.objects.filter(Tpaymentskey=transportinfo).aggregate(Sum('Amount'))
-        print(amtpaid)
         Transportinfo.objects.filter(id=tid).update(Amount_Paid=amtpaid['Amount__sum'])
+        tcost =Transportinfo.objects.filter(id=tid).values_list('Total_Cost', flat=True)[0]
+        Transportinfo.objects.filter(id=tid).update(Due_Amount=tcost-amtpaid['Amount__sum'])
     return render(request, 'hotelpayments.html',{'id':id})
 
 def activity_payments(request,id,aid):
@@ -489,6 +493,8 @@ def activity_payments(request,id,aid):
                                     Mode_of_payment=mode,Additional_info=info)
         amtpaid=Paymentinfo.objects.filter(Apaymentskey=activityinfo).aggregate(Sum('Amount'))
         Activitiesinfo.objects.filter(id=aid).update(Amount_Paid=amtpaid['Amount__sum'])
+        tcost =Activitiesinfo.objects.filter(id=aid).values_list('Total_Cost', flat=True)[0]
+        Activitiesinfo.objects.filter(id=aid).update(Due_Amount=tcost-amtpaid['Amount__sum'])
     return render(request, 'hotelpayments.html',{'id':id})
 
 

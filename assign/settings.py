@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-g-50h16sf!2m0$e46yz2h_7lkd_w23!=@%4-x_-bk9&&!661ve'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1','uaerp.herokuapp.com']
 
 
 # Application definition
@@ -144,6 +144,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'rahulmakhijals7@gmail.com' # email id
-EMAIL_HOST_PASSWORD = "arsenewenger" # password
+EMAIL_HOST_USER = 'ua.india.bookings@gmail.com' # email id
+EMAIL_HOST_PASSWORD = "ua.bookings19" # password
 
