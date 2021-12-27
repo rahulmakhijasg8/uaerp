@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'form',
-    'django_filters',
      'rest_framework',
      'sendMail',
      'mathfilters'
