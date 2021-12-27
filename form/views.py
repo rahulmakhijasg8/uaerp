@@ -8,7 +8,6 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import *
 from .models import Activitiesinfo, EntryForm, Hotelinfo, PersonalInfo, Bookinginfo,Paymentinfo,Connections, Transportinfo
-from .filters import DataFilter
 import json
 import random, string
 from django.conf import settings
@@ -31,9 +30,7 @@ def Entryform(request):
 
 def dataList(request):
     Entryform = EntryForm.objects.all()
-    myFilter = DataFilter(request.GET, queryset=Entryform)
-    Entryform = myFilter.qs
-    return render (request,'datalist.html',{'Entryform':Entryform,'myFilter':myFilter})
+    return render (request,'datalist.html',{'Entryform':Entryform})
 
 def a(request):
      if request.method == 'POST':
@@ -91,9 +88,7 @@ x = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range
 
 def b(request):
     Entryform = Bookinginfo.objects.all()
-    myFilter = DataFilter(request.GET, queryset=Entryform)
-    Entryform = myFilter.qs
-    return render (request,'b.html',{'Entryform':Entryform,'myFilter':myFilter})
+    return render (request,'b.html',{'Entryform':Entryform})
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 
