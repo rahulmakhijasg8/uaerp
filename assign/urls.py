@@ -24,7 +24,7 @@ from form import urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('form.urls')),
-    path('',include('django.contrib.auth.urls'))
+    path('auth/',include('django.contrib.auth.urls'))
 ]
 
 urlpatterns += static(settings.STATIC_URL)
