@@ -30,9 +30,9 @@
     {% endwith %}
     <label  >Due Date </label>
     <input id="duedate" type= 'text' name="Duedate" value="{{a.Due_Date}}" required readonly><br>
-
+    <input type="button" value="Edit" class="bbtn-edit" id="bbt" data-bid="{{a.id}}">
 </form>
-
+&nbsp;&nbsp;&nbsp;&nbsp;
    
 
 <script>
@@ -46,35 +46,37 @@
 }
 </script>
 
-<form action="" method="POST" id="id01" class="modal" style="text-align: center;">
+<form action="" method="POST" id="id0" class="" style="text-align: center;">
     {% csrf_token %}
+    <input type="hidden" name="biid" id="biid">
     <label  >Name: </label>
-    <input id="tripname" type= 'text' name="Tripname" value="{{a.Trip_Name}}" required>&nbsp;&nbsp;
+    <input id="tripname" type= 'text' name="Tripname"  required>&nbsp;&nbsp;
     <label  >Created By </label>
-    <input id="tcreatedby" type= 'text' name="Createdby" value="{{a.Created_by}}"><br>
+    <input id="tcreatedby" type= 'text' name="Createdby" ><br>
     <label  >Start Date </label>
-    <input type="text" id="tstartdate" name="Startdate" value="{{a.Start_Date}}">&nbsp;&nbsp;
+    <input type="date" id="tstartdate" name="Startdate" >&nbsp;&nbsp;
     <label  >End Date </label>
-    <input type="text" id="tenddate"  name="Enddate" value="{{a.End_Date}}"><br>
+    <input type="date" id="tenddate"  name="Enddate" ><br>
     <label  >City: </label>
-    <input id="tcity" type= 'text' name="Tripcity" value="{{a.City}}" required>&nbsp;&nbsp;
+    <input id="trcity" type= 'text' name="Tripcity" required>&nbsp;&nbsp;
     <label  >State: </label>
-    <input id="tstate" type= 'text' name="Tripstate" value="{{a.State}}" required><br>
+    <input id="trstate" type= 'text' name="Tripstate" required><br>
     <label  >No of Persons </label>
-    <input id="tnoofpersons" type= 'text' name="Noofpersons" value="{{a.No_of_People}}" required>&nbsp;&nbsp;
+    <input id="tnoofpersons" type= 'text' name="Noofpersons" required>&nbsp;&nbsp;
     <label  >Additional info </label>
-    <input id="tadditionalinfo" type= 'text' name="Additionalinfo" value="{{a.Additional_info}}" required><br>
+    <input id="tadditionalinfo" type= 'text' name="Additionalinfo" required><br>
     <label  >Total Cost </label>
-    <input id="ttotalcost" type= 'number' name="Totalcost" value="{{a.Total_Cost}}" required>&nbsp;&nbsp;
+    <input id="ttotalcost" type= 'number' name="Totalcost" required>&nbsp;&nbsp;
     <label  >Amount Paid </label>
-    <input id="tamountpaid" type= 'integer' name="Amountpaid" value="{{amtpaid}}" required><br>
+    <input id="tramountpaid" type= 'integer' name="Amountpaid" required><br>
+    <label  >Due Amount </label>
     {% with x=a.Total_Cost y=amtpaid %}
-    <input id="dueamount" type="number" name="dueamount" value={{x|sub:y}}  >&nbsp;&nbsp;
+    <input id="trdueamount" type="number" name="dueamount"   >&nbsp;&nbsp;
     {% endwith %}
     <label  >Due Date </label>
-    <input id="tduedate" type="text" name="Duedate" value="{{a.Due_Date}}"><br>
+    <input id="tduedate" type="date" name="Duedate" ><br>
 
-    <input type="submit" value="submit" id="btnsave" class="myElement" form="id01">
+    <input type="button" value="submit" id="tbtn-save" class="tbtn-save" form="id01">
 </form>
 
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Update Booking
@@ -596,6 +598,76 @@
         
         })
     })
+
+    $("#tbtn-save").click(function () {
+        console.log('save button clicked');
+        output = "";
+        let hid = $("#biid").val();
+        let hn = $("#tripname").val();
+        let city = $("#trcity").val();
+        let state = $("#trstate").val();
+        let cindate = $("#tstartdate").val();
+        let coutdate = $("#tenddate").val();
+        let rooms = $("#tnoofpersons").val();
+        let badditionalinfo = $("#tadditionalinfo").val();
+        let htotalcost = $("#ttotalcost").val();
+        let hamountpaid = $("#tramountpaid").val();
+        let hdueamount = $("#trdueamount").val();
+        let duedate = $("#tduedate").val();
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        bdata = {
+            biid:hid,bname: hn, csrfmiddlewaretoken: csr, bcity: city, bstate: state,
+            bcindate: cindate, bcodate: coutdate, bno: rooms, 
+             Additionalinfo: badditionalinfo,
+            Roomcost: htotalcost,Dueamount:hdueamount,Amountpaid:hamountpaid,duedate:duedate
+        };
+        $.ajax({
+            url: "book",
+            method: "POST",
+            data: bdata,
+            success: function (data) {
+
+                x = data.info;
+                console.log(x);
+            },
+            
+        
+    })
+})
+
+
+$(".bbtn-edit").click(function () {
+    console.log("edit button clicked");
+    let id = $(this).attr("data-bid");
+    let csr = $("input[name=csrfmiddlewaretoken").val();
+    console.log(id);
+    mydata = {bid:id,csrfmiddlewaretoken: csr}
+    $.ajax({
+        url: "{% url 'bedit' %}",
+        method: "POST",
+        data: mydata,
+        dataType:"json",
+        success: function (data){
+            console.log(data);
+            $("#biid").val(data.id);
+            $("#tripname").val(data.Hname);
+            $("#tcreatedby").val(data.Created_By);
+            $("#tstartdate").val(data.Checkin_Date);
+            $("#tenddate").val(data.Checktout_Date);
+            $("#trcity").val(data.Hcity);
+            $("#trstate").val(data.Hstate);
+            $("#tnoofpersons").val(data.No_of_persons);
+            $("#tadditionalinfo").val(data.Additional_info);
+            $("#ttotalcost").val(data.Total_Cost);
+            $("#tramountpaid").val(data.Amount_Paid);
+            $("#trdueamount").val(data.Due_Amount);
+            $("#tduedate").val(data.Due_Date);
+
+        }
+    
+    })
+})
 
 </script>
 

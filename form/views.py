@@ -105,40 +105,30 @@ def d(request,id):
     d = Hotelinfo.objects.filter(Bookingkey=id).all()
     if request.method == 'POST':
 
-        name = request.POST['Tripname']
-        city = request.POST['Tripcity']
-        createdby = request.POST['Createdby']
+       
+        name = request.POST['Hname']
+        city = request.POST['Hotelcity']
+        state = request.POST['Hotelstate']
+        createdby = request.POST['Checkindate']
         startdate = request.POST['Startdate']
-        enddate = request.POST['Enddate']
-        noofpeople = request.POST['Noofpersons']
+        enddate = request.POST['Checkoutdate']
+        noofpeople = request.POST['Rooms']
         additionalinfo = request.POST['Additionalinfo']
-        totalcost = request.POST['Totalcost']
+        totalcost = request.POST['Roomcost']
         amountpaid = request.POST['Amountpaid']
         dueamount = request.POST['dueamount']
         duedate = request.POST['Duedate']
-        date = datetime.strptime(startdate, '%b. %d, %Y').date()
-        edate = datetime.strptime(enddate, '%b. %d, %Y').date()
-        ddate = datetime.strptime(duedate, '%b. %d, %Y').date()
-        bookinginfo=Bookinginfo.objects.get(id=id)
-
         
-        bookinginfo.Trip_Name=name
-        bookinginfo.City = city
-        bookinginfo.Created_by = createdby
-        bookinginfo.Start_Date = date
-        bookinginfo.End_Date = edate
-        bookinginfo.No_of_People = noofpeople
-        bookinginfo.Additional_info = additionalinfo
-        bookinginfo.Total_Cost = totalcost
-        bookinginfo.Amount_Paid = amountpaid
-        bookinginfo.Due_amount = dueamount 
-        bookinginfo.Due_Date = ddate
-        bookinginfo.save()
+        bookinginfo=Bookinginfo.objects.filter(id=id).update(Trip_Name=name,Start_Date=startdate,End_Date=enddate,City=city,
+                                                               State=state,Total_Cost=totalcost,Amount_Paid=amountpaid,Due_amount=dueamount,
+                                                               Due_Date=duedate,No_of_People= noofpeople,Additional_info=additionalinfo)
 
-        
-        
-
-       
+        hinfo = Bookinginfo.objects.filter(id=id).values()
+        info = list(hinfo)
+        #print(info)
+        # hotelinfoserializer = Hotelinfoserializer(hotelinfo)
+        # print(hotelinfoserializer.data)
+        return Response({'status':'save', 'info':info})
         return render(request, 'd.html',{'id':id,'a':bookinginfo,'b':b,'c':pinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum']})
     return render(request, 'd.html',{'id':id,'a':a,'b':b,'c':pinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum']})
 
@@ -184,6 +174,35 @@ from django.core import serializers
 from .serializers import Hotelinfoserializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+
+@api_view(['GET','POST'])
+def book(request):
+        if request.method == 'POST':
+
+            hid = request.POST['biid']
+            name = request.POST['bname']
+            city = request.POST['bcity']
+            state = request.POST['bstate']
+            createdby = request.POST['Checkindate']
+            startdate = request.POST['bcindate']
+            enddate = request.POST['bcodate']
+            noofpeople = request.POST['bno']
+            additionalinfo = request.POST['Additionalinfo']
+            totalcost = request.POST['Roomcost']
+            amountpaid = request.POST['Amountpaid']
+            dueamount = request.POST['Dueamount']
+            duedate = request.POST['duedate']
+        
+        Bookinginfo.objects.filter(id=hid).update(Trip_Name=name,Start_Date=startdate,End_Date=enddate,City=city,
+                                                               State=state,Total_Cost=totalcost,Amount_Paid=amountpaid,Due_amount=dueamount,
+                                                               Due_Date=duedate,No_of_People= noofpeople,Additional_info=additionalinfo)
+
+        hinfo = Bookinginfo.objects.filter(id=id).values()
+        info = list(hinfo)
+        #print(info)
+        # hotelinfoserializer = Hotelinfoserializer(hotelinfo)
+        # print(hotelinfoserializer.data)
+        return Response({'status':'save', 'info':info})
 
 @api_view(['GET','POST'])
 def g(request,id):
@@ -369,6 +388,18 @@ def edit(request):
                     "Total_Cost":hi.Total_Cost,"Additional_info":hi.Additional_info}
 
         return JsonResponse(hidata)
+
+def bedit(request):
+    if request.method == "POST":
+        id = request.POST['bid']
+        print(id)
+        bi = Bookinginfo.objects.get(pk=id)
+        bidata = {"id":bi.id,"Hname":bi.Trip_Name,"Hcity":bi.City,"Hstate":bi.State,
+                 "Checkin_Date":bi.Start_Date,"Checktout_Date":bi.End_Date,"No_of_persons":bi.No_of_People,
+                   "Due_Date":bi.Due_Date,"Amount_Paid":bi.Amount_Paid,"Due_Amount":bi.Due_amount,
+                    "Total_Cost":bi.Total_Cost,"Additional_info":bi.Additional_info,"Created_By":bi.Created_by}
+        print(bidata)
+        return JsonResponse(bidata)
 
 def tedit(request):
     if request.method == "POST":
