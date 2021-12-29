@@ -608,6 +608,7 @@
         let state = $("#trstate").val();
         let cindate = $("#tstartdate").val();
         let coutdate = $("#tenddate").val();
+        let createdby = $("#tcreatedby").val();
         let rooms = $("#tnoofpersons").val();
         let badditionalinfo = $("#tadditionalinfo").val();
         let htotalcost = $("#ttotalcost").val();
@@ -619,7 +620,7 @@
         bdata = {
             biid:hid,bname: hn, csrfmiddlewaretoken: csr, bcity: city, bstate: state,
             bcindate: cindate, bcodate: coutdate, bno: rooms, 
-             Additionalinfo: badditionalinfo,
+             Additionalinfo: badditionalinfo,createdby:createdby,
             Roomcost: htotalcost,Dueamount:hdueamount,Amountpaid:hamountpaid,duedate:duedate
         };
         $.ajax({

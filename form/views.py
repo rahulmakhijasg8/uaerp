@@ -176,14 +176,14 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 @api_view(['GET','POST'])
-def book(request):
+def book(request,id):
         if request.method == 'POST':
 
             hid = request.POST['biid']
             name = request.POST['bname']
             city = request.POST['bcity']
             state = request.POST['bstate']
-            createdby = request.POST['Checkindate']
+            createdby = request.POST['createdby']
             startdate = request.POST['bcindate']
             enddate = request.POST['bcodate']
             noofpeople = request.POST['bno']
