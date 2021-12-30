@@ -58,16 +58,16 @@ def a(request):
         amountpaid = request.POST.get('amountpaid')
         dueamount = request.POST.get('dueamount')
         paymentdate = request.POST.get('payment-date')
-        modeofpayment = request.POST.get('modeofpayment')
+        modeofpayment = request.POST.get('pmode')
         additionalinfo = request.POST.get('additionalinfo')
         createdby = request.POST.get('createdby')
         duedate = request.POST.get('duedate')
-        servicestatus = request.POST.get('status')
+        sstatus = request.POST.get('sstatus')
         noofpeople = request.POST.get('noofpeople')
         bookinginfo=Bookinginfo.objects.create(Bookingkey = x, personal_details = personalinfo, Trip_Name=tripname,Start_Date=startdate,
                                     End_Date=enddate,City=tcity, State=tstate,Service=service,Total_Cost=totalcost,Amount_Paid=amountpaid,
                                     Due_amount=dueamount,BookingDate=paymentdate,Mode_of_payment=modeofpayment,Additional_info=additionalinfo,
-                                    Created_by=createdby,Due_Date=duedate,Service_Status=servicestatus,No_of_People=noofpeople)
+                                    Created_by=createdby,Due_Date=duedate,Service_Status=sstatus,No_of_People=noofpeople)
 
         Connections.objects.create(Bookingkey=bookinginfo,Membertype = 'Prime',Personalkey=personalinfo )
 
@@ -87,7 +87,7 @@ x = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range
 
 
 def b(request):
-    Entryform = Bookinginfo.objects.all()
+    Entryform = Bookinginfo.objects.select_related('personal_details').all()
     return render (request,'b.html',{'Entryform':Entryform})
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
@@ -192,10 +192,13 @@ def book(request,id):
             amountpaid = request.POST['Amountpaid']
             dueamount = request.POST['Dueamount']
             duedate = request.POST['duedate']
+            sstatus = request.POST['sstatus']
+        
         
         Bookinginfo.objects.filter(id=hid).update(Trip_Name=name,Start_Date=startdate,End_Date=enddate,City=city,
                                                                State=state,Total_Cost=totalcost,Amount_Paid=amountpaid,Due_amount=dueamount,
-                                                               Due_Date=duedate,No_of_People= noofpeople,Additional_info=additionalinfo)
+                                                               Due_Date=duedate,No_of_People= noofpeople,Additional_info=additionalinfo,
+                                                               Service_Status=sstatus)
 
         hinfo = Bookinginfo.objects.filter(id=id).values()
         info = list(hinfo)
@@ -241,6 +244,7 @@ def g(request,id):
         hemail = request.POST['Email']
         hadditionalinfo = request.POST['Additionalinfo']
         hoelname=request.POST['Hname']
+        sstatus = request.POST['sstatus']
 
         if hid =='':
             
@@ -249,14 +253,14 @@ def g(request,id):
                                                 No_of_rooms=rooms,Room_Type=roomtype,Meal_Plan=mealplan,
                                                 Room_Sharing_Option=roomsharing,Total_Cost=roomcost,Hotel_Contact_Name=hname,
                                                 Hotel_Contact_No=hnumber,Hemail=hemail,Additional_info=hadditionalinfo,
-                                                )
+                                                Service_Status=sstatus)
         else:
             Hotelinfo.objects.filter(id=hid).update(Bookingkey=bookinginfo,Hname=hoelname,Hstate=hotelstate,
                                              Hcity=hotelcity,Checkin_Date=checkin,Checktout_Date=checkout,
                                             No_of_rooms=rooms,Room_Type=roomtype,Meal_Plan=mealplan,
                                             Room_Sharing_Option=roomsharing,Total_Cost=roomcost,Hotel_Contact_Name=hname,
                                             Hotel_Contact_No=hnumber,Hemail=hemail,Additional_info=hadditionalinfo,
-                                            )
+                                             Service_Status=sstatus)
 
        
        
@@ -293,21 +297,20 @@ def h(request,id):
         dname = request.POST['dname']
         dnumber = request.POST['dno']
         totalcost = request.POST['totalcost']
-        amountpaid = request.POST['amountpaid']
-        dueamount = request.POST['dueamount']
+        sstatus = request.POST['sstatus']
 
         if tid =='':
 
             transportinfo = Transportinfo.objects.create(Bookingkey=bookinginfo,Vehicle_Name=vname,Driver_Name=dname,
                                             Driver_Phone_No=dnumber,Start_Date=Startdate,End_date=enddate,
                                             Start_Location=slocation,End_Location=elocation,Additional_info=additionalinfo,
-                                            Total_Cost=totalcost)
+                                            Total_Cost=totalcost,Service_Status=sstatus)
 
         else:
             Transportinfo.objects.filter(id=tid).update(Bookingkey=bookinginfo,Vehicle_Name=vname,Driver_Name=dname,
                                             Driver_Phone_No=dnumber,Start_Date=Startdate,End_date=enddate,
                                             Start_Location=slocation,End_Location=elocation,Additional_info=additionalinfo,
-                                            Total_Cost=totalcost)
+                                            Total_Cost=totalcost,Service_Status=sstatus)
                     
         tinfo = Transportinfo.objects.filter(Bookingkey=id).values()
         info = list(tinfo)
@@ -342,20 +345,19 @@ def i(request,id):
         vname = request.POST['avname']
         vno = request.POST['vno']
         totalcost = request.POST['atotalcost']
-        amountpaid = request.POST['aamountpaid']
-        dueamount = request.POST['adueamount']
+        sstatus = request.POST['sstatus']
 
         if aid =='':
 
          activityinfo = Activitiesinfo.objects.create(Bookingkey=bookinginfo,Name_of_activity=aname,State=state,
                                             City=city,No_of_People=noofpersons,Date=date,
                                             Vendor_Name=vname,Vendor_Contact_No=vno,Additional_info=additionalinfo,
-                                            Total_Cost=totalcost)
+                                            Total_Cost=totalcost,Service_Status=sstatus)
         else:
             Activitiesinfo.objects.filter(id=aid).update(Bookingkey=bookinginfo,Name_of_activity=aname,State=state,
                                             City=city,No_of_People=noofpersons,Date=date,
                                             Vendor_Name=vname,Vendor_Contact_No=vno,Additional_info=additionalinfo,
-                                            Total_Cost=totalcost)
+                                            Total_Cost=totalcost,Service_Status=sstatus)
        
         ainfo = Activitiesinfo.objects.filter(Bookingkey=id).values()
         info = list(ainfo)
@@ -385,7 +387,7 @@ def edit(request):
                  "Checkin_Date":hi.Checkin_Date,"Checktout_Date":hi.Checktout_Date,"No_of_rooms":hi.No_of_rooms,
                    "Room_Type":hi.Room_Type,"Meal_Plan":hi.Meal_Plan,"Room_Sharing_Option":hi.Room_Sharing_Option,
                     "Hotel_Contact_Name":hi.Hotel_Contact_Name,"Hotel_Contact_No":hi.Hotel_Contact_No,"Hemail":hi.Hemail,
-                    "Total_Cost":hi.Total_Cost,"Additional_info":hi.Additional_info}
+                    "Total_Cost":hi.Total_Cost,"Additional_info":hi.Additional_info,"sstatus":hi.Service_Status}
 
         return JsonResponse(hidata)
 
@@ -397,7 +399,8 @@ def bedit(request):
         bidata = {"id":bi.id,"Hname":bi.Trip_Name,"Hcity":bi.City,"Hstate":bi.State,
                  "Checkin_Date":bi.Start_Date,"Checktout_Date":bi.End_Date,"No_of_persons":bi.No_of_People,
                    "Due_Date":bi.Due_Date,"Amount_Paid":bi.Amount_Paid,"Due_Amount":bi.Due_amount,
-                    "Total_Cost":bi.Total_Cost,"Additional_info":bi.Additional_info,"Created_By":bi.Created_by}
+                    "Total_Cost":bi.Total_Cost,"Additional_info":bi.Additional_info,"Created_By":bi.Created_by,
+                    "Service_Status":bi.Service_Status}
         print(bidata)
         return JsonResponse(bidata)
 
@@ -408,7 +411,8 @@ def tedit(request):
         ti = Transportinfo.objects.get(pk=id)
         tidata = {"id":ti.id,"Vehicle_Name":ti.Vehicle_Name,"Driver_Name":ti.Driver_Name,"Driver_Phone_No":ti.Driver_Phone_No,
                  "Start_Date":ti.Start_Date,"End_date":ti.End_date,"Start_Location":ti.Start_Location,
-                   "End_Location":ti.End_Location,"Total_Cost":ti.Total_Cost,"Additional_info":ti.Additional_info}
+                   "End_Location":ti.End_Location,"Total_Cost":ti.Total_Cost,"Additional_info":ti.Additional_info,
+                   "Service_Status":ti.Service_Status}
 
         return JsonResponse(tidata)
 
@@ -429,7 +433,8 @@ def aedit(request):
         ai = Activitiesinfo.objects.get(pk=id)
         tidata = {"id":ai.id,"Name_of_activity":ai.Name_of_activity,"State":ai.State,"City":ai.City,
                  "No_of_People":ai.No_of_People,"Date":ai.Date,"Vendor_Name":ai.Vendor_Name,
-                   "Vendor_Contact_No":ai.Vendor_Contact_No,"Total_Cost":ai.Total_Cost,"Additional_info":ai.Additional_info}
+                   "Vendor_Contact_No":ai.Vendor_Contact_No,"Total_Cost":ai.Total_Cost,"Additional_info":ai.Additional_info,
+                   "Service_Status":ai.Service_Status}
 
         return JsonResponse(tidata)
 

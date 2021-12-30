@@ -46,7 +46,7 @@ class Bookinginfo(models.Model):
     Created_by = models.CharField(max_length=255, null=True)
     Due_Date = models.DateField(default=datetime.date.today)
     Service_Status = models.CharField(max_length=255, null=True)
-    No_of_People = models.PositiveIntegerField(default=0)
+    No_of_People = models.CharField(max_length=255, null=True)
 
     @property
     def due_amt(self):
@@ -71,6 +71,7 @@ class Hotelinfo(models.Model):
     Amount_Paid = models.PositiveIntegerField(null=True)
     due_amount = models.PositiveIntegerField(default='0')
     Additional_info = models.CharField(null=True,max_length=255)
+    Service_Status = models.CharField(max_length=255, null=True)
    
     @property
     def due_amt(self):
@@ -82,7 +83,7 @@ class Activitiesinfo(models.Model):
     Name_of_activity = models.CharField(max_length=255)
     State = models.CharField(max_length=255)
     City = models.CharField(max_length=255)
-    No_of_People = models.PositiveIntegerField()
+    No_of_People = models.CharField(max_length=255,null=True)
     Date = models.DateField(default=datetime.date.today)
     Vendor_Name = models.CharField(max_length=255)
     Vendor_Contact_No = models.CharField(max_length=255)
@@ -90,6 +91,7 @@ class Activitiesinfo(models.Model):
     Amount_Paid = models.PositiveBigIntegerField(null=True)
     Due_Amount = models.PositiveIntegerField(default='0')
     Additional_info = models.CharField(max_length=255,null=True)
+    Service_Status = models.CharField(max_length=255, null=True)
 
     @property
     def due_amt(self):
@@ -123,6 +125,7 @@ class Transportinfo(models.Model):
     Amount_Paid = models.PositiveBigIntegerField(null=True)
     Due_Amount = models.PositiveIntegerField(null=True)
     Additional_info = models.CharField(max_length=255)    
+    Service_Status = models.CharField(max_length=255, null=True)
 
     @property
     def due_amt(self):

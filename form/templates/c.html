@@ -75,9 +75,16 @@
                     <label for="your_name">Trip Name: </label> 
                     <input id="your_name" type="text" name="TripName" required>&nbsp;&nbsp;&nbsp;&nbsp;
                     <label for="">Service Status</label>
-                    <input type="text" name="Status" id="status" required><br>
+                    <select name="sstatus" id="sstatus">
+                        <option value="Booked">Booked</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Complete">Complete</option>
+                        <option value="Required">Required</option>
+                        <option value="Urgent Action Required">Urgent Action Required</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select><br>
                     <label for="your_name">Start Date: </label>
-                    <input id="your_name" type="date" name="startdate" value="2021-12-12" required><br>
+                    <input id="your_name" type="date" name="startdate" value="2021-12-12" required>&nbsp;
                     <label for="your_name">End Date: </label>
                     <input id="your_name" type="date" name="enddate" value="2021-12-12" required><br>
                     <label for="your_name">City: </label>
@@ -101,7 +108,16 @@
                     <label for="your_name">Due Amount </label>
                     <input id="ddueamount" type="number" name="dueamount"  >&nbsp;&nbsp;
                     <input type="date" name="payment-date">&nbsp;
-                    <input type="text" name="modeofpayment" placeholder="Mode of payment" required><br>
+                    <label for="">Mode of Payment</label>
+                    <select name="pmode" id="pmode">
+                        <option value="Website">Website</option>
+                        <option value="UA Account">UA Account</option>
+                        <option value="Google Pay">Google Pay</option>
+                        <option value="Phone Pay">Phone Pay</option>
+                        <option value="Paytm">Paytm</option>
+                        <option value="In-office">In-office</option>
+                        <option value="Direct Cash">Direct Cash</option>
+                      </select><br>
                     <label for="your_name">Additional info </label>
                     <input id="your_name" type="text" name="additionalinfo" required>
                     <label for="your_name">Created By </label>
@@ -109,7 +125,7 @@
                     <label for="your_name">Due Date </label>
                     <input id="your_name" type="date" name="duedate" value="2021-12-12" required><br>
                     <label for="your_name">No of People </label>
-                    <input id="your_name" type="number" name="noofpeople" required><br>
+                    <input id="your_name" type="text" name="noofpeople" required><br>
                 </div>
                 <input type="submit" value="Submit">
             </form>

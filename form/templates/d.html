@@ -52,7 +52,16 @@
     <label  >Name: </label>
     <input id="tripname" type= 'text' name="Tripname"  required>&nbsp;&nbsp;
     <label  >Created By </label>
-    <input id="tcreatedby" type= 'text' name="Createdby" ><br>
+    <input id="tcreatedby" type= 'text' name="Createdby" >&nbsp;&nbsp;
+    <label for="">Service Status</label>
+    <select name="sstatus" id="sstatus">
+        <option value="Booked">Booked</option>
+        <option value="Pending">Pending</option>
+        <option value="Complete">Complete</option>
+        <option value="Required">Required</option>
+        <option value="Urgent Action Required">Urgent Action Required</option>
+        <option value="Cancelled">Cancelled</option>
+      </select><br>
     <label  >Start Date </label>
     <input type="date" id="tstartdate" name="Startdate" >&nbsp;&nbsp;
     <label  >End Date </label>
@@ -181,7 +190,9 @@
     <div id="a">
         <form action="" id="" class="" style="text-align: center;">
             <label  >Hotel Name </label>
-            <input id="hotelnam" type= 'text' name="Hotelname" value="{{entry.Hname}}" required><br>
+            <input id="hotelnam" type= 'text' name="Hotelname" value="{{entry.Hname}}" required>&nbsp;&nbsp;
+            <label for="">Service Status</label>
+            <input type="text" name="" value="{{entry.Service_Status}}" id="status">
             <label  >City: </label>
             <input id="hcity" type= 'text' name="Hotelcity" value="{{entry.Hcity}}" required>&nbsp;&nbsp;
             <label  >State: </label>
@@ -229,7 +240,16 @@
     {% csrf_token %}
     <input type="hidden" name="hiid" id="hiid">
     <label  >Hotel Name </label>
-    <input id="hoelname" type= 'text' name="Hotelname" required><br>
+    <input id="hoelname" type= 'text' name="Hotelname" required>&nbsp;&nbsp;
+    <label for="">Service Status</label>
+    <select name="sstatus" id="hsstatus">
+        <option value="Booked">Booked</option>
+        <option value="Pending">Pending</option>
+        <option value="Complete">Complete</option>
+        <option value="Required">Required</option>
+        <option value="Urgent Action Required">Urgent Action Required</option>
+        <option value="Cancelled">Cancelled</option>
+      </select><br>
     <label  >City: </label>
     <input id="hocity" type= 'text' name="Hotelcity" required>&nbsp;&nbsp;
     <label  >State: </label>
@@ -249,11 +269,7 @@
     <label  >Additional info </label>
     <input id="hadditionalinfo" type= 'text' name="Additionalinfo" required><br>
     <label  >Room Cost </label>
-    <input id="htotalcost" type="number" name="Roomcost" oninput="calculate()" required>&nbsp;&nbsp;
-    <label  >Amount Paid </label>
-    <input id="hamountpaid" type="number" name="Amountpaid" oninput="calculate()"  >&nbsp;&nbsp;
-    <label  >Due Amount </label>
-    <input id="hdueamount" type="number" name="Dueamount"  ><br>
+    <input id="htotalcost" type="number" name="Roomcost" oninput="calculate()" required><br>
     <label  >Name </label>
     <input id="hname" type= 'text' name="Name" required>&nbsp;&nbsp;
     <label  >Phone No </label>
@@ -281,7 +297,9 @@
     <div>
         <form action="" id="" class="" style="text-align: center;">
             <label  >Vehicle Name </label>
-            <input id="vehiclename" type= 'text' name="Hotelname" value="{{entry.Vehicle_Name}}" required><br>
+            <input id="vehiclename" type= 'text' name="Hotelname" value="{{entry.Vehicle_Name}}" required>&nbsp;&nbsp;
+            <label for="">Service Status</label>
+            <input type="text" name="" value="{{entry.Service_Status}}" id="status"><br>
             <label  >Driver Name </label>
             <input id="dname" type= 'text' name="Hotelcity" value="{{entry.Driver_Name}}" required>&nbsp;&nbsp;
             <label  >Driver Phone No </label>
@@ -320,7 +338,16 @@
     {% csrf_token %}
     <input type="hidden" name="tiid" id="tiid">
     <label for="your_name" >Vehicle Name </label>
-    <input id="vname" type="text" name="Vehiclename"    required><br>
+    <input id="vname" type="text" name="Vehiclename" required>&nbsp;&nbsp;
+    <label for="">Service Status</label>
+    <select name="sstatus" id="tsstatus">
+        <option value="Booked">Booked</option>
+        <option value="Pending">Pending</option>
+        <option value="Complete">Complete</option>
+        <option value="Required">Required</option>
+        <option value="Urgent Action Required">Urgent Action Required</option>
+        <option value="Cancelled">Cancelled</option>
+      </select><br>
     <label for="your_name">Start Date </label>
     <input id="Startdate" type="date" name="Startdate"  required>&nbsp;&nbsp;
     <label for="your_name">End Date </label>
@@ -349,7 +376,9 @@
     <div>
         <form action="" id="tinfo" class="" style="text-align: center;">
             <label  >Activity Name</label>
-            <input id="aname" type= 'text' name="Hotelname" value="{{entry.Name_of_activity}}" required><br>
+            <input id="aname" type= 'text' name="Hotelname" value="{{entry.Name_of_activity}}" required>&nbsp;&nbsp;
+            <label for="">Service Status</label>
+            <input type="text" name="" value="{{entry.Service_Status}}" id="status"><br>
             <label  >State </label>
             <input id="astate" type= 'text' name="Hotelcity" value="{{entry.State}}" required>&nbsp;&nbsp;
             <label  >City </label>
@@ -357,7 +386,7 @@
             <label  >Date </label>
             <input id="adate" type= 'text' name="Checkindate" value="{{entry.Date|date:'d M, Y' }}"required>&nbsp;&nbsp;
             <label  >No of People </label>
-            <input id="anoofpeople" type= 'number' name="Checkoutdate" value="{{entry.No_of_People}}" required><br>
+            <input id="anoofpeople" type= 'text' name="Checkoutdate" value="{{entry.No_of_People}}" required><br>
             <label  >Vendor Name </label>
             <input id="avename" type="text" name="Rooms" value="{{entry.Vendor_Name}}">&nbsp;&nbsp;
             <label  >Vendor Contact No </label>
@@ -390,7 +419,16 @@
     {% csrf_token %}
     <input type="hidden" name="aiid" id="aiid">
     <label for="your_name" >Activity Name </label>
-    <input id="acname" type="text" name="Activityname"    required><br>
+    <input id="acname" type="text" name="Activityname"required>&nbsp;&nbsp;
+    <label for="">Service Status</label>
+    <select name="sstatus" id="asstatus">
+        <option value="Booked">Booked</option>
+        <option value="Pending">Pending</option>
+        <option value="Complete">Complete</option>
+        <option value="Required">Required</option>
+        <option value="Urgent Action Required">Urgent Action Required</option>
+        <option value="Cancelled">Cancelled</option>
+      </select><br>
     <label for="your_name">State </label>
     <input id="acstate" type="text" name="State"  required>&nbsp;&nbsp;
     <label for="your_name">City </label>
@@ -406,11 +444,8 @@
     <label for="your_name">Vendor No. </label>
     <input type="number"   id="vno" name="Vno" ><br>
     <label for="your_name">Total Cost </label>
-    <input type="number"   id="actotalcost" name="Vno" >&nbsp;&nbsp;
-    <label for="your_name">Amount Paid </label>
-    <input type="number"   id="aamountpaid" name="Vno" >&nbsp;&nbsp;
-    <label for="your_name">Due Amount </label>
-    <input type="number"   id="adueamount" name="Vno" ><br>
+    <input type="number"   id="actotalcost" name="Vno" ><br>
+    
 
     <input type="button" value="Save" name="" id="abtn">
 
@@ -478,14 +513,15 @@
         let name = $("#hname").val();
         let phoneno = $("#hphoneno").val();
         let email = $("#hemail").val();
+        let sstatus = $("#hsstatus").val();
         let csr = $("input[name=csrfmiddlewaretoken").val();
         console.log(id);
         hdata = {
             hiid:hid,Hname: hn, csrfmiddlewaretoken: csr, Hotelcity: city, Hotelstate: state,
             Checkindate: cindate, Checkoutdate: coutdate, Rooms: rooms, Roomsharing: roomsharing,
             Roomtype: roomtype, Mealplan: mealplan, Additionalinfo: hadditionalinfo,
-            Roomcost: htotalcost,Name: name, Number: phoneno, Email: email
-        };
+            Roomcost: htotalcost,Name: name, Number: phoneno, Email: email,
+            sstatus:sstatus};
         $.ajax({
             url: "addhotels",
             method: "POST",
@@ -593,6 +629,7 @@
                 $("#hname").val(data.Hotel_Contact_Name);
                 $("#hphoneno").val(data.Hotel_Contact_No);
                 $("#hemail").val(data.Hemail);
+                $("#hsstatus").val(data.sstatus);
 
             }
         
@@ -615,13 +652,15 @@
         let hamountpaid = $("#tramountpaid").val();
         let hdueamount = $("#trdueamount").val();
         let duedate = $("#tduedate").val();
+        let sstatus = $("#sstatus").val();
         let csr = $("input[name=csrfmiddlewaretoken").val();
         console.log(id);
         bdata = {
             biid:hid,bname: hn, csrfmiddlewaretoken: csr, bcity: city, bstate: state,
             bcindate: cindate, bcodate: coutdate, bno: rooms, 
              Additionalinfo: badditionalinfo,createdby:createdby,
-            Roomcost: htotalcost,Dueamount:hdueamount,Amountpaid:hamountpaid,duedate:duedate
+            Roomcost: htotalcost,Dueamount:hdueamount,Amountpaid:hamountpaid,duedate:duedate,
+            sstatus:sstatus
         };
         $.ajax({
             url: "book",
@@ -664,6 +703,8 @@ $(".bbtn-edit").click(function () {
             $("#tramountpaid").val(data.Amount_Paid);
             $("#trdueamount").val(data.Due_Amount);
             $("#tduedate").val(data.Due_Date);
+            $("#sstatus").val(data.Service_Status);
+
 
         }
     
@@ -689,13 +730,15 @@ $(".bbtn-edit").click(function () {
         let totalcost = $("#tttotalcost").val();
         let amountpaid = $("#tamountpaid").val();
         let dueamount = $("#dueamount").val();
+        let sstatus = $("#tsstatus").val();
         let csr = $("input[name=csrfmiddlewaretoken").val();
         console.log(id);
         tdata = {
             tiid:tid,vname: vname, csrfmiddlewaretoken: csr, Startdate: Startdate, enddate: enddate,
             slocation: slocation, elocation: elocation, vadditionalinfo: vadditionalinfo, dname: dname,
             dno: dno, totalcost: totalcost, amountpaid: amountpaid,
-            dueamount: dueamount};
+            dueamount: dueamount,sstatus:sstatus};
+        console.log(tdata);
         $.ajax({
             url: "addtransport",
             method: "POST",
@@ -785,6 +828,7 @@ $(".bbtn-edit").click(function () {
                 $("#drname").val(data.Driver_Name);
                 $("#dno").val(data.Driver_Phone_No);
                 $("#tttotalcost").val(data.Total_Cost);
+                $("#tsstatus").val(data.Service_Status);
 
             }
         })
@@ -812,13 +856,14 @@ $(".bbtn-edit").click(function () {
         let atotalcost = $("#actotalcost").val();
         let aamountpaid = $("#aamountpaid").val();
         let adueamount = $("#adueamount").val();
+        let sstatus = $("#asstatus").val();
         let csr = $("input[name=csrfmiddlewaretoken").val();
         console.log(id);
         adata = {
             aiid:aid,aname: aname, csrfmiddlewaretoken: csr, astate: astate, acity: acity,
             anoofpersons: anoofpersons, adate: adate, aadditionalinfo: aadditionalinfo, avname: avname,
             vno: vno, atotalcost: atotalcost, aamountpaid: aamountpaid,
-            adueamount: adueamount};
+            adueamount: adueamount,sstatus:sstatus};
         $.ajax({
             url: "addactivities",
             method: "POST",
@@ -907,6 +952,7 @@ $(".bbtn-edit").click(function () {
                 $("#avname").val(data.Vendor_Name);
                 $("#vno").val(data.Vendor_Contact_No);
                 $("#actotalcost").val(data.Total_Cost);
+                $("#asstatus").val(data.Service_Status);
 
             }
         })
