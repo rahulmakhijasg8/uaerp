@@ -160,4 +160,4 @@ Thumbs.db #thumbnail cache on Windows
 
 # End of https://www.toptal.com/developers/gitignore/api/django
 universaldb.sqlite3
-universaldb.sqlite3
+

@@ -2,12 +2,13 @@ from django import forms
 from django.db import connections
 from django.db.models import Q
 from django.db.models.aggregates import Sum
+from django.db.models.expressions import F
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import *
-from .models import Activitiesinfo, EntryForm, Hotelinfo, PersonalInfo, Bookinginfo,Paymentinfo,Connections, Transportinfo
+from .models import Activitiesinfo, EntryForm, Hotelinfo, PersonalInfo, Bookinginfo,Paymentinfo,Connections, Ticketinfo, Transportinfo
 import json
 import random, string
 from django.conf import settings
@@ -103,6 +104,7 @@ def d(request,id):
     transport = Transportinfo.objects.filter(Bookingkey=id).all()
     activity = Activitiesinfo.objects.filter(Bookingkey=id).all()
     d = Hotelinfo.objects.filter(Bookingkey=id).all()
+    tickets = Ticketinfo.objects.filter(Bookingkey=id).all()
     if request.method == 'POST':
 
        
@@ -130,7 +132,7 @@ def d(request,id):
         # print(hotelinfoserializer.data)
         return Response({'status':'save', 'info':info})
         return render(request, 'd.html',{'id':id,'a':bookinginfo,'b':b,'c':pinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum']})
-    return render(request, 'd.html',{'id':id,'a':a,'b':b,'c':pinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum']})
+    return render(request, 'd.html',{'id':id,'a':a,'b':b,'c':pinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum'],'tickets':tickets})
 
 def e(request,id):
     id=id
@@ -367,6 +369,42 @@ def i(request,id):
         return Response({'status':'save', 'info':info})
     return render(request, 'i.html',{'id':id})
 
+@api_view(['GET','POST'])
+def j(request,id):
+    id=id
+    bookinginfo = Bookinginfo.objects.get(id=id)
+    if request.method == 'POST':
+
+        tiid = request.POST['tiid']
+        toticket=request.POST['toticket']
+        tinooftickets = request.POST['tinooftickets']
+        tisstatus = request.POST['tisstatus']
+        ddate = request.POST['ddate']
+        ardate = request.POST['ardate']
+        tidcity = request.POST['tidcity']
+        tiacity = request.POST['tiacity']
+        tiadditionalinfo = request.POST['tiadditionalinfo']
+        titotalcost = request.POST['titotalcost']
+
+        if tiid =='':
+
+         ticketinfo=Ticketinfo.objects.create(Bookingkey=bookinginfo,Type_of_ticket=toticket,No_of_tickets=tinooftickets,
+                                            Service_Status=tisstatus,Departure_Date=ddate,Arrival_Date=ardate,
+                                            Departure_city=tidcity,Arrival_city=tiacity,Additional_info=tiadditionalinfo,
+                                            Total_Cost=titotalcost)
+        else:
+            Ticketinfo.objects.filter(id=tiid).update(Bookingkey=bookinginfo,Type_of_ticket=toticket,No_of_tickets=tinooftickets,
+                                            Service_Status=tisstatus,Departure_Date=ddate,Arrival_Date=ardate,
+                                            Departure_city=tidcity,Arrival_city=tiacity,Additional_info=tiadditionalinfo,
+                                            Total_Cost=titotalcost)
+       
+        tiinfo = Ticketinfo.objects.filter(Bookingkey=id).values()
+        info = list(tiinfo)
+        #print(info)
+        # hotelinfoserializer = Hotelinfoserializer(hotelinfo)
+        # print(hotelinfoserializer.data)
+        return Response({'status':'save', 'info':info})
+    return render(request, 'i.html',{'id':id})
 
 def delete(request):
     if request.method == "POST":
@@ -426,6 +464,28 @@ def tdelete(request):
     else:
         return JsonResponse({'status':0})
 
+def tidelete(request):
+    if request.method == "POST":
+        id = request.POST['tiid']
+        print(id)
+        ti = Ticketinfo.objects.get(pk=id)
+        ti.delete()
+        return JsonResponse({'status':1})
+    else:
+        return JsonResponse({'status':0})
+
+def tiedit(request):
+    if request.method == "POST":
+        id = request.POST['tiid']
+        print(id)
+        ai = Ticketinfo.objects.get(pk=id)
+        tidata = {"id":ai.id,"Type_of_ticket":ai.Type_of_ticket,"No_of_tickets":ai.No_of_tickets,"Departure_Date":ai.Departure_Date,
+                 "Arrival_Date":ai.Arrival_Date,"Departure_city":ai.Departure_city,"Arrival_city":ai.Arrival_city,
+                   "Total_Cost":ai.Total_Cost,"Amount_Paid":ai.Amount_Paid,"Due_Amount":ai.Due_Amount,
+                   "Additional_info":ai.Additional_info,"Service_Status":ai.Service_Status}
+
+        return JsonResponse(tidata)
+
 def aedit(request):
     if request.method == "POST":
         id = request.POST['aid']
@@ -459,7 +519,7 @@ def index(request,id,pid):
             'bookinginfo':bookinginfo,'pinfo':pinfo,'payinfo':payinfo
         })
   mail = EmailMessage(
-    subject='Payment Confirmation',
+    subject='Universal Adventures - Payment Confirmation ID: UA001900'+str(payinfo.id),
     body=message_body,
     from_email = 'booking@universaladventure.in',
     #from_email=settings.EMAIL_HOST_USER,
@@ -528,6 +588,24 @@ def activity_payments(request,id,aid):
         Activitiesinfo.objects.filter(id=aid).update(Due_Amount=tcost-amtpaid['Amount__sum'])
     return render(request, 'hotelpayments.html',{'id':id})
 
+def ticket_payments(request,id,tiid):
+    id=id
+    tiid=tiid
+    bookinginfo = Bookinginfo.objects.get(id=id)
+    ticketinfo = Ticketinfo.objects.get(id=tiid)
+    if request.method == 'POST':
+        amount = request.POST.get('amount')
+        date = request.POST.get('date')
+        mode = request.POST.get('mode')
+        info = request.POST.get('info')
+
+        Paymentinfo.objects.create(Bookingkey=bookinginfo,Tipaymentskey=ticketinfo,Payment_Type='Tickets',Amount=amount,Date=date,
+                                    Mode_of_payment=mode,Additional_info=info)
+        amtpaid=Paymentinfo.objects.filter(Tipaymentskey=ticketinfo).aggregate(Sum('Amount'))
+        Ticketinfo.objects.filter(id=tiid).update(Amount_Paid=amtpaid['Amount__sum'])
+        tcost =Ticketinfo.objects.filter(id=tiid).values_list('Total_Cost', flat=True)[0]
+        Ticketinfo.objects.filter(id=tiid).update(Due_Amount=tcost-amtpaid['Amount__sum'])
+    return render(request, 'hotelpayments.html',{'id':id})
 
 def login_user(request):
     if request.method == 'POST':

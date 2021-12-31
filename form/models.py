@@ -1,6 +1,8 @@
 from django.db import models
 import datetime
 
+from django.db.models.aggregates import Count, Sum
+
 
 class PersonalInfo(models.Model):
     GENDER = [
@@ -53,6 +55,77 @@ class Bookinginfo(models.Model):
         due = self.Total_Cost - self.Amount_Paid
         return due
 
+    @property
+    def total_hbookings(self):
+        hbookings = self.hotelinfo_set.all()
+        count = 0
+        for booking in hbookings:
+                count += 1
+        return count
+
+    @property
+    def bhbookings(self):
+        hbookings = self.hotelinfo_set.all()
+        count = 0
+        for booking in hbookings:
+            if booking.Service_Status=='Booked':
+                count += 1
+        return count
+
+    @property
+    def total_abookings(self):
+        abookings = self.activitiesinfo_set.all()
+        count = 0
+        for booking in abookings:
+                count += 1
+        return count
+
+    @property
+    def babookings(self):
+        abookings = self.activitiesinfo_set.all()
+        count = 0
+        for booking in abookings:
+            if booking.Service_Status=='Booked':
+                count += 1
+        return count
+
+    @property
+    def total_tbookings(self):
+        tbookings = self.transportinfo_set.all()
+        count = 0
+        for booking in tbookings:
+                count += 1
+        return count
+
+    @property
+    def btbookings(self):
+        tbookings = self.transportinfo_set.all()
+        count = 0
+        for booking in tbookings:
+            if booking.Service_Status=='Booked':
+                count += 1
+        return count
+
+    @property
+    def total_tibookings(self):
+        tibookings = self.ticketinfo_set.all()
+        count = 0
+        for booking in tibookings:
+                count += 1
+        return count
+
+    @property
+    def btibookings(self):
+        tibookings = self.ticketinfo_set.all()
+        count = 0
+        for booking in tibookings:
+            if booking.Service_Status=='Booked':
+                count += 1
+        return count
+
+
+        
+
 class Hotelinfo(models.Model):
     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE)
     Hname = models.CharField(max_length=255)
@@ -77,6 +150,9 @@ class Hotelinfo(models.Model):
     def due_amt(self):
         due = self.Total_Cost - self.Amount_Paid
         return due
+    @property
+    def totalbookings(self):
+        return Count(self.id)
 
 class Activitiesinfo(models.Model):
     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE)
@@ -108,8 +184,9 @@ class Ticketinfo(models.Model):
     Arrival_city = models.CharField(max_length=255)
     Total_Cost = models.PositiveIntegerField()
     Amount_Paid = models.PositiveIntegerField(null=True)
+    Due_Amount = models.PositiveIntegerField(null=True)
     Additional_info = models.CharField(max_length=255)
-
+    Service_Status = models.CharField(max_length=255, null=True)
    
 
 class Transportinfo(models.Model):
@@ -137,6 +214,7 @@ class Paymentinfo(models.Model):
     Hpaymentskey = models.ForeignKey(Hotelinfo,null=True,on_delete=models.CASCADE,related_name='hp')
     Tpaymentskey = models.ForeignKey(Transportinfo,null=True,on_delete=models.CASCADE,related_name='tp')
     Apaymentskey = models.ForeignKey(Activitiesinfo,null=True,on_delete=models.CASCADE,related_name='ap')
+    Tipaymentskey = models.ForeignKey(Ticketinfo,null=True,on_delete=models.CASCADE,related_name='tip')
     Payment_Type = models.CharField(max_length=255)
     Amount = models.PositiveBigIntegerField()
     Date = models.DateField(default=datetime.date.today)

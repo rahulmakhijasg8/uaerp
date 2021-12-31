@@ -453,6 +453,78 @@
 
 <h2>Tickets Info</h2> <button>Add more Tickets</button>
 
+<div id="djax">
+    {% for entry in tickets %}
+        <div>
+            <form action="" id="tinfo" class="" style="text-align: center;">
+                <label  >Type of Ticket</label>
+                <input id="toticket" type= 'text' name="Hotelname" value="{{entry.Type_of_ticket}}" required>&nbsp;&nbsp;
+                <label  >No of Tickets </label>
+                <input id="tinoofpeople" type= 'number' name="Checkoutdate" value="{{entry.No_of_tickets}}" required>&nbsp;&nbsp;
+                <label for="">Service Status</label>
+                <input type="text" name="" value="{{entry.Service_Status}}" id="status"><br>
+                <label for="your_name">Departure Date </label>
+                <input id="ddate" type="text" name="Startdate" value="{{entry.Departure_Date}}"  required>&nbsp;&nbsp;
+                <label for="your_name">Arrival Date </label>
+                <input id="ardate" type="text" name="Enddate" value="{{entry.Arrival_Date}}" required><br>
+                <label  >Departure City </label>
+                <input id="ticity" type= 'text' name="Hotelcity" value="{{entry.Departure_city}}" required>&nbsp;&nbsp;
+                <label  >Arrival City </label>
+                <input id="tistate" type= 'text' name="Hotelstate" value="{{entry.Arrival_city}}" required><br>
+                <label  >Additional Info </label>
+                <input id="tiadditionalinfo" type= 'text' name="Mealplan" value="{{entry.Additional_info}}" required><br>
+                <label  >Total Cost </label>
+                <input type= 'number' id="titotalcost" type= 'number' name="Roomtype" value="{{entry.Total_Cost}}">&nbsp;&nbsp;
+                <label  >Amount Paid </label>
+                <input type= 'number' id="tiamountpaid" type= 'number' name="Roomtype" value="{{entry.Amount_Paid}}">&nbsp;&nbsp;
+                <label  >Due Amount </label>
+                <input type= 'number' id="tidueamountt" type= 'number' name="Roomtype" value="{{entry.Due_Amount}}"><br>
+                
+                <input type="button" value="Edit" class="tibtn-edit" data-tiid="{{entry.id}}">
+                <input type="button" value="Delete" id="dbtn" class="tibtn-del" data-tiid="{{entry.id}}"><br>
+                <a href="{{entry.id}}/tipayments" target="_blank"><button type="button">Payments</button></a>
+    
+        </div></form>
+        <hr>
+    
+    
+        {% endfor %}
+    </div>
+    
+    
+    <form action="" method="POST" id="tiinfo" class="ti-info" style="text-align: center;"  >
+        {% csrf_token %}
+        <input type="hidden" name="tiiid" id="tiiid">
+        <label for="your_name" >Type of Ticket</label>
+        <input id="ab" type="text" name="Activityname"required>&nbsp;&nbsp;
+        <label  >No of Tickets </label>
+        <input id="b" type= 'number' name="Checkoutdate" value="{{entry.No_of_tickets}}" required>&nbsp;&nbsp;
+        <label for="">Service Status</label>
+        <select name="sstatus" id="c">
+            <option value="Booked">Booked</option>
+            <option value="Pending">Pending</option>
+            <option value="Complete">Complete</option>
+            <option value="Required">Required</option>
+            <option value="Urgent Action Required">Urgent Action Required</option>
+            <option value="Cancelled">Cancelled</option>
+          </select><br>
+          <label for="your_name">Departure Date </label>
+          <input id="d" type="date" name="Startdate" value="{{entry.Departure_Date}}"  required>&nbsp;&nbsp;
+          <label for="your_name">Arrival Date </label>
+          <input id="e" type="date" name="Enddate" value="{{entry.Arrival_Date}}" required><br>
+          <label  >Departure City </label>
+          <input id="f" type= 'text' name="Hotelcity" value="{{entry.Departure_city}}" required>&nbsp;&nbsp;
+          <label  >Arrival City </label>
+          <input id="g" type= 'text' name="Hotelstate" value="{{entry.Arrival_city}}" required><br>
+          <label  >Additional Info </label>
+          <input id="h" type= 'text' name="Mealplan" value="{{entry.Additional_info}}" required><br>
+          <label  >Total Cost </label>
+          <input type= 'number' id="i" type= 'number' name="Roomtype" value="{{entry.Total_Cost}}"><br>
+        
+    
+        <input type="button" value="Save" name="" id="ticketsbtn">
+    
+    </form>
 
 
 <style>
@@ -959,4 +1031,120 @@ $(".bbtn-edit").click(function () {
     
     })
 
+
+</script>
+
+<script>
+    $("#ticketsbtn").click(function () {
+        console.log('save button clicked');
+        output = "";
+        let html = $("#a");
+        let tiid = $("#tiiid").val();
+        let toticket = $("#ab").val();
+        let tinooftickets = $("#b").val();
+        let tisstatus = $("#c").val();
+        let ddate = $("#d").val();
+        let ardate = $("#e").val();
+        let tidcity = $("#f").val();
+        let tiacity = $("#g").val();
+        let tiadditionalinfo = $("#h").val();
+        let titotalcost = $("#i").val();
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        tidata = {
+           tiid:tiid,toticket: toticket, csrfmiddlewaretoken: csr, tinooftickets: tinooftickets, tisstatus: tisstatus,
+           ddate: ddate, ardate: ardate, tidcity: tidcity, tiacity: tiacity,
+           tiadditionalinfo: tiadditionalinfo, titotalcost: titotalcost};
+            
+        $.ajax({
+        url: "addtickets",
+        method: "POST",
+        data: tidata,
+        success: function (data) {
+
+            x = data.info;
+            console.log(x);
+            for(i=1; i<x.length; i++){
+                output += "<form style='text-align: center;'>" +
+                        "<label >Activity Name </label>"+
+                        "<input type='text' value="+x[i].Name_of_activity+"><br\>"+
+                        "<label >State </label>"+
+                        "<input type='text'value="+x[i].State+" required>&nbsp;&nbsp;" +
+                        "<label  >City </label>"+
+                        "<input type='text'value="+x[i].City+" required><br\>" +
+                        "<label  >Date </label>"+
+                        "<input type='date' value="+x[i].Date +" required>&nbsp;&nbsp;" +
+                        "<label  >No of People </label>"+
+                        "<input type='number' value="+x[i].No_of_People +" required><br\>" +
+                        "<label  >Vendor Name </label>"+
+                        "<input type='text' value="+x[i].Vendor_Name+" required>&nbsp;&nbsp;"+
+                        "<label  >Vendor Contact No </label>"+
+                        "<input type='text' value="+x[i].Vendor_Contact_No +" required><br\>"+
+                        "<label  >Total Cost </label>"+
+                        "<input type='number' value="+x[i].Total_Cost +" required>&nbsp;&nbsp;"+
+                        "<label  >Additional Info </label>"+
+                        "<input type='text' value="+x[i].Additional_info +" required><br\>"+
+                        "<input type='button' value='Edit' class='edit-btn' data-hid="+x[i].id+">"+
+                        "<input type='button' value='Delete' class='del-btn' id='dbtn' data-hid="+x[i].id+"><hr\>"
+
+                };
+
+                $("#djax").append(output);
+                $("#tiinfo").trigger("reset");
+                $("#tiiid").val("");
+            }
+        })
+    })
+
+    $(".tibtn-del").click(function () {
+        console.log("delete button clicked");
+        let id = $(this).attr("data-tiid");
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        mydata = {tiid:id,csrfmiddlewaretoken: csr}
+        mythis = this;
+        $.ajax({
+            url: "{% url 'tidelete' %}",
+            method: "POST",
+            data: mydata,
+            success: function (data){
+                if(data.status==1){
+                console.log(data);
+                $(mythis).closest("div").fadeOut();
+                }
+            }
+
+        })
+    })
+
+    $(".tibtn-edit").click(function () {
+        console.log("edit button clicked");
+        let id = $(this).attr("data-tiid");
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        console.log(id);
+        mydata = {tiid:id,csrfmiddlewaretoken: csr}
+        $.ajax({
+            url: "{% url 'tiedit' %}",
+            method: "POST",
+            data: mydata,
+            dataType:"json",
+            success: function (data){
+                console.log(data);
+                $("#tiiid").val(data.id);
+                $("#ab").val(data.Type_of_ticket);
+                $("#b").val(data.No_of_tickets);
+                $("#c").val(data.Service_Status);
+                $("#d").val(data.Departure_Date);
+                $("#e").val(data.Arrival_Date);
+                $("#f").val(data.Departure_city);
+                $("#g").val(data.Arrival_city);
+                $("#h").val(data.Additional_info);
+                $("#i").val(data.Total_Cost);
+
+            }
+        })
+    
+    })
+
+    
 </script>

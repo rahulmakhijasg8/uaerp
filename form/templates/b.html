@@ -25,7 +25,7 @@
      </thead>
      <tbody>
         {% for entry in Entryform %}
-            
+       
          <tr>
              <td style="height: 50px;px;width:100px">{{entry.Bookingkey}}</td>
              <td>{{entry.BookingDate}}</td>
@@ -35,11 +35,12 @@
              <td>{{entry.personal_details.Name}}</td>
              <td>{{entry.Total_Cost}}</td>
              <td>{{entry.Due_amount}}</td>
-             <td>{{entry.Service_Status}}</td>
+             <td>{{entry.Service_Status}} <br>
+               Hotel-({{entry.bhbookings}}/{{entry.total_hbookings}})&nbsp;&nbsp;Activity-({{entry.babookings}}/{{entry.total_abookings}})<br>
+               Transport-({{entry.btbookings}}/{{entry.total_tbookings}})&nbsp;&nbsp;Tickets-({{entry.btibookings}}/{{entry.total_tibookings}})
+             </td>
              <td>{{entry.Due_Date}}
                  <a href="b/d/{{entry.id}}" target="_blank">link</a></td>
-            
- 
          </tr>
      {% endfor %}
      </tbody>
