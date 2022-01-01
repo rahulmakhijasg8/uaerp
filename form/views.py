@@ -8,7 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import *
-from .models import Activitiesinfo, EntryForm, Hotelinfo, PersonalInfo, Bookinginfo,Paymentinfo,Connections, Ticketinfo, Transportinfo
+from .models import Activitiesinfo, EntryForm, Hotelinfo, PersonalInfo, Bookinginfo,Paymentinfo,Connections, Ticketinfo, Transportinfo, Venderinfo
 import json
 import random, string
 from django.conf import settings
@@ -104,6 +104,7 @@ def d(request,id):
     transport = Transportinfo.objects.filter(Bookingkey=id).all()
     activity = Activitiesinfo.objects.filter(Bookingkey=id).all()
     d = Hotelinfo.objects.filter(Bookingkey=id).all()
+    venderinfo =Venderinfo.objects.values_list('state', flat=True)
     tickets = Ticketinfo.objects.filter(Bookingkey=id).all()
     if request.method == 'POST':
 
@@ -132,7 +133,7 @@ def d(request,id):
         # print(hotelinfoserializer.data)
         return Response({'status':'save', 'info':info})
         return render(request, 'd.html',{'id':id,'a':bookinginfo,'b':b,'c':pinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum']})
-    return render(request, 'd.html',{'id':id,'a':a,'b':b,'c':pinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum'],'tickets':tickets})
+    return render(request, 'd.html',{'id':id,'a':a,'b':b,'c':pinfo,'venderinfo':venderinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum'],'tickets':tickets})
 
 def e(request,id):
     id=id
