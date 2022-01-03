@@ -183,7 +183,7 @@
 
 </table>
 
-<h2>Hotel Info</h2> <a href="addhotels" target="_blank"><button>Add more Hotels</button></a><br>
+<h2>Hotel Info</h2> 
 
 <div id="ajax">
     {% for entry in d %}
@@ -225,7 +225,7 @@
             <input id="tduedate" type="number" name="Number" value="{{entry.Hotel_Contact_No}}" required>&nbsp;&nbsp;
             <label  >Email </label>
             <input id="tduedate" type="email" name="Email" value="{{entry.Hemail}}" required><br>
-            <input type="button" value="Edit" class="btn-edit" id="btn-edit-{{entry.id}}" data-hid="{{entry.id}}">
+            <input type="button" value="Edit" onclick="hform(2)" class="btn-edit" id="btn-edit-{{entry.id}}" data-hid="{{entry.id}}">
             <input type="button" value="Delete" id="dbtn" class="btn-del" data-hid="{{entry.id}}"><br>
               <a href="{{entry.id}}/hpayments" target="_blank"><button type="button">Payments</button></a>
         </form>
@@ -235,7 +235,7 @@
     {% endfor %}
 
 </div>
-
+<button type="button" onclick="hform(2)">Add more Hotels</button><br>
 <form action="" method="POST" id="hform" class="" style="text-align: center;">
     {% csrf_token %}
     <input type="hidden" name="hiid" id="hiid">
@@ -276,7 +276,7 @@
     <input id="hphoneno" type="number" name="Number" required>&nbsp;&nbsp;
     <label  >Email </label>
     <input id="hemail" type="email" name="Email" required><br>
-    <input type="button" value="save" name="" id="btn">
+    <input type="button" onclick="hform(1)"  value="save" name="" id="btn">
 
 </form>
 
@@ -291,7 +291,7 @@
 }
 </script>
 
-<h2>Transport Info</h2> <a href="addtransport" target="_blank"><button>Add more Transport</button></a>
+<h2>Transport Info</h2> 
 <div id="bjax">
 {% for entry in transport %}
     <div>
@@ -323,7 +323,7 @@
             
             <label  >Additional Info </label>
             <input id="dadditionalinfo" type= 'text' name="Mealplan" value="{{entry.Additional_info}}" required><br>
-            <input type="button" value="Edit" class="tbtn-edit" id="btn-edit-{{entry.id}}" data-tid="{{entry.id}}">
+            <input type="button" value="Edit" onclick="tform(2)" class="tbtn-edit" id="btn-edit-{{entry.id}}" data-tid="{{entry.id}}">
             <input type="button" value="Delete" id="dbtn" class="tbtn-del" data-tid="{{entry.id}}"><br>
             <a href="{{entry.id}}/tpayments" target="_blank"><button type="button">Payments</button></a>
 
@@ -333,7 +333,7 @@
 </div>
 
 
-
+<button type="button" onclick="tform(2)">Add more Transport</button><br>
 <form action="" method="POST" id="tinfo" class="tinfo"  style="text-align: center;"  >
     {% csrf_token %}
     <input type="hidden" name="tiid" id="tiid">
@@ -363,18 +363,18 @@
     <label for="your_name">Driver No. </label>
     <input type="number"   id="dno" name="dno" ><br>
     <label for="your_name">Total Cost </label>
-    <input type="number"   id="tttotalcost" name="totalcost" >&nbsp;&nbsp;
+    <input type="number"   id="tttotalcost" name="totalcost" ><br>
 
-    <input type="button" name="" value="save" id="tbtn">
+    <input type="button" onclick="tform(1)" name="" value="save" id="tbtn">
 
 </form>
 
 
-<h2>Activities Info</h2> <a href="addactivities" target="_blank"><button>Add more Activity</button></a>
+<h2>Activities Info</h2> 
 <div id="cjax">
 {% for entry in activity %}
     <div>
-        <form action="" id="tinfo" class="" style="text-align: center;">
+        <form action="" id="aform" class="" style="text-align: center;">
             <label  >Activity Name</label>
             <input id="aname" type= 'text' name="Hotelname" value="{{entry.Name_of_activity}}" required>&nbsp;&nbsp;
             <label for="">Service Status</label>
@@ -403,7 +403,7 @@
             
             <label  >Additional Info </label>
             <input id="aadditionalinfo" type= 'text' name="Mealplan" value="{{entry.Additional_info}}" required><br>
-            <input type="button" value="Edit" class="abtn-edit" data-aid="{{entry.id}}">
+            <input type="button" value="Edit" onclick="aform(2)" class="abtn-edit" data-aid="{{entry.id}}">
             <input type="button" value="Delete" id="dbtn" class="abtn-del" data-aid="{{entry.id}}"><br>
             <a href="{{entry.id}}/apayments" target="_blank"><button type="button">Payments</button></a>
 
@@ -414,7 +414,7 @@
     {% endfor %}
 </div>
 
-
+<button type="button" onclick="aform(2)">Add more Activity</button><br>
 <form action="" method="POST" id="ainfo" class="a-info" style="text-align: center;"  >
     {% csrf_token %}
     <input type="hidden" name="aiid" id="aiid">
@@ -452,16 +452,16 @@
     <input type="number"   id="actotalcost" name="Vno" ><br>
     
 
-    <input type="button" value="Save" name="" id="abtn">
+    <input type="button" onclick="aform(1)" value="Save" name="" id="abtn">
 
 </form>
 
-<h2>Tickets Info</h2> <button>Add more Tickets</button>
+<h2>Tickets Info</h2> 
 
 <div id="djax">
     {% for entry in tickets %}
         <div>
-            <form action="" id="tinfo" class="" style="text-align: center;">
+            <form action="" id="tiform" class="" style="text-align: center;">
                 <label  >Type of Ticket</label>
                 <input id="toticket" type= 'text' name="Hotelname" value="{{entry.Type_of_ticket}}" required>&nbsp;&nbsp;
                 <label  >No of Tickets </label>
@@ -485,7 +485,7 @@
                 <label  >Due Amount </label>
                 <input type= 'number' id="tidueamountt" type= 'number' name="Roomtype" value="{{entry.Due_Amount}}"><br>
                 
-                <input type="button" value="Edit" class="tibtn-edit" data-tiid="{{entry.id}}">
+                <input type="button" value="Edit" onclick="tiform(2)" class="tibtn-edit" data-tiid="{{entry.id}}">
                 <input type="button" value="Delete" id="dbtn" class="tibtn-del" data-tiid="{{entry.id}}"><br>
                 <a href="{{entry.id}}/tipayments" target="_blank"><button type="button">Payments</button></a>
     
@@ -496,7 +496,7 @@
         {% endfor %}
     </div>
     
-    
+    <button type="button" onclick="tiform(2)">Add more Tickets</button><br>
     <form action="" method="POST" id="tiinfo" class="ti-info" style="text-align: center;"  >
         {% csrf_token %}
         <input type="hidden" name="tiiid" id="tiiid">
@@ -527,40 +527,49 @@
           <input type= 'number' id="i" type= 'number' name="Roomtype" value="{{entry.Total_Cost}}"><br>
         
     
-        <input type="button" value="Save" name="" id="ticketsbtn">
+        <input type="button" value="Save" onclick="tiform(1)" name="" id="ticketsbtn">
     
     </form>
 
 
 <style>
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0, 0, 0);
-        background-color: rgba(0, 0, 0, 0.4);
-        padding-top: 60px;
-    }
-
-    .moda {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0, 0, 0);
-        background-color: rgba(0, 0, 0, 0.4);
-        padding-top: 60px;
-    }
+    #hform,#tinfo,#ainfo,#tiinfo {
+            display:none;
+        }
+        #txtvalues{
+            display: none;
+        }
 </style>
+<script type="">
+        function hform(a)
+    {
+        if(a==1)
+            document.getElementById("hform").style.display="none";
+        else
+            document.getElementById("hform").style.display="block";
+    }
+    function tform(a)
+    {
+        if(a==1)
+            document.getElementById("tinfo").style.display="none";
+        else
+            document.getElementById("tinfo").style.display="block";
+    }
+    function aform(a)
+    {
+        if(a==1)
+            document.getElementById("ainfo").style.display="none";
+        else
+            document.getElementById("ainfo").style.display="block";
+    }
+    function tiform(a)
+    {
+        if(a==1)
+            document.getElementById("tiinfo").style.display="none";
+        else
+            document.getElementById("tiinfo").style.display="block";
+    }
+    </script>
 
 
 

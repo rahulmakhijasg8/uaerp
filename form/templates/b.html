@@ -36,8 +36,27 @@
              <td>{{entry.Total_Cost}}</td>
              <td>{{entry.Due_amount}}</td>
              <td>{{entry.Service_Status}} <br>
-               Hotel-({{entry.bhbookings}}/{{entry.total_hbookings}})&nbsp;&nbsp;Activity-({{entry.babookings}}/{{entry.total_abookings}})<br>
-               Transport-({{entry.btbookings}}/{{entry.total_tbookings}})&nbsp;&nbsp;Tickets-({{entry.btibookings}}/{{entry.total_tibookings}})
+               {% if entry.bhbookings == entry.total_hbookings %}
+               <div style="background-color:green; display: inline-block;" id="hstyle">Hotel-({{entry.bhbookings}}/{{entry.total_hbookings}})</div> &nbsp;&nbsp;
+               {% else %}
+               <div style="background-color:red; display: inline-block;" id="hstyle">Hotel-({{entry.bhbookings}}/{{entry.total_hbookings}})</div> &nbsp;&nbsp;
+               {% endif %}
+               {% if entry.babookings == entry.total_abookings %}
+               <div style="background-color: green; display: inline-block; border-radius: 25px;">Activity-({{entry.babookings}}/{{entry.total_abookings}})</div><br>
+               {% else %}
+               <div style="background-color: red; display: inline-block; border-radius: 25px;">Activity-({{entry.babookings}}/{{entry.total_abookings}})</div><br>
+               {% endif %}
+               {% if entry.btbookings == entry.total_tbookings %}
+               <div style="background-color: green; display: inline-block; border-radius: 25px;">Transport-({{entry.btbookings}}/{{entry.total_tbookings}})</div>&nbsp;&nbsp;
+               {% else %}
+               <div style="background-color: red; display: inline-block; border-radius: 25px;">Transport-({{entry.btbookings}}/{{entry.total_tbookings}})</div>&nbsp;&nbsp;
+               {% endif %}
+               {% if entry.btibookings == entry.total_tibookings %}
+               <div style="background-color: green; display: inline-block; border-radius: 25px;">Tickets-({{entry.btibookings}}/{{entry.total_tibookings}})</div> 
+               {% else %}
+               <div style="background-color: red; display: inline-block; border-radius: 25px;">Tickets-({{entry.btibookings}}/{{entry.total_tibookings}})</div> 
+               {% endif %}
+                </div><br>
              </td>
              <td>{{entry.Due_Date}}
                  <a href="b/d/{{entry.id}}" target="_blank">link</a></td>
@@ -46,7 +65,21 @@
      </tbody>
  </table>
 
+
+
  <script type="text/javascript">
+    let a = "{{entry.bhbookings}}";
+    let b = "{{entry.total_hbookings}}";
+    if (a=b){
+        var myDiv = document.getElementById("#hstyle");
+        myDiv.setAttribute("style", "background-color:green;");
+        myDiv.style.display='none';
+    }
+
+    
+    
+    
+    
     /* 
        Willmaster Table Sort
        Version 1.1

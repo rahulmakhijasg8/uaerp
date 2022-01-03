@@ -89,6 +89,11 @@ x = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range
 
 def b(request):
     Entryform = Bookinginfo.objects.select_related('personal_details').all()
+    venderinfo =Bookinginfo.objects.values_list('Service', flat=True)[:]
+    v = list(venderinfo)
+    for ve in v:
+        y = ve.strip(',')
+        print(y)
     return render (request,'b.html',{'Entryform':Entryform})
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
