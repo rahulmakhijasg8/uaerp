@@ -1,5 +1,6 @@
 {% load mathfilters %}
 <form action="" method="" id="id00">
+    <a href="{{a.Trello_link}}" target="_blank"><button type="button">Open Trello Link</button></a><br>
     <label  >Trip Name </label>
     <input id="name" type= 'text' name="Tripname" value="{{a.Trip_Name}}" readonly required>&nbsp;&nbsp;
     <label for="">Service Status</label>
@@ -30,7 +31,7 @@
     {% endwith %}
     <label  >Due Date </label>
     <input id="duedate" type= 'text' name="Duedate" value="{{a.Due_Date}}" required readonly><br>
-    <input type="button" value="Edit" class="bbtn-edit" id="bbt" data-bid="{{a.id}}">
+    <input type="button" value="Edit" onclick="bform(2)" class="bbtn-edit" id="bbt" data-bid="{{a.id}}">
 </form>
 &nbsp;&nbsp;&nbsp;&nbsp;
    
@@ -85,11 +86,8 @@
     <label  >Due Date </label>
     <input id="tduedate" type="date" name="Duedate" ><br>
 
-    <input type="button" value="submit" id="tbtn-save" class="tbtn-save" form="id01">
+    <input type="button" value="submit" onclick="bform(1)" id="tbtn-save" class="tbtn-save" form="id01">
 </form>
-
-<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Update Booking
-    Details</button>
 
 <h2>Payment History</h2> <a href="payments" target="_blank"><button>New Payment</button><br></a>
 
@@ -187,7 +185,7 @@
 
 <div id="ajax">
     {% for entry in d %}
-    <div id="a">
+    <div id="a" >
         <form action="" id="" class="" style="text-align: center;">
             <label  >Hotel Name </label>
             <input id="hotelnam" type= 'text' name="Hotelname" value="{{entry.Hname}}" required>&nbsp;&nbsp;
@@ -236,7 +234,7 @@
 
 </div>
 <button type="button" onclick="hform(2)">Add more Hotels</button><br>
-<form action="" method="POST" id="hform" class="" style="text-align: center;">
+<form action="" method="POST" id="hform" class="" style="text-align: center">
     {% csrf_token %}
     <input type="hidden" name="hiid" id="hiid">
     <label  >Hotel Name </label>
@@ -533,8 +531,12 @@
 
 
 <style>
-    #hform,#tinfo,#ainfo,#tiinfo {
+    #hform,#tinfo,#ainfo,#tiinfo,#id0 {
             display:none;
+            border: 5px;
+            background-color: lightgrey;
+            border-color: red;
+            border-style: solid;
         }
         #txtvalues{
             display: none;
@@ -568,6 +570,13 @@
             document.getElementById("tiinfo").style.display="none";
         else
             document.getElementById("tiinfo").style.display="block";
+    }
+    function bform(a)
+    {
+        if(a==1)
+            document.getElementById("id0").style.display="none";
+        else
+            document.getElementById("id0").style.display="block";
     }
     </script>
 

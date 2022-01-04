@@ -50,6 +50,7 @@ class Bookinginfo(models.Model):
     Due_Date = models.DateField(default=datetime.date.today)
     Service_Status = models.CharField(max_length=255, null=True)
     No_of_People = models.CharField(max_length=255, null=True)
+    Trello_link = models.CharField(max_length=255,null=True)
 
     @property
     def due_amt(self):

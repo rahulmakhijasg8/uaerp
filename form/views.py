@@ -65,10 +65,11 @@ def a(request):
         duedate = request.POST.get('duedate')
         sstatus = request.POST.get('sstatus')
         noofpeople = request.POST.get('noofpeople')
+        trello = request.POST.get('trello')
         bookinginfo=Bookinginfo.objects.create(Bookingkey = x, personal_details = personalinfo, Trip_Name=tripname,Start_Date=startdate,
                                     End_Date=enddate,City=tcity, State=tstate,Service=service,Total_Cost=totalcost,Amount_Paid=amountpaid,
                                     Due_amount=dueamount,BookingDate=paymentdate,Mode_of_payment=modeofpayment,Additional_info=additionalinfo,
-                                    Created_by=createdby,Due_Date=duedate,Service_Status=sstatus,No_of_People=noofpeople)
+                                    Created_by=createdby,Due_Date=duedate,Service_Status=sstatus,No_of_People=noofpeople,Trello_link=trello)
 
         Connections.objects.create(Bookingkey=bookinginfo,Membertype = 'Prime',Personalkey=personalinfo )
 
@@ -89,11 +90,7 @@ x = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range
 
 def b(request):
     Entryform = Bookinginfo.objects.select_related('personal_details').all()
-    venderinfo =Bookinginfo.objects.values_list('Service', flat=True)[:]
-    v = list(venderinfo)
-    for ve in v:
-        y = ve.strip(',')
-        print(y)
+    venderinfo =Bookinginfo.objects.values_list('Service', flat=True)[0]
     return render (request,'b.html',{'Entryform':Entryform})
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime

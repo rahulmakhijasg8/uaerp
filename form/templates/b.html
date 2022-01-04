@@ -37,24 +37,24 @@
              <td>{{entry.Due_amount}}</td>
              <td>{{entry.Service_Status}} <br>
                {% if entry.bhbookings == entry.total_hbookings %}
-               <div style="background-color:green; display: inline-block;" id="hstyle">Hotel-({{entry.bhbookings}}/{{entry.total_hbookings}})</div> &nbsp;&nbsp;
+               <div style="background-color: #00ba02;display: inline-block;color: white;padding: 2px 7px;font-weight: 600;border-radius: 7px;margin: 5px 0px;">Hotel-({{entry.bhbookings}}/{{entry.total_hbookings}})</div> &nbsp;&nbsp;
                {% else %}
-               <div style="background-color:red; display: inline-block;" id="hstyle">Hotel-({{entry.bhbookings}}/{{entry.total_hbookings}})</div> &nbsp;&nbsp;
+               <div style="background-color: #ff5722;display: inline-block;color: white;padding: 2px 7px;font-weight: 600;border-radius: 7px;margin: 5px 0px;" id="hstyle">Hotel-({{entry.bhbookings}}/{{entry.total_hbookings}})</div> &nbsp;&nbsp;
                {% endif %}
                {% if entry.babookings == entry.total_abookings %}
-               <div style="background-color: green; display: inline-block; border-radius: 25px;">Activity-({{entry.babookings}}/{{entry.total_abookings}})</div><br>
+               <div style="background-color: #00ba02;display: inline-block;color: white;padding: 2px 7px;font-weight: 600;border-radius: 7px;margin: 5px 0px;">Activity-({{entry.babookings}}/{{entry.total_abookings}})</div><br>
                {% else %}
-               <div style="background-color: red; display: inline-block; border-radius: 25px;">Activity-({{entry.babookings}}/{{entry.total_abookings}})</div><br>
+               <div style="background-color: #ff5722;display: inline-block;color: white;padding: 2px 7px;font-weight: 600;border-radius: 7px;margin: 5px 0px;">Activity-({{entry.babookings}}/{{entry.total_abookings}})</div><br>
                {% endif %}
                {% if entry.btbookings == entry.total_tbookings %}
-               <div style="background-color: green; display: inline-block; border-radius: 25px;">Transport-({{entry.btbookings}}/{{entry.total_tbookings}})</div>&nbsp;&nbsp;
+               <div style="background-color: #00ba02;display: inline-block;color: white;padding: 2px 7px;font-weight: 600;border-radius: 7px;margin: 5px 0px;">Transport-({{entry.btbookings}}/{{entry.total_tbookings}})</div>&nbsp;&nbsp;
                {% else %}
-               <div style="background-color: red; display: inline-block; border-radius: 25px;">Transport-({{entry.btbookings}}/{{entry.total_tbookings}})</div>&nbsp;&nbsp;
+               <div style="background-color: #ff5722;display: inline-block;color: white;padding: 2px 7px;font-weight: 600;border-radius: 7px;margin: 5px 0px;">Transport-({{entry.btbookings}}/{{entry.total_tbookings}})</div>&nbsp;&nbsp;
                {% endif %}
                {% if entry.btibookings == entry.total_tibookings %}
-               <div style="background-color: green; display: inline-block; border-radius: 25px;">Tickets-({{entry.btibookings}}/{{entry.total_tibookings}})</div> 
+               <div style="background-color: #00ba02;display: inline-block;color: white;padding: 2px 7px;font-weight: 600;border-radius: 7px;margin: 5px 0px;">Tickets-({{entry.btibookings}}/{{entry.total_tibookings}})</div> 
                {% else %}
-               <div style="background-color: red; display: inline-block; border-radius: 25px;">Tickets-({{entry.btibookings}}/{{entry.total_tibookings}})</div> 
+               <div style="background-color: #ff5722;display: inline-block;color: white;padding: 2px 7px;font-weight: 600;border-radius: 7px;margin: 5px 0px;">Tickets-({{entry.btibookings}}/{{entry.total_tibookings}})</div> 
                {% endif %}
                 </div><br>
              </td>
