@@ -24,6 +24,7 @@ urlpatterns = [
     path('aedit/', views.aedit, name = 'aedit'),
     path('tidelete/', views.tidelete, name = 'tidelete'),
     path('tiedit/', views.tiedit, name = 'tiedit'),
+    path('partialpayments/', views.partialpayments, name = 'partialpayments'),
     path('b/b/d/<int:id>/<int:hid>/hpayments/', views.hotel_payments, name = 'hpayments'),
     path('b/b/d/<int:id>/<int:tid>/tpayments/', views.transport_payments, name = 'tpayments'),
     path('b/b/d/<int:id>/<int:aid>/apayments/', views.activity_payments, name = 'apayments'),

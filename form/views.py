@@ -624,3 +624,7 @@ def login_user(request):
 
     else:
         return render(request,'login.html')
+
+@api_view(['POST'])
+def partialpayments(request):
+    return JsonResponse({'status':'success'})
