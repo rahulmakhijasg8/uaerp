@@ -1,8 +1,11 @@
 from django.db import models
 import datetime
 from django.contrib.auth.models import User
-
 from django.db.models.aggregates import Count, Sum
+import string
+import random
+
+
 
 
 class PersonalInfo(models.Model):
@@ -30,6 +33,16 @@ class PersonalInfo(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+def generate_unique_code():
+    length = 11
+
+    while True:
+        Bookingkey = ''.join(random.choices(string.ascii_uppercase, k=length))
+        if Bookinginfo.objects.filter(Bookingkey=Bookingkey).count() == 0:
+            break
+
+    return Bookingkey
 
 class Bookinginfo(models.Model):
     personal_details = models.ForeignKey(PersonalInfo, on_delete=models.CASCADE, null=True, blank=True,related_name='bdetails')
@@ -156,6 +169,13 @@ class Hotelinfo(models.Model):
     def totalbookings(self):
         return Count(self.id)
 
+    @property
+    def comments(self):
+        comment = Comment.objects.filter(Hopaymentskey=self.id)
+        print(comment)
+        return comment
+
+
 class Activitiesinfo(models.Model):
     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE)
     Name_of_activity = models.CharField(max_length=255)
@@ -229,6 +249,20 @@ class Connections(models.Model):
     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE)
     Personalkey = models.OneToOneField(PersonalInfo, on_delete=models.CASCADE,related_name='connections')
     Membertype = models.CharField(max_length=255)
+
+
+class Comment(models.Model):
+     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE,related_name='bp')
+     Hopaymentskey = models.ForeignKey(Hotelinfo,null=True,on_delete=models.CASCADE,related_name='hop')
+     Trpaymentskey = models.ForeignKey(Transportinfo,null=True,on_delete=models.CASCADE,related_name='trp')
+     Acpaymentskey = models.ForeignKey(Activitiesinfo,null=True,on_delete=models.CASCADE,related_name='acp')
+     Ticpaymentskey = models.ForeignKey(Ticketinfo,null=True,on_delete=models.CASCADE,related_name='ticp')
+     Comment_Type = models.CharField(max_length=255)
+     duedate = models.DateField(default=datetime.date.today)
+     Comment = models.TextField()
+     User = models.CharField(max_length=255)
+     Time = models.DateTimeField(auto_now_add=True)
+     Tag = models.CharField(max_length=255)
 
 
 class Venderinfo(models.Model):

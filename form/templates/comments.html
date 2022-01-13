@@ -1,0 +1,23 @@
+<link href="multiselect.css" rel="stylesheet">
+<h2>New Payment</h2><br>
+<form action=""  method = "POST" >
+    {% csrf_token %}
+    <div id="compulsary-fields">
+        <label for="your_name" >Booking ID:{{id}} </label><br>
+        <label for="your_name">User </label>
+        <input id="user" type="text" name="user" required><br>
+        <label for="your_name"> Comment </label>
+        <textarea name="comment" id="comment" cols="30" rows="10"></textarea><br>
+        <label for="your_name">Tag </label>
+        <select name="a" id="a">
+            <option value="Payment">Payment</option>
+            <option value="Trip Date">Trip Date</option>
+            <option value="Transport">Transport</option>
+            <option value="Tickets">Tickets</option>
+            <option value="Activities">Activities</option>
+            <option value="Cancellation">Cancellation</option>
+            <option value="Hotel">Hotel</option>
+        </select>
+        <br>
+        <button type="submit">Submit</button>
+</form>

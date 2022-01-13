@@ -1,3 +1,4 @@
+from re import X
 from django import forms
 from django.db import connections
 from django.db.models import Q
@@ -8,7 +9,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import *
-from .models import Activitiesinfo, EntryForm, Hotelinfo, PersonalInfo, Bookinginfo,Paymentinfo,Connections, Ticketinfo, Transportinfo, Venderinfo
+from .models import *
 import json
 import random, string
 from django.conf import settings
@@ -78,11 +79,23 @@ def a(request):
      
      return render(request, "c.html")
 
+x = ''.join(random.choice(string.ascii_uppercase + string.digits)for _ in range(11))
 
 
+def generate_unique_code():
+    length = 11
 
+    while True:
+       x = ''.join(random.choice(string.ascii_uppercase + string.digits))
+       if Bookinginfo.objects.filter(Bookingkey=x).count() == 0:
+            break
+
+       x=x[:3]
+       print(x)
+       return x
   
-x = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(11))
+
+
 
 
 
@@ -99,15 +112,17 @@ from datetime import datetime
 def d(request,id):
     id = id
     a = Bookinginfo.objects.get(id=id)
+    p = Comment.objects.filter(Bookingkey=id).order_by('-Time')
     b = Paymentinfo.objects.filter(Bookingkey=id).all()
     amtpaid =Paymentinfo.objects.filter(Bookingkey=id,Payment_Type='Customer').aggregate(Sum('Amount'))
     Bookinginfo.objects.filter(id=id).update(Amount_Paid=amtpaid['Amount__sum'])
     pinfo = PersonalInfo.objects.filter(connections__Bookingkey=id)
-    transport = Transportinfo.objects.filter(Bookingkey=id).all()
-    activity = Activitiesinfo.objects.filter(Bookingkey=id).all()
-    d = Hotelinfo.objects.filter(Bookingkey=id).all()
+    transport = Transportinfo.objects.filter(Bookingkey=id).prefetch_related('trp').all()
+    activity = Activitiesinfo.objects.filter(Bookingkey=id).prefetch_related('acp').all()
+    d = Hotelinfo.objects.filter(Bookingkey=id).prefetch_related('hop').all()
+    print(d)
     venderinfo =Venderinfo.objects.values_list('state', flat=True)
-    tickets = Ticketinfo.objects.filter(Bookingkey=id).all()
+    tickets = Ticketinfo.objects.filter(Bookingkey=id).prefetch_related('tip').all().all()
     if request.method == 'POST':
 
        
@@ -135,7 +150,7 @@ def d(request,id):
         # print(hotelinfoserializer.data)
         return Response({'status':'save', 'info':info})
         return render(request, 'd.html',{'id':id,'a':bookinginfo,'b':b,'c':pinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum']})
-    return render(request, 'd.html',{'id':id,'a':a,'b':b,'c':pinfo,'venderinfo':venderinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum'],'tickets':tickets})
+    return render(request, 'd.html',{'id':id,'p':p,'a':a,'b':b,'c':pinfo,'venderinfo':venderinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum'],'tickets':tickets})
 
 def e(request,id):
     id=id
@@ -624,6 +639,75 @@ def login_user(request):
 
     else:
         return render(request,'login.html')
+
+def hotel_comments(request,id,hid):
+    id=id
+    hid=hid
+    bookinginfo = Bookinginfo.objects.get(id=id)
+    hotelinfo = Hotelinfo.objects.get(id=hid)
+    if request.method == 'POST':
+        user = request.POST.get('user')
+        comment = request.POST.get('comment')
+        tag = request.POST.get('a')
+
+        Comment.objects.create(Bookingkey=bookinginfo,Hopaymentskey=hotelinfo,Comment_Type='For Hotel',
+                                Comment=comment,User=user,Tag=tag)
+    return render(request,'comments.html')
+
+def transport_comments(request,id,tid):
+    id=id
+    tid=tid
+    bookinginfo = Bookinginfo.objects.get(id=id)
+    transportinfo = Transportinfo.objects.get(id=tid)
+    if request.method == 'POST':
+        user = request.POST.get('user')
+        comment = request.POST.get('comment')
+        tag = request.POST.get('a')
+
+        Comment.objects.create(Bookingkey=bookinginfo,Trpaymentskey=transportinfo,Comment_Type='For Transport',
+                                Comment=comment,User=user,Tag=tag)
+    return render(request,'comments.html')
+
+def activity_comments(request,id,aid):
+    id=id
+    aid=aid
+    bookinginfo = Bookinginfo.objects.get(id=id)
+    activityinfo = Activitiesinfo.objects.get(id=aid)
+    if request.method == 'POST':
+        user = request.POST.get('user')
+        comment = request.POST.get('comment')
+        tag = request.POST.get('a')
+
+        Comment.objects.create(Bookingkey=bookinginfo,Acpaymentskey=activityinfo,Comment_Type='For Activity',
+                                Comment=comment,User=user,Tag=tag)
+    return render(request,'comments.html')
+
+def ticket_comments(request,id,tiid):
+    id=id
+    tiid=tiid
+    bookinginfo = Bookinginfo.objects.get(id=id)
+    ticket = Ticketinfo.objects.get(id=tiid)
+    if request.method == 'POST':
+        user = request.POST.get('user')
+        comment = request.POST.get('comment')
+        tag = request.POST.get('a')
+
+        Comment.objects.create(Bookingkey=bookinginfo,Ticpaymentskey=ticket,Comment_Type='For Tickets',
+                                Comment=comment,User=user,Tag=tag)
+    return render(request,'comments.html')
+
+def comments(request,id):
+    if request.method == 'POST':
+        id =id
+        bookinginfo = Bookinginfo.objects.get(id=id)
+        user = request.POST['user']
+        comment = request.POST['comment']
+        tag = request.POST['type']
+        
+
+        Comment.objects.create(Bookingkey=bookinginfo,Comment_Type='For Tickets',
+                                Comment=comment,User=user,Tag=tag)
+        return JsonResponse({'status':'save'})
 
 @api_view(['POST'])
 def partialpayments(request):

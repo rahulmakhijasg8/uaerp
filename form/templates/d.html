@@ -1,7 +1,6 @@
 {% load mathfilters %}
 <form action="" method="" id="id00">
     <a href="{{a.Trello_link}}" target="_blank"><button type="button">Open Trello Link</button></a><br>
-    <label  >Trip Name </label>
     <input id="name" type= 'text' name="Tripname" value="{{a.Trip_Name}}" readonly required>&nbsp;&nbsp;
     <label for="">Service Status</label>
     <input type= 'text' name="Status" id="status" value="{{a.Service_Status}}" required readonly><br>
@@ -32,10 +31,7 @@
     <label  >Due Date </label>
     <input id="duedate" type= 'text' name="Duedate" value="{{a.Due_Date}}" required readonly><br>
     <input type="button" value="Edit" onclick="bform(2)" class="bbtn-edit" id="bbt" data-bid="{{a.id}}">
-</form>
-&nbsp;&nbsp;&nbsp;&nbsp;
-   
-
+</form><br>
 <script>
     function calculate() {
   var myBox1 = parseFloat(document.getElementById('totalcost').value);
@@ -226,9 +222,25 @@
             <input type="button" value="Edit" onclick="hform(2)" class="btn-edit" id="btn-edit-{{entry.id}}" data-hid="{{entry.id}}">
             <input type="button" value="Delete" id="dbtn" class="btn-del" data-hid="{{entry.id}}"><br>
               <a href="{{entry.id}}/hpayments" target="_blank"><button type="button">Payments</button></a>
+              <a href="{{entry.id}}/hcomments" target="_blank"><button type="button">Comments</button></a>
         </form>
-    </div><hr>
-
+    </div><br>
+    {% for c in entry.hop.all %}
+           <div style="font-family: arial;background-color: whitesmoke;
+           font-size: 18px;
+           margin: 25px;margin-left: 350px;
+           width: 750px;
+           height: 60px;
+           outline: solid 1px rgb(48, 100, 117);">
+              <div style="margin-left: 15px; display: inline-block;">{{c.Time}}</div> <div style="text-align: right; display: inline-block; float: right;margin-right: 5px;">{{c.User}}</div> 
+               <div style="background-color: lightskyblue;
+               height: 20px;margin-left: 15px;margin-right: 15px;outline: solid 1px rgb(48, 100, 117);">
+                   {{c.Comment}}
+               </div>
+              <div style="display: inline-block; margin-left: 15px;">{{c.Tag}}</div> 
+           </div>
+           {% endfor %}<hr>
+           
 
     {% endfor %}
 
@@ -324,12 +336,27 @@
             <input type="button" value="Edit" onclick="tform(2)" class="tbtn-edit" id="btn-edit-{{entry.id}}" data-tid="{{entry.id}}">
             <input type="button" value="Delete" id="dbtn" class="tbtn-del" data-tid="{{entry.id}}"><br>
             <a href="{{entry.id}}/tpayments" target="_blank"><button type="button">Payments</button></a>
+            <a href="{{entry.id}}/tcomments" target="_blank"><button type="button">Comments</button></a>
 
-     </div>   </form>
+     </div>   </form><br>
+     {% for c in entry.trp.all %}
+           <div style="font-family: arial;background-color: whitesmoke;
+           font-size: 18px;
+           margin: 25px;margin-left: 350px;
+           width: 750px;
+           height: 60px;
+           outline: solid 1px rgb(48, 100, 117);">
+              <div style="margin-left: 15px; display: inline-block;">{{c.Time}}</div> <div style="text-align: right; display: inline-block; float: right;margin-right: 5px;">{{c.User}}</div> 
+               <div style="background-color: lightskyblue;
+               height: 20px;margin-left: 15px;margin-right: 15px;outline: solid 1px rgb(48, 100, 117);">
+                   {{c.Comment}}
+               </div>
+              <div style="display: inline-block; margin-left: 15px;">{{c.Tag}}</div> 
+           </div>
+           {% endfor %}
     <hr>
-    {% endfor %}
 </div>
-
+{% endfor %}
 
 <button type="button" onclick="tform(2)">Add more Transport</button><br>
 <form action="" method="POST" id="tinfo" class="tinfo"  style="text-align: center;"  >
@@ -404,8 +431,23 @@
             <input type="button" value="Edit" onclick="aform(2)" class="abtn-edit" data-aid="{{entry.id}}">
             <input type="button" value="Delete" id="dbtn" class="abtn-del" data-aid="{{entry.id}}"><br>
             <a href="{{entry.id}}/apayments" target="_blank"><button type="button">Payments</button></a>
-
-    </div></form>
+            <a href="{{entry.id}}/acomments" target="_blank"><button type="button">Comments</button></a>
+    </div></form><br>
+    {% for c in entry.acp.all %}
+           <div style="font-family: arial;background-color: whitesmoke;
+           font-size: 18px;
+           margin: 25px;margin-left: 350px;
+           width: 750px;
+           height: 60px;
+           outline: solid 1px rgb(48, 100, 117);">
+              <div style="margin-left: 15px; display: inline-block;">{{c.Time}}</div> <div style="text-align: right; display: inline-block; float: right;margin-right: 5px;">{{c.User}}</div> 
+               <div style="background-color: lightskyblue;
+               height: 20px;margin-left: 15px;margin-right: 15px;outline: solid 1px rgb(48, 100, 117);">
+                   {{c.Comment}}
+               </div>
+              <div style="display: inline-block; margin-left: 15px;">{{c.Tag}}</div> 
+           </div>
+           {% endfor %}
     <hr>
 
 
@@ -486,8 +528,23 @@
                 <input type="button" value="Edit" onclick="tiform(2)" class="tibtn-edit" data-tiid="{{entry.id}}">
                 <input type="button" value="Delete" id="dbtn" class="tibtn-del" data-tiid="{{entry.id}}"><br>
                 <a href="{{entry.id}}/tipayments" target="_blank"><button type="button">Payments</button></a>
-    
-        </div></form>
+                <a href="{{entry.id}}/ticomments" target="_blank"><button type="button">Comments</button></a>
+        </div></form><br>
+        {% for c in entry.ticp.all %}
+           <div style="font-family: arial;background-color: whitesmoke;
+           font-size: 18px;
+           margin: 25px;margin-left: 350px;
+           width: 750px;
+           height: 60px;
+           outline: solid 1px rgb(48, 100, 117);">
+              <div style="margin-left: 15px; display: inline-block;">{{c.Time}}</div> <div style="text-align: right; display: inline-block; float: right;margin-right: 5px;">{{c.User}}</div> 
+               <div style="background-color: lightskyblue;
+               height: 20px;margin-left: 15px;margin-right: 15px;outline: solid 1px rgb(48, 100, 117);">
+                   {{c.Comment}}
+               </div>
+              <div style="display: inline-block; margin-left: 15px;">{{c.Tag}}</div> 
+           </div>
+           {% endfor %}
         <hr>
     
     
@@ -527,7 +584,44 @@
     
         <input type="button" value="Save" onclick="tiform(1)" name="" id="ticketsbtn">
     
+    </form><br><br>
+
+<div>
+    <form action="" name="bc" method="post">
+        {% csrf_token %}
+        <label for="">User</label>&nbsp;&nbsp;&nbsp;
+        <input type="text" name="user" id="user"><br>
+        <label for="">Comment</label>
+        <textarea name="comment" id="comment" cols="30" rows="2"></textarea><br>
+        <label for="">Payment Type</label>&nbsp;&nbsp;&nbsp;
+        <select name="a" id="a">
+            <option value="Payment">Payment</option>
+            <option value="Trip Date">Trip Date</option>
+            <option value="Transport">Transport</option>
+            <option value="Tickets">Tickets</option>
+            <option value="Activities">Activities</option>
+            <option value="Cancellation">Cancellation</option>
+            <option value="Hotel">Hotel</option>
+        </select><br>
+        <button type="button" data-id="{{a.id}}" id="bc">Submit</button>
+
     </form>
+</div><br>
+{% for c in p %}
+<div style="font-family: arial;background-color: whitesmoke;
+font-size: 18px;
+margin: 25px;margin-left: 350px;
+width: 750px;
+height: 60px;
+outline: solid 1px rgb(48, 100, 117);">
+   <div style="margin-left: 15px; display: inline-block;">{{c.Time}}</div> <div style="text-align: right; display: inline-block; float: right;margin-right: 5px;">{{c.User}}</div> 
+    <div style="background-color: lightskyblue;
+    height: 20px;margin-left: 15px;margin-right: 15px;outline: solid 1px rgb(48, 100, 117);">
+        {{c.Comment}}
+    </div>
+   <div style="display: inline-block; margin-left: 15px;">{{c.Tag}}</div> 
+</div>
+{% endfor %}<hr>
 
 
 <style>
@@ -684,6 +778,31 @@
         mythis = this;
         $.ajax({
             url: "{% url 'delete' %}",
+            method: "POST",
+            data: mydata,
+            success: function (data){
+                if(data.status==1){
+                console.log(data);
+                $(mythis).closest("div").fadeOut();
+                }
+            }
+
+        })
+    })
+
+    $("#bc").click(function () {
+        console.log("comment button clicked");
+        let id = $(this).attr("data-id");
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        let name = $("#user").val();
+        let comment = $("#comment").val();
+        let type = $("a").val();
+        console.log(id);
+        mydata = {id:id,csrfmiddlewaretoken: csr,user:name,comment:comment,
+                    type:type}
+        mythis = this;
+        $.ajax({
+            url: "bcomments/",
             method: "POST",
             data: mydata,
             success: function (data){
@@ -1023,6 +1142,8 @@ $(".bbtn-edit").click(function () {
 
         })
     })
+
+
 
     $(".abtn-edit").click(function () {
         console.log("edit button clicked");
