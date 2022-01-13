@@ -34,16 +34,6 @@ class PersonalInfo(models.Model):
     def __str__(self):
         return str(self.id)
 
-def generate_unique_code():
-    length = 11
-
-    while True:
-        Bookingkey = ''.join(random.choices(string.ascii_uppercase, k=length))
-        if Bookinginfo.objects.filter(Bookingkey=Bookingkey).count() == 0:
-            break
-
-    return Bookingkey
-
 class Bookinginfo(models.Model):
     personal_details = models.ForeignKey(PersonalInfo, on_delete=models.CASCADE, null=True, blank=True,related_name='bdetails')
     Bookingkey = models.CharField(max_length=255, null=True)
