@@ -233,7 +233,7 @@ class Connections(models.Model):
     Personalkey = models.OneToOneField(PersonalInfo, on_delete=models.CASCADE,related_name='connections')
     Membertype = models.CharField(max_length=255)
 
-class Comment(models.Model):
+class Commentinfo(models.Model):
      Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE,related_name='bp')
      Hopaymentskey = models.ForeignKey(Hotelinfo,null=True,on_delete=models.CASCADE,related_name='hop')
      Trpaymentskey = models.ForeignKey(Transportinfo,null=True,on_delete=models.CASCADE,related_name='trp')

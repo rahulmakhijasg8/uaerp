@@ -112,7 +112,7 @@ from datetime import datetime
 def d(request,id):
     id = id
     a = Bookinginfo.objects.get(id=id)
-    p = Comment.objects.filter(Bookingkey=id).order_by('-Time')
+    p = Commentinfo.objects.filter(Bookingkey=id).order_by('-Time')
     b = Paymentinfo.objects.filter(Bookingkey=id).all()
     amtpaid =Paymentinfo.objects.filter(Bookingkey=id,Payment_Type='Customer').aggregate(Sum('Amount'))
     Bookinginfo.objects.filter(id=id).update(Amount_Paid=amtpaid['Amount__sum'])
@@ -649,7 +649,7 @@ def hotel_comments(request,id,hid):
         comment = request.POST.get('comment')
         tag = request.POST.get('a')
 
-        Comment.objects.create(Bookingkey=bookinginfo,Hopaymentskey=hotelinfo,Comment_Type='For Hotel',
+        Commentinfo.objects.create(Bookingkey=bookinginfo,Hopaymentskey=hotelinfo,Comment_Type='For Hotel',
                                 Comment=comment,User=user,Tag=tag)
     return render(request,'comments.html')
 
@@ -663,7 +663,7 @@ def transport_comments(request,id,tid):
         comment = request.POST.get('comment')
         tag = request.POST.get('a')
 
-        Comment.objects.create(Bookingkey=bookinginfo,Trpaymentskey=transportinfo,Comment_Type='For Transport',
+        Commentinfo.objects.create(Bookingkey=bookinginfo,Trpaymentskey=transportinfo,Comment_Type='For Transport',
                                 Comment=comment,User=user,Tag=tag)
     return render(request,'comments.html')
 
@@ -677,7 +677,7 @@ def activity_comments(request,id,aid):
         comment = request.POST.get('comment')
         tag = request.POST.get('a')
 
-        Comment.objects.create(Bookingkey=bookinginfo,Acpaymentskey=activityinfo,Comment_Type='For Activity',
+        Commentinfo.objects.create(Bookingkey=bookinginfo,Acpaymentskey=activityinfo,Comment_Type='For Activity',
                                 Comment=comment,User=user,Tag=tag)
     return render(request,'comments.html')
 
@@ -691,7 +691,7 @@ def ticket_comments(request,id,tiid):
         comment = request.POST.get('comment')
         tag = request.POST.get('a')
 
-        Comment.objects.create(Bookingkey=bookinginfo,Ticpaymentskey=ticket,Comment_Type='For Tickets',
+        Commentinfo.objects.create(Bookingkey=bookinginfo,Ticpaymentskey=ticket,Comment_Type='For Tickets',
                                 Comment=comment,User=user,Tag=tag)
     return render(request,'comments.html')
 
@@ -703,7 +703,7 @@ def comments(request,id):
         comment = request.POST['comment']
         tag = request.POST['tag']
 
-        Comment.objects.create(Bookingkey=bookinginfo,Comment_Type='Booking',
+        Commentinfo.objects.create(Bookingkey=bookinginfo,Comment_Type='Booking',
                                 Comment=comment,User=user,Tag=tag)
         return JsonResponse({'status':'save'})
 
