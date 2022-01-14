@@ -225,7 +225,7 @@
               <a href="{{entry.id}}/hcomments" target="_blank"><button type="button">Comments</button></a>
         </form>
     </div><br>
-    {% for c in entry.hop.all %}
+    {% for c in entry.hop.all reversed %}
            <div style="font-family: arial;background-color: whitesmoke;
            font-size: 18px;
            margin: 25px;margin-left: 350px;
@@ -339,7 +339,7 @@
             <a href="{{entry.id}}/tcomments" target="_blank"><button type="button">Comments</button></a>
 
      </div>   </form><br>
-     {% for c in entry.trp.all %}
+     {% for c in entry.trp.all reversed %}
            <div style="font-family: arial;background-color: whitesmoke;
            font-size: 18px;
            margin: 25px;margin-left: 350px;
@@ -433,7 +433,7 @@
             <a href="{{entry.id}}/apayments" target="_blank"><button type="button">Payments</button></a>
             <a href="{{entry.id}}/acomments" target="_blank"><button type="button">Comments</button></a>
     </div></form><br>
-    {% for c in entry.acp.all %}
+    {% for c in entry.acp.all reversed %}
            <div style="font-family: arial;background-color: whitesmoke;
            font-size: 18px;
            margin: 25px;margin-left: 350px;
@@ -530,7 +530,7 @@
                 <a href="{{entry.id}}/tipayments" target="_blank"><button type="button">Payments</button></a>
                 <a href="{{entry.id}}/ticomments" target="_blank"><button type="button">Comments</button></a>
         </div></form><br>
-        {% for c in entry.ticp.all %}
+        {% for c in entry.ticp.all reversed %}
            <div style="font-family: arial;background-color: whitesmoke;
            font-size: 18px;
            margin: 25px;margin-left: 350px;
@@ -593,8 +593,8 @@
         <input type="text" name="user" id="user"><br>
         <label for="">Comment</label>
         <textarea name="comment" id="comment" cols="30" rows="2"></textarea><br>
-        <label for="">Payment Type</label>&nbsp;&nbsp;&nbsp;
-        <select name="a" id="a">
+        <label for="your_name">Tag </label>
+        <select name="a" id="tag">
             <option value="Payment">Payment</option>
             <option value="Trip Date">Trip Date</option>
             <option value="Transport">Transport</option>
@@ -603,7 +603,7 @@
             <option value="Cancellation">Cancellation</option>
             <option value="Hotel">Hotel</option>
         </select><br>
-        <button type="button" data-id="{{a.id}}" id="bc">Submit</button>
+        <button type="button" id="bc">Submit</button>
 
     </form>
 </div><br>
@@ -796,20 +796,17 @@ outline: solid 1px rgb(48, 100, 117);">
         let csr = $("input[name=csrfmiddlewaretoken").val();
         let name = $("#user").val();
         let comment = $("#comment").val();
-        let type = $("a").val();
+        let tag = $("#tag").val();
         console.log(id);
-        mydata = {id:id,csrfmiddlewaretoken: csr,user:name,comment:comment,
-                    type:type}
+        mydata = {csrfmiddlewaretoken: csr,user:name,comment:comment,
+                    tag:tag}
         mythis = this;
         $.ajax({
             url: "bcomments/",
             method: "POST",
             data: mydata,
             success: function (data){
-                if(data.status==1){
-                console.log(data);
-                $(mythis).closest("div").fadeOut();
-                }
+                
             }
 
         })

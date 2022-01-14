@@ -2,8 +2,7 @@ from django.db import models
 import datetime
 from django.contrib.auth.models import User
 from django.db.models.aggregates import Count, Sum
-import string
-import random
+from django.utils import timezone
 
 
 
@@ -251,7 +250,7 @@ class Comment(models.Model):
      duedate = models.DateField(default=datetime.date.today)
      Comment = models.TextField()
      User = models.CharField(max_length=255)
-     Time = models.DateTimeField(auto_now_add=True)
+     Time = models.DateTimeField(default=timezone.now)
      Tag = models.CharField(max_length=255)
 
 

@@ -120,7 +120,6 @@ def d(request,id):
     transport = Transportinfo.objects.filter(Bookingkey=id).prefetch_related('trp').all()
     activity = Activitiesinfo.objects.filter(Bookingkey=id).prefetch_related('acp').all()
     d = Hotelinfo.objects.filter(Bookingkey=id).prefetch_related('hop').all()
-    print(d)
     venderinfo =Venderinfo.objects.values_list('state', flat=True)
     tickets = Ticketinfo.objects.filter(Bookingkey=id).prefetch_related('tip').all().all()
     if request.method == 'POST':
@@ -702,10 +701,9 @@ def comments(request,id):
         bookinginfo = Bookinginfo.objects.get(id=id)
         user = request.POST['user']
         comment = request.POST['comment']
-        tag = request.POST['type']
-        
+        tag = request.POST['tag']
 
-        Comment.objects.create(Bookingkey=bookinginfo,Comment_Type='For Tickets',
+        Comment.objects.create(Bookingkey=bookinginfo,Comment_Type='Booking',
                                 Comment=comment,User=user,Tag=tag)
         return JsonResponse({'status':'save'})
 
