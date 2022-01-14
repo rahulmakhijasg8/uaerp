@@ -158,12 +158,6 @@ class Hotelinfo(models.Model):
     def totalbookings(self):
         return Count(self.id)
 
-    @property
-    def comments(self):
-        comment = Comment.objects.filter(Hopaymentskey=self.id)
-        print(comment)
-        return comment
-
 
 class Activitiesinfo(models.Model):
     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE)
@@ -240,18 +234,7 @@ class Connections(models.Model):
     Membertype = models.CharField(max_length=255)
 
 
-class Comment(models.Model):
-     Bookingkey = models.ForeignKey(Bookinginfo, on_delete=models.CASCADE,related_name='bp')
-     Hopaymentskey = models.ForeignKey(Hotelinfo,null=True,on_delete=models.CASCADE,related_name='hop')
-     Trpaymentskey = models.ForeignKey(Transportinfo,null=True,on_delete=models.CASCADE,related_name='trp')
-     Acpaymentskey = models.ForeignKey(Activitiesinfo,null=True,on_delete=models.CASCADE,related_name='acp')
-     Ticpaymentskey = models.ForeignKey(Ticketinfo,null=True,on_delete=models.CASCADE,related_name='ticp')
-     Comment_Type = models.CharField(max_length=255)
-     duedate = models.DateField(default=datetime.date.today)
-     Comment = models.TextField()
-     User = models.CharField(max_length=255)
-     Time = models.DateTimeField(default=timezone.now)
-     Tag = models.CharField(max_length=255)
+
 
 
 class Venderinfo(models.Model):
