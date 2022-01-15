@@ -67,11 +67,11 @@ def a(request):
         sstatus = request.POST.get('sstatus')
         noofpeople = request.POST.get('noofpeople')
         trello = request.POST.get('trello')
-        bookinginfo=Bookinginfo.objects.create(Bookingkey = x, personal_details = personalinfo, Trip_Name=tripname,Start_Date=startdate,
+        bookinginfo=Bookinginfo.objects.create( Bookingkey=get_random_string(5),personal_details = personalinfo, Trip_Name=tripname,Start_Date=startdate,
                                     End_Date=enddate,City=tcity, State=tstate,Service=service,Total_Cost=totalcost,Amount_Paid=amountpaid,
                                     Due_amount=dueamount,BookingDate=paymentdate,Mode_of_payment=modeofpayment,Additional_info=additionalinfo,
                                     Created_by=createdby,Due_Date=duedate,Service_Status=sstatus,No_of_People=noofpeople,Trello_link=trello)
-
+        print(bookinginfo.Bookingkey)
         Connections.objects.create(Bookingkey=bookinginfo,Membertype = 'Prime',Personalkey=personalinfo )
 
         payment = Paymentinfo.objects.create(Bookingkey=bookinginfo,Payment_Type='Customer',Amount=amountpaid,Date=paymentdate,
@@ -79,20 +79,20 @@ def a(request):
      
      return render(request, "c.html")
 
-x = ''.join(random.choice(string.ascii_uppercase + string.digits)for _ in range(11))
+# x = ''.join(random.choice(string.ascii_uppercase + string.digits)for _ in range(11))
 
 
-def generate_unique_code():
-    length = 11
-
-    while True:
-       x = ''.join(random.choice(string.ascii_uppercase + string.digits))
-       if Bookinginfo.objects.filter(Bookingkey=x).count() == 0:
-            break
-
-       x=x[:3]
-       print(x)
-       return x
+    
+def get_random_string(length):
+    # choose from all lowercase letter
+    letters = string.ascii_uppercase + string.digits
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    if Bookinginfo.objects.filter(Bookingkey=result_str).count() == 0:
+        return result_str
+        print("Random string of length", length, "is:", result_str)
+    else:
+        get_random_string(length)
+    
   
 
 
@@ -102,7 +102,7 @@ def generate_unique_code():
 
 
 def b(request):
-    Entryform = Bookinginfo.objects.select_related('personal_details').all()
+    Entryform = Bookinginfo.objects.select_related('personal_details').order_by('Start_Date','Due_Date').all()
     venderinfo =Bookinginfo.objects.values_list('Service', flat=True)[0]
     return render (request,'b.html',{'Entryform':Entryform})
 from django.views.decorators.csrf import csrf_exempt

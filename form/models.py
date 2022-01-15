@@ -3,7 +3,8 @@ import datetime
 from django.contrib.auth.models import User
 from django.db.models.aggregates import Count, Sum
 from django.utils import timezone
-
+import string
+import random
 
 
 
@@ -33,9 +34,10 @@ class PersonalInfo(models.Model):
     def __str__(self):
         return str(self.id)
 
+
 class Bookinginfo(models.Model):
     personal_details = models.ForeignKey(PersonalInfo, on_delete=models.CASCADE, null=True, blank=True,related_name='bdetails')
-    Bookingkey = models.CharField(max_length=255, null=True)
+    Bookingkey = models.CharField(max_length=255, default="")
     Trip_Name = models.CharField(max_length=255, null=True)
     Start_Date = models.DateField(default=datetime.date.today)
     End_Date = models.DateField(default=datetime.date.today)
