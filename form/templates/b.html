@@ -5,12 +5,22 @@
    border-collapse: collapse;
  }
  </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
  
  <a href="javascript:SortTable(2,'D','mdy');"><button>Sort by Service Date</button></a>&nbsp;&nbsp;
  <a href="javascript:SortTable(9,'D','mdy');"><button>Sort by Due Date</button></a>
+ <input type="checkbox" class="name" name="name" value="Urgent Action Required" />Urgent Action Required
+<input type="checkbox" class="name" name="name" value="Booked" />Booked
+<br><br>
+ 
+ 
+ 
  <table id="results"   class="table table-sm sortable">
      <thead>
-        <tr>
+        <tr class="first">
             <th>Booking ID</th> &nbsp;&nbsp;
             <th>Booking Date</th> &nbsp;
             <th>Start Date-End Date</th> &nbsp;
@@ -36,7 +46,9 @@
              <td>{{entry.Total_Cost}}</td>
              <td>{{entry.Due_amount}}</td>
              <td>{{entry.Service_Status}} <br>
-               {% if entry.bhbookings == entry.total_hbookings %}
+               {% if entry.bhbookings == '0' or entry.total_hbookings == '0' %}
+               <div style="background-color: gray;display: inline-block;color: white;padding: 2px 7px;font-weight: 600;border-radius: 7px;margin: 5px 0px;">Hotel-({{entry.bhbookings}}/{{entry.total_hbookings}})</div> &nbsp;&nbsp;
+               {% elif entry.bhbookings == entry.total_hbookings and entry.total_hbookings > '0' %}
                <div style="background-color: #00ba02;display: inline-block;color: white;padding: 2px 7px;font-weight: 600;border-radius: 7px;margin: 5px 0px;">Hotel-({{entry.bhbookings}}/{{entry.total_hbookings}})</div> &nbsp;&nbsp;
                {% else %}
                <div style="background-color: #ff5722;display: inline-block;color: white;padding: 2px 7px;font-weight: 600;border-radius: 7px;margin: 5px 0px;" id="hstyle">Hotel-({{entry.bhbookings}}/{{entry.total_hbookings}})</div> &nbsp;&nbsp;
@@ -200,5 +212,23 @@
     return "" + String(y) + "" + String(m) + "" + String(d) + "";
     } // function GetDateSortingKey()
     </script>
+<script>
+$(document).ready(function(){
+    $(".name").on("click", function() {
+    name_list = []
+    $("#results tr").not('.first').hide()
+    var flag = 1
+    $("input:checkbox[name=name]:checked").each(function(){
+            flag = 0;
+          var value = $(this).val().toLowerCase();
+            $("#results tr").filter(function() {
+              if($(this).text().toLowerCase().indexOf(value) > -1)
+                  $(this).show()
+          });
+        });
+      if(flag == 1)
+          $("#results tr").show()
+    });
+  });
     
-    
+</script>

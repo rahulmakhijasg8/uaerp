@@ -49,7 +49,11 @@
     <label  >Name: </label>
     <input id="tripname" type= 'text' name="Tripname"  required>&nbsp;&nbsp;
     <label  >Created By </label>
-    <input id="tcreatedby" type= 'text' name="Createdby" >&nbsp;&nbsp;
+    <select name="Createdby" id="tcreatedby">
+        {% for entry in cu %}
+        <option value="{{entry.created_by}}">{{entry.created_by}}</option>
+        {% endfor %}
+    </select>
     <label for="">Service Status</label>
     <select name="sstatus" id="sstatus">
         <option value="Booked">Booked</option>
@@ -58,6 +62,7 @@
         <option value="Required">Required</option>
         <option value="Urgent Action Required">Urgent Action Required</option>
         <option value="Cancelled">Cancelled</option>
+        <option value="Postponed">Postponed</option>
       </select><br>
     <label  >Start Date </label>
     <input type="date" id="tstartdate" name="Startdate" >&nbsp;&nbsp;
@@ -72,15 +77,11 @@
     <label  >Additional info </label>
     <input id="tadditionalinfo" type= 'text' name="Additionalinfo" required><br>
     <label  >Total Cost </label>
-    <input id="ttotalcost" type= 'number' name="Totalcost" required>&nbsp;&nbsp;
-    <label  >Amount Paid </label>
-    <input id="tramountpaid" type= 'integer' name="Amountpaid" required><br>
-    <label  >Due Amount </label>
-    {% with x=a.Total_Cost y=amtpaid %}
-    <input id="trdueamount" type="number" name="dueamount"   >&nbsp;&nbsp;
-    {% endwith %}
+    <input id="ttotalcost" type= 'number' name="Totalcost" required><br>
     <label  >Due Date </label>
-    <input id="tduedate" type="date" name="Duedate" ><br>
+    <input id="tduedate" type="date" name="Duedate" >&nbsp;&nbsp;
+    <label  >Trello Link </label>
+    <input type="text" id="trello" name="trello"><br><br>
 
     <input type="button" value="submit" onclick="bform(1)" id="tbtn-save" class="tbtn-save" form="id01">
 </form>
@@ -603,6 +604,12 @@
             <option value="Cancellation">Cancellation</option>
             <option value="Hotel">Hotel</option>
         </select><br>
+        <label for="your_name">User </label>
+        <select name="a" id="tag">
+            {% for entry in cu %}
+            <option value="{{entry.user}}">{{entry.user}}</option>
+            {% endfor %}
+        </select><br>
         <button type="button" id="bc">Submit</button>
 
     </form>
@@ -864,6 +871,7 @@ outline: solid 1px rgb(48, 100, 117);">
         let hdueamount = $("#trdueamount").val();
         let duedate = $("#tduedate").val();
         let sstatus = $("#sstatus").val();
+        let trello = $("#trello").val();
         let csr = $("input[name=csrfmiddlewaretoken").val();
         console.log(id);
         bdata = {
@@ -871,7 +879,7 @@ outline: solid 1px rgb(48, 100, 117);">
             bcindate: cindate, bcodate: coutdate, bno: rooms, 
              Additionalinfo: badditionalinfo,createdby:createdby,
             Roomcost: htotalcost,Dueamount:hdueamount,Amountpaid:hamountpaid,duedate:duedate,
-            sstatus:sstatus
+            sstatus:sstatus,trello:trello
         };
         $.ajax({
             url: "book",
@@ -915,6 +923,7 @@ $(".bbtn-edit").click(function () {
             $("#trdueamount").val(data.Due_Amount);
             $("#tduedate").val(data.Due_Date);
             $("#sstatus").val(data.Service_Status);
+            $("#trello").val(data.trello)
 
 
         }

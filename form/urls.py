@@ -31,7 +31,7 @@ urlpatterns = [
     path('b/b/d/<int:id>/<int:tid>/tpayments/', views.transport_payments, name = 'tpayments'),
     path('b/b/d/<int:id>/<int:tid>/tcomments/', views.transport_comments, name = 'tcomments'),
     path('b/b/d/<int:id>/<int:aid>/apayments/', views.activity_payments, name = 'apayments'),
-     path('b/b/d/<int:id>/<int:aid>/acomments/', views.activity_comments, name = 'acomments'),
+    path('b/b/d/<int:id>/<int:aid>/acomments/', views.activity_comments, name = 'acomments'),
     path('b/b/d/<int:id>/<int:tiid>/tipayments/', views.ticket_payments, name = 'tipayments'),
-     path('b/b/d/<int:id>/<int:tiid>/ticomments/', views.ticket_comments, name = 'ticomments'),
+    path('b/b/d/<int:id>/<int:tiid>/ticomments/', views.ticket_comments, name = 'ticomments'),
 ]

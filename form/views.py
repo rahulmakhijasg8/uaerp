@@ -121,7 +121,8 @@ def d(request,id):
     activity = Activitiesinfo.objects.filter(Bookingkey=id).prefetch_related('acp').all()
     d = Hotelinfo.objects.filter(Bookingkey=id).prefetch_related('hop').all()
     venderinfo =Venderinfo.objects.values_list('state', flat=True)
-    tickets = Ticketinfo.objects.filter(Bookingkey=id).prefetch_related('tip').all().all()
+    tickets = Ticketinfo.objects.filter(Bookingkey=id).prefetch_related('tip').all()
+    cu = Usercreatedby.objects.all()
     if request.method == 'POST':
 
        
@@ -149,7 +150,7 @@ def d(request,id):
         # print(hotelinfoserializer.data)
         return Response({'status':'save', 'info':info})
         return render(request, 'd.html',{'id':id,'a':bookinginfo,'b':b,'c':pinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum']})
-    return render(request, 'd.html',{'id':id,'p':p,'a':a,'b':b,'c':pinfo,'venderinfo':venderinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum'],'tickets':tickets})
+    return render(request, 'd.html',{'id':id,'p':p,'a':a,'b':b,'c':pinfo,'venderinfo':venderinfo,'d':d,'transport':transport,'activity':activity,'amtpaid':amtpaid['Amount__sum'],'tickets':tickets,'cu':cu})
 
 def e(request,id):
     id=id
@@ -208,16 +209,15 @@ def book(request,id):
             noofpeople = request.POST['bno']
             additionalinfo = request.POST['Additionalinfo']
             totalcost = request.POST['Roomcost']
-            amountpaid = request.POST['Amountpaid']
-            dueamount = request.POST['Dueamount']
             duedate = request.POST['duedate']
             sstatus = request.POST['sstatus']
+            trello = request.POST['trello']
         
         
         Bookinginfo.objects.filter(id=hid).update(Trip_Name=name,Start_Date=startdate,End_Date=enddate,City=city,
-                                                               State=state,Total_Cost=totalcost,Amount_Paid=amountpaid,Due_amount=dueamount,
+                                                               State=state,Total_Cost=totalcost,
                                                                Due_Date=duedate,No_of_People= noofpeople,Additional_info=additionalinfo,
-                                                               Service_Status=sstatus)
+                                                               Service_Status=sstatus,Trello_link=trello,Created_by=createdby)
 
         hinfo = Bookinginfo.objects.filter(id=id).values()
         info = list(hinfo)
@@ -455,7 +455,7 @@ def bedit(request):
                  "Checkin_Date":bi.Start_Date,"Checktout_Date":bi.End_Date,"No_of_persons":bi.No_of_People,
                    "Due_Date":bi.Due_Date,"Amount_Paid":bi.Amount_Paid,"Due_Amount":bi.Due_amount,
                     "Total_Cost":bi.Total_Cost,"Additional_info":bi.Additional_info,"Created_By":bi.Created_by,
-                    "Service_Status":bi.Service_Status}
+                    "Service_Status":bi.Service_Status,"trello":bi.Trello_link}
         print(bidata)
         return JsonResponse(bidata)
 

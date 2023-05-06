@@ -248,6 +248,10 @@ class Commentinfo(models.Model):
      Time = models.DateTimeField(default=timezone.now)
      Tag = models.CharField(max_length=255)
 
+class Usercreatedby(models.Model):
+    user = models.CharField(max_length=255)
+    created_by = models.CharField(max_length=255)
+
 
 
 class Venderinfo(models.Model):

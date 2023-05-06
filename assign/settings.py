@@ -22,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g-50h16sf!2m0$e46yz2h_7lkd_w23!=@%4-x_-bk9&&!661ve'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','uaerp.herokuapp.com']
 
@@ -144,7 +144,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ua.india.bookings@gmail.com' # email id
-EMAIL_HOST_PASSWORD = "ua.bookings19" # password
+EMAIL_PORT = 
+EMAIL_HOST_USER = '' # email id
+EMAIL_HOST_PASSWORD = "" # password
 
